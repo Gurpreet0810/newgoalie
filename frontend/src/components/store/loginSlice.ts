@@ -11,7 +11,19 @@ interface AuthPayload {
   token: string;
   userInfo: any[]; // Add userInfo to the AuthPayload
 }
-
+export const add_goalie = async (payload: any) => {
+  try {
+    const res: any = await UserService.add_goalie(payload);
+    console.log('redux res loign here', res);
+    if(res.status="200"){
+      alert("User Created");
+    }
+    return res?.data || []
+  } catch (err) {
+    console.log('Error on login slice', err);   
+    throw err;
+  }
+};
 // Async login function
 export const userLogin = async (payload: any, dispatch: any) => {
   try {
@@ -24,7 +36,7 @@ export const userLogin = async (payload: any, dispatch: any) => {
     }));
 
     if (res?.data?.token) {
-      await localStorage.setItem('token', res?.data?.data?.token);
+      await localStorage.setItem('token', res?.data?.token);
       return res?.data;
     } else {
       console.log('User not able to login');

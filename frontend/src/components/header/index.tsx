@@ -53,10 +53,10 @@ const HeaderPage = () => {
     return (
         <header className={`headerTag ${showMenu ? '' : 'new_header_class'}`}>
             <div className="left_sider">
-                <input type="text" className="search_bar"  placeholder="Search By Employee"/>
+                {/* <input type="text" className="search_bar"  placeholder="Search By Employee"/>
                 <p  className="icons filter">
                     <TuneIcon/>
-                </p>
+                </p> */}
             </div>
             <nav>
               <ul>
