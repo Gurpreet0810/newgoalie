@@ -220,7 +220,7 @@ const getUserdata = async (req, res) => {
   try {
     console.log("req is this : "+req);
       // Assuming the user's ID is passed in the request (e.g., from req.user after authentication)
-      const userId = req.user._id;
+      const userId = req.user;
       console.log("user id : "+ userId);
 
       // Fetch user data from the database
