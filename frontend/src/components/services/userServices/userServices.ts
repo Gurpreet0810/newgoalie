@@ -8,7 +8,10 @@ class LoginService {
     return postRequest(`/api/v1/signIn`,payload)
   }
   logoutUser = async () => {
-    return getRequest('/api/v1/users/logout')
+    return getRequest('/api/v1/logout')
+  }
+  add_goalie = async (payload:any) => {
+    return postRequest(`/api/v1/add_goalie`,payload) 
   }
   forgotPassword = async (payload: any) => {
     return putRequest('/api/v1/forgotPassword', payload)
