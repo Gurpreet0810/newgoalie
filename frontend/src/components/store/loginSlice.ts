@@ -24,7 +24,7 @@ export const userLogin = async (payload: any, dispatch: any) => {
     }));
 
     if (res?.data?.token) {
-      await localStorage.setItem('token', res?.data?.data?.token);
+      await localStorage.setItem('token', res?.data?.token);
       return res?.data;
     } else {
       console.log('User not able to login');

@@ -14,6 +14,7 @@ router.post('/login', loginUser)
 router.put('/forgotPassword', forgotPassword)
 router.post('/resetPassword', updatePassword)
 router.get('/user-profile', verifyUser, getUserdata)
+// router.get('/user-profile', getUserdata);
 router.post('/logout', verifyUser, logoutUser)
 router.post('/addProduct', verifyUser, getProductImg, addProduct)
 router.post('/add-address', verifyUser, userAddress)

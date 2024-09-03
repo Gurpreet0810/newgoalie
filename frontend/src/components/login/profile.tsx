@@ -36,17 +36,23 @@ const ProfileEdit = () => {
      useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('/api/v1/user-profile'); // Replace with your API endpoint
+                const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+                const response = await axios.get('http://localhost:4500/api/v1/user-profile', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 const userData = response.data;
+                console.log("udata ="+ userData);
 
                 // Update formData state with fetched data
-                setFormData({
-                    name: userData.name,
-                    email: userData.email,
-                    photo: null, // You may handle the photo upload separately
-                    phoneNumber: userData.phoneNumber,
-                    password: '' // Keep password empty initially
-                });
+                // setFormData({
+                //     name: userData.name,
+                //     email: userData.email,
+                //     photo: null, // You may handle the photo upload separately
+                //     phoneNumber: userData.phoneNumber,
+                //     password: '' // Keep password empty initially
+                // });
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 toast.error('Failed to load profile data');
