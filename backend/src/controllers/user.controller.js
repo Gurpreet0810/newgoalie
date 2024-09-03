@@ -218,6 +218,7 @@ const updatePassword = asyncHandler(async (req, res) => {
 
 const getUserdata = async (req, res) => {
   try {
+    console.log("req is this : "+req);
       // Assuming the user's ID is passed in the request (e.g., from req.user after authentication)
       const userId = req.user._id;
       console.log("user id : "+ userId);
