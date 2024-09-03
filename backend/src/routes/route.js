@@ -1,5 +1,5 @@
 import express from 'express';
-import { editSingleAddress, editUserAddress, forgotPassword, updatePassword, getUserdata, getUserAddress, loginUser, logoutUser, removeUserAddress, signInRouter, userAddress } from '../controllers/user.controller.js';
+import { editSingleAddress, editUserAddress, forgotPassword, updatePassword, getUserdata, updateProfile, getUserAddress, loginUser, logoutUser, removeUserAddress, signInRouter, userAddress } from '../controllers/user.controller.js';
 import { verifyUser } from '../middleware/index.js';
 import { getProductImg } from '../middleware/multer.js';
 import { addProduct } from '../controllers/addProduct.js';
@@ -15,6 +15,8 @@ router.post('/login', loginUser)
 router.put('/forgotPassword', forgotPassword)
 router.post('/resetPassword', updatePassword)
 router.get('/user-profile', verifyUser, getUserdata)
+router.post('/updateProfile', verifyUser, updateProfile)
+
 router.get('/logout', verifyUser, logoutUser)
 router.post('/addProduct', verifyUser, getProductImg, addProduct)
 router.post('/add-address', verifyUser, userAddress)

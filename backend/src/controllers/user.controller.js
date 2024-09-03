@@ -129,6 +129,7 @@ const loginUser = asyncHandler(async (req, res) => {
   res.status(200).json(response);
 });
 
+
 const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
@@ -184,6 +185,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
   }
 });
 
+
 const updatePassword = asyncHandler(async (req, res) => {
   const { token, password } = req.body;
 
@@ -216,32 +218,75 @@ const updatePassword = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, [], "Password updated successfully"));
 });
 
-const getUserdata = async (req, res) => {
+
+const getUserdata = asyncHandler(async (req, res) => {
   try {
-    console.log("req is this : "+req);
-      // Assuming the user's ID is passed in the request (e.g., from req.user after authentication)
-      const userId = req.user;
-      console.log("user id : "+ userId);
-
-      // Fetch user data from the database
-      // const user = await User.findById(userId);
-
-      // if (user) {
-      //     res.status(200).json({
-      //         _id: user._id,
-      //         name: user.userName,
-      //         email: user.email,
-      //         // phoneNumber: user.phoneNumber,
-      //         // Include other fields you want to return
-      //     });
-      // } else {
-      //     res.status(404).json({ message: 'User not found' });
-      // }
+      const userId = req.query._id;
+      const user = await User.findById(userId);
+      if (user) {
+          res.status(200).json({
+              _id: user._id,
+              userName: user.userName,
+              email: user.email,
+               phoneNumber: user.phoneNumber,
+              // Include other fields you want to return
+          });
+      } else {
+          res.status(404).json({ message: 'User not found' });
+      }
   } catch (error) {
       console.error('Error fetching user data:', error);
       res.status(500).json({ message: 'Server error' });
   }
-};
+});
+
+const updateProfile = asyncHandler(async (req, res) => {
+    try {
+      const { _id } = req.decoded;
+      // console.log("id is :", _id);
+      // const userId = req.user._id;
+      const { userName, email, phoneNumber, password, photo } = req.body;
+
+      // Find the user by ID
+      const user = await User.findById(_id);
+
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Update the user's profile
+      user.userName = userName || user.userName;
+      user.email = email || user.email;
+      user.phoneNumber = phoneNumber || user.phoneNumber;
+
+      // Only update the password if it's provided
+      if (password) {
+          user.password = password;
+      }
+
+      // If a photo is uploaded, handle the photo upload logic here
+      if (photo) {
+          user.photo = photo;
+      }
+
+      // Save the updated user to the database
+      const updatedUser = await user.save();
+
+      res.status(200).json({
+          message: 'Profile updated successfully',
+          user: {
+              _id: updatedUser._id,
+              userName: updatedUser.userName,
+              email: updatedUser.email,
+              phoneNumber: updatedUser.phoneNumber,
+              photo: updatedUser.photo,
+          }
+      });
+  } catch (error) {
+      console.error('Error updating profile:', error);
+      res.status(500).json({ message: 'Server error' });
+  }
+});
 
 
 const logoutUser = asyncHandler(async (req, res) => {
@@ -615,11 +660,8 @@ const removeUserAddress = asyncHandler(async (req, res) => {
 });
 
 
-
-
-
 export {
   signInRouter, loginUser, forgotPassword, updatePassword, getUserdata,
-  logoutUser, userAddress, getUserAddress, editUserAddress,
+  updateProfile, logoutUser, userAddress, getUserAddress, editUserAddress,
   removeUserAddress, editSingleAddress
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +10,7 @@ import { updateUserProfile } from '../store/loginSlice';
 import axios from 'axios';
 
 interface FormState {
-    name: string;
+    userName: string;
     email: string;
     photo: File | null;
     phoneNumber: string;
@@ -18,8 +18,9 @@ interface FormState {
 }
 
 const ProfileEdit = () => {
+    const {userInfo} = useSelector((state : any) => state.user)
     const [formData, setFormData] = useState<FormState>({
-        name: '',
+        userName: '',
         email: '',
         photo: null,
         phoneNumber: '',
@@ -29,41 +30,43 @@ const ProfileEdit = () => {
     const [loader, setLoader] = useState(false);
     const [errors, setErrors] = useState<any>({});
     const [showValidation, setShowValidation] = useState(false);
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const fetchUserData = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get('http://localhost:4500/api/v1/user-profile', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                params: {
+                    _id: userInfo[0]?.userDetails?._id,
+                  }
+            });
+            // console.log(response);
+            const userData = response.data;
+            // console.log("udata ="+ userData);
+            // Update formData state with fetched data
+            setFormData({
+                userName: userData.userName,
+                email: userData.email,
+                photo: null, // You may handle the photo upload separately
+                phoneNumber: userData.phoneNumber,
+                password: '' // Keep password empty initially
+            });
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            toast.error('Failed to load profile data');
+        }
+    };
 
-     // Fetch user data when component mounts
      useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
-                const response = await axios.get('http://localhost:4500/api/v1/user-profile', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                const userData = response.data;
-                console.log("udata ="+ userData);
-
-                // Update formData state with fetched data
-                // setFormData({
-                //     name: userData.name,
-                //     email: userData.email,
-                //     photo: null, // You may handle the photo upload separately
-                //     phoneNumber: userData.phoneNumber,
-                //     password: '' // Keep password empty initially
-                // });
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-                toast.error('Failed to load profile data');
-            }
-        };
-
         fetchUserData();
     }, []);
 
     const fields = [
-        { field: 'name', name: 'name', validate: 'required' },
+        { field: 'userName', name: 'userName', validate: 'required' },
         { field: 'email', name: 'email', validate: 'required' },
         { field: 'phoneNumber', name: 'phoneNumber', validate: 'required' },
         { field: 'password', name: 'password', validate: '' } // Optional validation
@@ -90,14 +93,16 @@ const ProfileEdit = () => {
         try {
             const isValidate = await validate(fields, formData);
             if (isValidate) {
+                console.log(formData);
                 setLoader(true);
                 const data = await updateUserProfile(formData, dispatch);
                 
-                if (data?.statusCode === 200) {
+                if (data?.status === 200) {
                     setLoader(false);
                     toast.success(data.message, { autoClose: 1000 });
                     navigate('/profile'); // Redirect to the profile page
                 }
+                setLoader(false);
             }
         } catch (error: any) {
             setLoader(false);
@@ -112,15 +117,18 @@ const ProfileEdit = () => {
     };
 
     return (
-                <div className="profile-edit-content">
+                <div className="profile-edit-content card card-primary">
+                    <div className="card-header">
+                        <h3 className="card-title">Profile</h3>
+                        </div>
                         <Form onSubmit={handleSubmit} className="profile-edit-form row">
                             <Form.Group controlId="name" className="profile-edit-field col-md-6">
                                 <Form.Label>Name</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter your name"
-                                    name="name"
-                                    value={formData.name}
+                                    name="userName"
+                                    value={formData.userName}
                                     onChange={handleChange}
                                     isInvalid={!!errors.name}
                                 />
@@ -184,13 +192,15 @@ const ProfileEdit = () => {
                                 />
                                 {errors.photo && <div className='text-danger'>{errors.photo}</div>}
                             </Form.Group>
+                            <Form.Group controlId="photo" className="profile-edit-field col-md-6">
+                            </Form.Group>
 
                             {loader ? (
-                                <div className="text-center">
+                                <div className="text-left">
                                     <Spinner animation="border" variant="primary" />
                                 </div>
                             ) : (
-                                <div className="text-center">
+                                <div className="text-left">
                                     <Button variant="primary" type="submit">Submit</Button>
                                 </div>
                             )}
