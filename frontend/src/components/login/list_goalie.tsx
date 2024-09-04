@@ -1,6 +1,6 @@
-// src/components/login/list_goalie.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 // Define the user interface based on the structure of your data
 interface User {
@@ -12,11 +12,6 @@ interface User {
   createdAt: string;
   updatedAt: string;
   __v: number;
-}
-
-// Define the error type for TypeScript
-interface AxiosError {
-  message: string;
 }
 
 function ListGoalie() {
@@ -43,11 +38,24 @@ function ListGoalie() {
     fetchUsers();
   }, []);
 
+  const handleDelete = async (id: string) => {
+    try {
+      await axios.delete(`http://localhost:4500/api/v1/goalies/${id}`);
+      setUsers(users.filter(user => user._id !== id));
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred');
+      }
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-<div className="home_section">
+    <div className="home_section">
       <h1>Goalies List</h1>
       {users.length > 0 ? (
         <table>
@@ -59,7 +67,7 @@ function ListGoalie() {
               <th>Email</th>
               <th>Created At</th>
               <th>Updated At</th>
-              <th>Action</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -71,8 +79,12 @@ function ListGoalie() {
                 <td>{user.email}</td>
                 <td>{new Date(user.createdAt).toLocaleString()}</td>
                 <td>{new Date(user.updatedAt).toLocaleString()}</td>
-                <td><a href="#">Edit</a></td>
-                <td><a href="#">Delete</a></td>
+                <td>
+                  <Link to={`http://localhost:3000/goalies/edit/${user._id}`}>
+                    <button>Edit</button>
+                  </Link>
+                  <button onClick={() => handleDelete(user._id)}>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>

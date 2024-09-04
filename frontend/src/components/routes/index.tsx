@@ -5,6 +5,7 @@ import Login from '../login/login';
 import SignUp from '../login/signUp';
 import Addgoalie from '../login/add_goalie';
 import ListGoalie from  '../login/list_goalie';
+import EditGoalie from '../login/EditGoalie';
 import ForgotPassword from '../login/forgot-password';
 import ResetPassword from '../login/reset-password';
 import ProtectedRoute from './protectedRoute';
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
           {
             path: 'add_goalie',
             element: <Addgoalie />, 
+          },
+          {
+            path: '/goalies/edit/',
+            element: <EditGoalie />, 
           },
         ],
       },

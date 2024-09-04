@@ -16,7 +16,7 @@ export const add_goalie = async (payload: any) => {
     const res: any = await UserService.add_goalie(payload);
     console.log('redux res loign here', res);
     if(res.status="200"){
-      alert("User Created");
+      toast.success('user created successfully')
     }
     return res?.data || []
   } catch (err) {

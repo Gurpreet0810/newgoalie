@@ -7,7 +7,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 const addGoalie = asyncHandler(async (req, res) => {
     console.log(req.body);
     const {goalie_name,phone,email,password} = req.body
-    const product_image = req.file;  // Access the uploaded file
+    const goalie_photo = req.image;  // Access the uploaded file
 
     if (!goalie_name || !phone || !email || !password ) {
         return res.status(404)
@@ -21,7 +21,8 @@ const addGoalie = asyncHandler(async (req, res) => {
     goalie_name,
     phone,
     email,
-    password
+    password,
+    goalie_photo
   })
   const addGoalieSuccess = await addGoalie.save()
   if (!addGoalieSuccess) {
@@ -82,5 +83,8 @@ export const getAllGoalies = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+
+
 
 export {addGoalie}

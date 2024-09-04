@@ -8,6 +8,7 @@ import { getProductByName, getProducts } from '../controllers/getProduct.js';
 import sendEmail from '../utils/nodemailer.js';
 import { addGoalie } from '../controllers/Goalie.js';
 import { getAllGoalies } from '../controllers/Goalie.js';
+// import { updateGoalie } from '../controllers/Goalie.js';
 
 const router = express.Router()
 router.post('/signIn', signInRouter)
@@ -28,6 +29,8 @@ router.post('/edit-personal-address', verifyUser, editSingleAddress)
 router.get('/remove-address', verifyUser, removeUserAddress)
 router.get('/send-email', sendEmail)
 router.get('/goalies', getAllGoalies);
-router.post('/add_goalie', verifyUser ,addGoalie)
+router.post('/add_goalie', verifyUser, getProductImg ,addGoalie)
+// router.put('/update_goalie/:id', verifyUser, getProductImg, updateGoalie);
+
 
 export default router

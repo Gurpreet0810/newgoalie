@@ -7,8 +7,7 @@ const jwt = jsonwebtoken;
 
 export const verifyUser = asyncHandler(async (req, res, next) => {
   const authorizationHeader = req.headers.authorization;
-  console.log('request header for token', req.headers);
-
+ 
 
   if (!authorizationHeader) {
     return res.status(401).json(new ApiError(401, [], "Authorization header missing"));

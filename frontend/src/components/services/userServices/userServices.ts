@@ -1,5 +1,5 @@
-import { getRequest, postRequest,putRequest } from "../index";
-
+import { getRequest, imagePostRequest, postRequest,putRequest } from "../index";
+import axios from 'axios';
 class LoginService {
   signInUSer = async (payload:any) => {
     return postRequest(`/api/v1/login`,payload) 
@@ -10,8 +10,20 @@ class LoginService {
   logoutUser = async () => {
     return getRequest('/api/v1/logout')
   }
-  add_goalie = async (payload:any) => {
-    return postRequest(`/api/v1/add_goalie`,payload) 
+  // add_goalie = async (payload:any) => {
+  //   return postRequest(`/api/v1/add_goalie`,payload) 
+  // }
+   add_goalie = async (payload: any) => {
+    // const formData = new FormData();
+  
+    // // Append your payload to FormData
+    // for (const key in payload) {
+    //   if (payload.hasOwnProperty(key)) {
+    //     formData.append(key, payload[key]);
+    //   }
+    // }
+  return imagePostRequest ('/api/v1/add_goalie', payload)
+  
   }
   forgotPassword = async (payload: any) => {
     return putRequest('/api/v1/forgotPassword', payload)

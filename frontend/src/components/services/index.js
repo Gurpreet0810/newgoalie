@@ -93,7 +93,7 @@ export async function uploadPostRequest(url, payload, otherInfo) {
   }
 }
 export async function postRequest(url, payload, otherInfo) {
-  console.log('biiling address paload', payload);
+ // console.log('biiling address paload', payload);
   try {
     const accessToken = localStorage.getItem('token')
     console.log('login token', accessToken);
