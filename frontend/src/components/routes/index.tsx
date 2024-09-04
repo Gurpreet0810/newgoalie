@@ -59,7 +59,7 @@ const router = createBrowserRouter([
             element: <Addgoalie />, 
           },
           {
-            path: '/goalies/edit/',
+            path: '/goalies/edit/:id',
             element: <EditGoalie />, 
           },
         ],
