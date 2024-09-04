@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:4500', // Set the default base URL here
+  baseURL: 'https://goaliebackend.loca.lt', // Set the default base URL here
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
