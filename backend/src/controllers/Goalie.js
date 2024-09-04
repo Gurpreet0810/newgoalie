@@ -85,6 +85,52 @@ export const getAllGoalies = async (req, res) => {
 };
 
 
+export const getSingleGoalie = async (req, res) => {
+  try {
+    const goalie = await AddGoalie.findById(req.params.id);
+    
+    if (!goalie) {
+      return res.status(404).json({ message: 'Goalie not found' });
+    }
+    res.status(200).json(goalie);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
+export const updateGoalie = async (req, res) => {
+  const { id } = req.params;
+  const { goalie_name, phone, email } = req.body;
 
+  // Handle file upload
+  const file = req.image;
+
+  try {
+    // Construct the update fields
+    const updateFields = {
+      goalie_name,
+      phone,
+      email,
+    };
+
+    if (file) {
+      // If a file is uploaded, include the image path in the update
+      const imagePath = `/storage/productImages/${file.filename}`;
+      updateFields.goalie_photo = imagePath; // Add the image path to the update fields
+    }
+
+    // Perform the update operation
+    const result = await AddGoalie.findByIdAndUpdate(id, updateFields, { new: true });
+
+    if (result) {
+      res.status(200).json(result); // Return the updated goalie
+    } else {
+      res.status(404).json({ message: 'Goalie not found' });
+    }
+  } catch (error) {
+    console.error('Error updating goalie:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 export {addGoalie}

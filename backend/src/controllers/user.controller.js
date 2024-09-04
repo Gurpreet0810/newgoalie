@@ -221,26 +221,6 @@ const updatePassword = asyncHandler(async (req, res) => {
 
 const getUserdata = asyncHandler(async (req, res) => {
   try {
-<<<<<<< HEAD
-      // Assuming the user's ID is passed in the request (e.g., from req.user after authentication)
-      const userId = req.user._id;
-      console.log("user id : "+ userId);
-
-      // Fetch user data from the database
-      // const user = await User.findById(userId);
-
-      // if (user) {
-      //     res.status(200).json({
-      //         _id: user._id,
-      //         name: user.userName,
-      //         email: user.email,
-      //         // phoneNumber: user.phoneNumber,
-      //         // Include other fields you want to return
-      //     });
-      // } else {
-      //     res.status(404).json({ message: 'User not found' });
-      // }
-=======
       const userId = req.query._id;
       const user = await User.findById(userId);
       if (user) {
@@ -254,7 +234,6 @@ const getUserdata = asyncHandler(async (req, res) => {
       } else {
           res.status(404).json({ message: 'User not found' });
       }
->>>>>>> 2115580831f81ebadcc378584a1a0357de4f486e
   } catch (error) {
       console.error('Error fetching user data:', error);
       res.status(500).json({ message: 'Server error' });

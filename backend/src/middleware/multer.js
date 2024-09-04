@@ -45,15 +45,18 @@ const getProductImg = asyncHandler(async (req, res, next) => {
         }
 
         if (!req.file) {
-            // If no file was uploaded, return an error
-            return next(new ApiError('Image is required', 400));
-        }
+            // If no file was uploaded, handle accordingly
+            req.image = null; // Set image to null if no new image is provided
+          } else {
+            // Save the filename to req.image
+            req.image = req.file.filename;
+          }
 
         // At this point, multer has parsed the file and req.file should be populated
         console.log(req.file); // Output file details if correctly uploaded
         
         // Save the filename to req.image
-        req.image = req.file.filename;
+        // req.image = req.file.filename;
 
         // Continue to the next middleware or route handler
         next();

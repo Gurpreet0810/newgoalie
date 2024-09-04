@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import { Table, Button } from 'react-bootstrap';
 // Define the user interface based on the structure of your data
 interface User {
   _id: string;
   goalie_name: string;
   phone: string;
   email: string;
+  goalie_photo:string;
   password: string;
   createdAt: string;
   updatedAt: string;
@@ -18,6 +19,7 @@ function ListGoalie() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -55,44 +57,42 @@ function ListGoalie() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="home_section">
-      <h1>Goalies List</h1>
-      {users.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Created At</th>
-              <th>Updated At</th>
-              <th>Actions</th>
+    <div className="home_section container-fluid">
+    <h1>Goalies List</h1>
+    {users.length > 0 ? (
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Logo</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={user._id}>
+              <td>{user.goalie_name}</td>
+              <td>{user.phone}</td>
+              <td>{user.email}</td>
+                <td><img src={`http://localhost:4500/storage/productImages/${user.goalie_photo}`} /></td>
+             
+                {/* <td>${user.goalie_photo}</td> */}
+              <td>
+                <Link to={`/goalies/edit/${user._id}`}>
+                  <Button variant="warning" className="me-2">Edit</Button>
+                </Link>
+                <Button variant="danger" onClick={() => handleDelete(user._id)}>Delete</Button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {users.map(user => (
-              <tr key={user._id}>
-                <td>{user._id}</td>
-                <td>{user.goalie_name}</td>
-                <td>{user.phone}</td>
-                <td>{user.email}</td>
-                <td>{new Date(user.createdAt).toLocaleString()}</td>
-                <td>{new Date(user.updatedAt).toLocaleString()}</td>
-                <td>
-                  <Link to={`http://localhost:3000/goalies/edit/${user._id}`}>
-                    <button>Edit</button>
-                  </Link>
-                  <button onClick={() => handleDelete(user._id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No users found</p>
-      )}
-    </div>
+          ))}
+        </tbody>
+      </Table>
+    ) : (
+      <p>No users found</p>
+    )}
+  </div>
   );
 }
 
