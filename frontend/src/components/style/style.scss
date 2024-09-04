@@ -77,8 +77,8 @@ body {
 }
 
 .layout_container .sidebar_layout {
-    width: 260px;
-    background-color: #0056b3;
+    width: 320px;
+    background-color: #1a748d29;
     height: 100%;
     transition: ease-in-out .3s;
 }
@@ -109,7 +109,7 @@ header {
     height: 80px;
     padding: 0 30px;
     font-family: sans-serif;
-    border-bottom: 1px solid var(--siebarText);
+    border-bottom: 1px solid #1a748d29;
     position: fixed;
     background: var(--textNormal);
     width: 100%;
@@ -155,16 +155,30 @@ header .profile_logo img {
 }
 
 header .icons {
-    color: var(--siebarText);
+    color: #00617a;
 }
 
+button.btn.btn-primary {
+    background: #00617A;
+    border-radius: 40px;
+    padding: 8px 20px;
+    // display: flex;
+    gap: 7px;
+    align-items: center;
+}
 
+button.btn.btn-primary:hover {
+    background: #000;
+}
 
 
 
 //  >>>>>>>>>><<<<<<<<<<<<<||||||||||||||||||||||||||||||<<<<<<<<<<<<<<<<<<<<<<
 //  >>>>>>>>>><<<<<<<<<<<<< CHECK SCREEN <<<<<<<<<<<<<<<<<<<<<<
 //  >>>>>>>>>><<<<<<<<<<<<<||||||||||||||||||||||||||||||<<<<<<<<<<<<<<<<<<<<<<
+.card-primary:not(.card-outline)>.card-header {
+    background-color: #00617a;
+}
 
 .check_screen_container{
     background: #e9ecef;
@@ -357,12 +371,19 @@ font-weight: bold;
 
 .lower_sidebar {
     padding: 0 20px;
-    background-color: var(--textNormal);
     overflow-y: scroll;
 }
 
+nav.MuiList-root.MuiList-padding.css-1mcnwpj-MuiList-root {
+    background: transparent;
+}
+
+.lower_sidebar .list_child:hover {
+    background-color: #000;
+}
+
 .lower_sidebar .title {
-    color: var(--siebarText);
+    color: #fff;
 }
 .lower_sidebar .title:hover {
     cursor: pointer;
@@ -374,7 +395,7 @@ font-weight: bold;
 
 
 .lower_sidebar .list_child {
-    background-color: #ede7f6;
+    background-color: #00617a;
     border-radius: 5px;
     margin-top: 10px;
 }
@@ -397,7 +418,6 @@ font-weight: bold;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: var(--themeWhite);
 }
 
 
@@ -405,7 +425,6 @@ font-weight: bold;
 .lower_sidebar {
     flex: 1;
     overflow-y: auto;
-    /* Enables vertical scrolling */
     margin-top: 30%;
 }
 
@@ -414,7 +433,6 @@ font-weight: bold;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--textNormal);
     position: fixed;
     width: 250px;
     z-index: 999;
@@ -1734,12 +1752,17 @@ section .product_title {
   }
   
   .profile-edit-content {
-    display: flex;
-    flex-direction: column;
     gap: 20px;
-    margin-top: 7%;
-    padding: 20px;
-  }
+    margin-top: 8% !important;
+    margin: 20px;
+}
+h3.card-title {
+    color: #fff;
+}
+
+form.profile-edit-form.row {
+    margin: 10px;
+}
   
   .profile-edit-field {
     width: 46%;

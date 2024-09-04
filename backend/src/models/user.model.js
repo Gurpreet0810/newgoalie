@@ -16,15 +16,20 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true
   },
+  phoneNumber: {
+    type: String,
+    required: false,
+    trim: true,
+  },
   password: {
     type: String,
     required: true,
     trim: true,
   },
-   addressId: {
-    type: Schema.Types.ObjectId,
-    ref: 'address',
+  photo: {
+    type: String,
     required: false,
+    trim: true,
   },
   refreshToken: {
     type: String

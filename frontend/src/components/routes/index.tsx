@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../layout';
 import HomeSection, { HomeSection1, HomeSection2 } from '../home';
 import Login from '../login/login';
+import Profile from '../login/profile';
 import SignUp from '../login/signUp';
 import Addgoalie from '../login/add_goalie';
 import ListGoalie from  '../login/list_goalie';
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'profile',
-            element: <HomeSection2 />, // Displayed within Layout
+            element: <Profile />, // Displayed within Layout
           },
           {
             path: 'users-extension',

@@ -1,1 +1,1 @@
-export const Db_Host = 'Goalie'
+export const Db_Host = 'goalie'

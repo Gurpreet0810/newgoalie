@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../src/assests/logo.png'; // Ensure correct path to logo
+import logo from '../../src/assests/goalie-logo.png'; // Ensure correct path to logo
 import MenuIcon from '@mui/icons-material/Menu';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
