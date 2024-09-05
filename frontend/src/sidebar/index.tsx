@@ -104,7 +104,7 @@ const hideSibar = () => {
                     aria-labelledby="nested-list-subheader"
                 >
                     {/* <p className='link_title'>Dashboard</p> */}
-                   <ListItem component={Link} to="/" className='list_child' button>
+                   <ListItem component={Link} to="/profile" className='list_child' button>
                         <ListItemIcon>
                             <DashboardIcon className='title' />
                         </ListItemIcon>
@@ -147,7 +147,7 @@ const hideSibar = () => {
                             </ListItem>
                             <Collapse in={open4} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
-                                    <ListItem component={Link} to="/users-extension" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/add-drill-cat" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <CallIcon className='title' />
                                         </ListItemIcon>
