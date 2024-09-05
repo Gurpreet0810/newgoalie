@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { validate } from '../utils/validate';
 import { toast } from 'react-toastify';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { Image} from 'react-bootstrap';
 
@@ -17,6 +18,7 @@ const Addgoalie = () => {
         email: "",
         password: ""
     });
+    const navigate = useNavigate();
     const [pro_image, setProFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>('');
     
@@ -44,7 +46,7 @@ const Addgoalie = () => {
         { field: 'email', name: 'email', validate: 'required' },
         { field: 'phone', name: 'phone', validate: 'required' },
         { field: 'password', name: 'password', validate: 'required' },
-        { field: 'goalie_photo', name: 'goalie_photo', validate: 'required' }
+        { field: 'goalie_photo', name: 'goalie_photo', validate: '' }
          // Optional validation
     ];
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -71,6 +73,7 @@ const Addgoalie = () => {
             if (isValidate) {
             await add_goalie(formData);  // Assuming add_goalie accepts FormData
             console.log('User added successfully');
+            navigate('/list_goalie');
         }
         } catch (error) {
             setLoader(false);

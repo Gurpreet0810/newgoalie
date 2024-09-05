@@ -76,7 +76,7 @@ function ListGoalie() {
               <td>{user.goalie_name}</td>
               <td>{user.phone}</td>
               <td>{user.email}</td>
-                <td><img src={`http://localhost:4500/storage/productImages/${user.goalie_photo}`} /></td>
+                <td><img src={`http://localhost:4500/storage/productImages/${user.goalie_photo}`} style={{ width: "200px" }}  /></td>
              
                 {/* <td>${user.goalie_photo}</td> */}
               <td>
