@@ -147,7 +147,7 @@ const hideSibar = () => {
                             </ListItem>
                             <Collapse in={open4} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
-                                    <ListItem component={Link} to="/users-extension" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/add-drill-cat" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <CallIcon className='title' />
                                         </ListItemIcon>

@@ -229,6 +229,7 @@ const getUserdata = asyncHandler(async (req, res) => {
               userName: user.userName,
               email: user.email,
                phoneNumber: user.phoneNumber,
+               photo: user.photo,
               // Include other fields you want to return
           });
       } else {
@@ -245,7 +246,8 @@ const updateProfile = asyncHandler(async (req, res) => {
       const { _id } = req.decoded;
       // console.log("id is :", _id);
       // const userId = req.user._id;
-      const { userName, email, phoneNumber, password, photo } = req.body;
+      const { userName, email, phoneNumber, password } = req.body;
+      const photo = req.image; 
 
       // Find the user by ID
       const user = await User.findById(_id);

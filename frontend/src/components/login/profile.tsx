@@ -41,7 +41,7 @@ const ProfileEdit = () => {
     const fetchUserData = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('https://goaliebackend.loca.lt/api/v1/user-profile', {
+            const response = await axios.get('http://localhost:4500/api/v1/user-profile', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -50,6 +50,7 @@ const ProfileEdit = () => {
                 }
             });
             const userData = response.data;
+            console.log("udata : ",userData);
             setFormData({
                 userName: userData.userName,
                 email: userData.email,
@@ -57,6 +58,9 @@ const ProfileEdit = () => {
                 phoneNumber: userData.phoneNumber,
                 password: ''
             });
+            setImagePreview(`http://localhost:4500/storage/productImages/${userData.photo}`);
+            // const uImg = userData.photo;
+            // console.log('uu :',uImg);
         } catch (error) {
             console.error('Error fetching user data:', error);
             toast.error('Failed to load profile data');
@@ -67,8 +71,6 @@ const ProfileEdit = () => {
         fetchUserData();
     }, []);
 
-    
-
     const fields = [
         { field: 'userName', name: 'userName', validate: 'required' },
         { field: 'email', name: 'email', validate: 'required' },
@@ -76,13 +78,6 @@ const ProfileEdit = () => {
         { field: 'password', name: 'password', validate: '' }
     ];
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-          const file = e.target.files[0];
-          setImage(file);
-          setImagePreview(URL.createObjectURL(file)); // Set image preview for new upload
-        }
-      };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setShowValidation(true);
@@ -98,6 +93,12 @@ const ProfileEdit = () => {
                 [name]: value,
             });
         }
+
+        if (e.target.files) {
+            const file = e.target.files[0];
+            setImage(file);
+            setImagePreview(URL.createObjectURL(file)); // Set image preview for new upload
+          }
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -126,7 +127,7 @@ const ProfileEdit = () => {
                 };
 
                 const response = await axios.post(
-                    'https://goaliebackend.loca.lt/api/v1/updateProfile',
+                    'http://localhost:4500/api/v1/updateProfile',
                     formDataToSend,
                     config
                 );
@@ -221,7 +222,8 @@ const ProfileEdit = () => {
                     <Form.Control
                         type="file"
                         name="photo"
-                        onChange={handleImageChange}
+                        accept=".jpg,.jpeg,.png"
+                        onChange={handleChange}
                     />
                     {errors.photo && <div className='text-danger'>{errors.photo}</div>}
                 </Form.Group>

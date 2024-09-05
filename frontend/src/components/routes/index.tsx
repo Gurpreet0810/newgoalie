@@ -13,6 +13,7 @@ import ProtectedRoute from './protectedRoute';
 import ComplianceBox from '../complianceBox';
 import ComplaintReason from '../complianceBox/reason';
 import CheckScreen from '../screen';
+import AddDrillCategory from '../login/add_drill_cat';
 
 const router = createBrowserRouter([
   {
@@ -35,8 +36,8 @@ const router = createBrowserRouter([
             element: <Profile />, // Displayed within Layout
           },
           {
-            path: 'users-extension',
-            element: <HomeSection2 />, // Displayed within Layout
+            path: 'add-drill-cat',
+            element: <AddDrillCategory />, // Displayed within Layout
           },
           {
             path: '/list_goalie',
