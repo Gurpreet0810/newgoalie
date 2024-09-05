@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const addGoalie = asyncHandler(async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     const {goalie_name,phone,email,password} = req.body
     const goalie_photo = req.image;  // Access the uploaded file
 
@@ -35,26 +35,6 @@ const addGoalie = asyncHandler(async (req, res) => {
 
   return res.status(200)
   .json(new ApiResponse(200, {addGoalieSuccess}, 'user created successfully'))
-
-//   const Images = req.productImg;
-  
-//   const productImagesPromises = Images.map(item => {
-
-//     const imagePath = item.path.replace(/^public\\/, '');
-//     const productImages = new ProductImages({
-//       productId: addProduct._id, // Reference the product ID
-//       productImages: imagePath
-//     });
-//     return productImages.save();
-//   });
-
-//   const productImagesSuccess = await Promise.all(productImagesPromises);
-
-//   if (!productImagesSuccess) {
-//     return res.status(500).json(new ApiError(500, [], "Something went wrong while adding Product images"));
-//   }
-
-//   return res.status(200).json(new ApiResponse(200, { addProductSuccess, productImagesSuccess }, "Successfully added product"));
 });
 
 

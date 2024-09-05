@@ -88,4 +88,34 @@ export const getProductupdateImg = asyncHandler(async (req, res, next) => {
     });
 });
 
-export { getProductImg };
+const getImg = asyncHandler(async (req, res, next) => {
+    // Use multer's single method within the middleware
+    upload.single('photo')(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            // Handle Multer errors (e.g., file size limit exceeded)
+            return next(new ApiError(err.message, 400));
+        } else if (err) {
+            // Handle other errors
+            return next(new ApiError(err.message, 500));
+        }
+
+        if (!req.file) {
+            // If no file was uploaded, handle accordingly
+            req.image = null; // Set image to null if no new image is provided
+          } else {
+            // Save the filename to req.image
+            req.image = req.file.filename;
+          }
+
+        // At this point, multer has parsed the file and req.file should be populated
+        console.log(req.file); // Output file details if correctly uploaded
+        
+        // Save the filename to req.image
+        // req.image = req.file.filename;
+
+        // Continue to the next middleware or route handler
+        next();
+    });
+});
+
+export { getProductImg, getImg };
