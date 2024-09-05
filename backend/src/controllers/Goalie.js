@@ -113,4 +113,24 @@ export const updateGoalie = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+ 
+export const deleteGoalie = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find the category by id and delete it
+    const result = await AddGoalie.findByIdAndDelete(id);
+
+    if (!result) {
+      return res.status(404).json(new ApiError(404, [], "Goalie not found"));
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Goalie deleted successfully"));
+  } catch (error) {
+    console.error("Error deleting Goalie:", error);
+    res.status(500).json(new ApiError(500, [], "Server error while deleting Goalie"));
+  }
+});
 export {addGoalie}

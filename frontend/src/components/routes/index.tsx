@@ -14,6 +14,8 @@ import ComplianceBox from '../complianceBox';
 import ComplaintReason from '../complianceBox/reason';
 import CheckScreen from '../screen';
 import AddDrillCategory from '../login/add_drill_cat';
+import ListDrillCategory from '../login/listDrillCategory';
+import EditDrillCategory from '../login/editDrillCategory';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
           {
             path: 'add-drill-cat',
             element: <AddDrillCategory />, // Displayed within Layout
+          },
+          {
+            path: 'list-drill-cat',
+            element: <ListDrillCategory />, // Displayed within Layout
+          },
+          {
+            path: '/drill-categories/edit/:id',
+            element: <EditDrillCategory />, 
           },
           {
             path: '/list_goalie',

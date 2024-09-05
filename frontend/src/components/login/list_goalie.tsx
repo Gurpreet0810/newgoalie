@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Table, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 // Define the user interface based on the structure of your data
 interface User {
   _id: string;
@@ -42,8 +43,9 @@ function ListGoalie() {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:4500/api/v1/goalies/${id}`);
+      await axios.delete(`http://localhost:4500/api/v1/deleteGoalies/${id}`);
       setUsers(users.filter(user => user._id !== id));
+      toast.success('Goalie deleted successfully', { autoClose: 1000 });
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -76,7 +78,7 @@ function ListGoalie() {
               <td>{user.goalie_name}</td>
               <td>{user.phone}</td>
               <td>{user.email}</td>
-                <td><img src={`http://localhost:4500/storage/productImages/${user.goalie_photo}`} /></td>
+                <td><img width="150px" src={`http://localhost:4500/storage/productImages/${user.goalie_photo}`} /></td>
              
                 {/* <td>${user.goalie_photo}</td> */}
               <td>

@@ -153,7 +153,7 @@ const hideSibar = () => {
                                         </ListItemIcon>
                                         <ListItemText className='title' primary="Add Drill Category" />
                                     </ListItem>
-                                    <ListItem component={Link} to="/change-password" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/list-drill-cat" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>

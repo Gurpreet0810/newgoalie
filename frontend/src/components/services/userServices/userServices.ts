@@ -34,6 +34,9 @@ class LoginService {
   updateUserProfile = async (payload: any) => {
     return postRequest('/api/v1/updateProfile', payload)
   } 
+  addDrillCat = async (payload: any) => {
+    return postRequest('/api/v1/addDrillCat', payload)
+  } 
 
 }
 
