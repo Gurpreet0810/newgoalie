@@ -10,6 +10,7 @@ import { addGoalie } from '../controllers/Goalie.js';
 import { getAllGoalies } from '../controllers/Goalie.js';
 import { getSingleGoalie } from '../controllers/Goalie.js';
 import { updateGoalie } from '../controllers/Goalie.js';
+import { getProductupdateImg } from '../middleware/multer.js';
 
 const router = express.Router()
 router.post('/signIn', signInRouter)
@@ -34,7 +35,7 @@ router.get('/send-email', sendEmail)
 router.get('/goalies', getAllGoalies);
 router.post('/add_goalie', verifyUser, getProductImg ,addGoalie)
 router.get('/get_goalies/:id', getSingleGoalie)
-router.put('/update_goalie/:id', getProductImg, updateGoalie);
+router.put('/update_goalie/:id', getProductupdateImg, updateGoalie);
 
 
 export default router

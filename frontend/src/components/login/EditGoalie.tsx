@@ -11,6 +11,7 @@ function EditGoalie() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [image, setImage] = useState<File | null>(null);
+  const [pro_image, setProFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
@@ -45,16 +46,18 @@ function EditGoalie() {
       const file = e.target.files[0];
       setImage(file);
       setImagePreview(URL.createObjectURL(file)); // Set image preview for new upload
+      setProFile(file);
     }
   };
 
-  const handleUpdate = async () => {
+  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append('goalie_name', name);
     formData.append('phone', phone);
     formData.append('email', email);
-    if (image) {
-      formData.append('goalie_photo', image); // Append image if selected
+    if (pro_image) {
+      formData.append('goalie_photo', pro_image); // Append image if selected
     }
 
     try {
@@ -77,63 +80,79 @@ function EditGoalie() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <Container className='home_section'>
-      <h1>Edit Goalie</h1>
-      <Form>
-        <Form.Group controlId="formName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Name"
-          />
-        </Form.Group>
+    <Container className="profile-edit-content card card-primary">
+  <div className="card-header">
+    <h3 className="card-title">Edit Goalie</h3>
+  </div>
+  
+  <Form onSubmit={handleUpdate} encType="multipart/form-data" className="profile-edit-form row">
+    <Row className="mb-3">
+      <Form.Group as={Col} controlId="formName" className="profile-edit-field mb-3">
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          type="text"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Goalie Name"
+        />
+      </Form.Group>
 
-        <Form.Group controlId="formPhone">
-          <Form.Label>Phone</Form.Label>
-          <Form.Control
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Phone"
-          />
-        </Form.Group>
+      <Form.Group as={Col} controlId="formEmail" className="profile-edit-field mb-3">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          type="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+      </Form.Group>
+    </Row>
 
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-          />
-        </Form.Group>
+    <Row className="mb-3">
+      <Form.Group as={Col} controlId="formPhone" className="profile-edit-field mb-3">
+        <Form.Label>Phone</Form.Label>
+        <Form.Control
+          type="tel"
+          name="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Phone"
+        />
+      </Form.Group>
 
-        <Form.Group controlId="formImage">
-          <Form.Label>Image</Form.Label>
-          <Form.Control
-            type="file"
-            onChange={handleImageChange}
-          />
-        </Form.Group>
+      
+    </Row>
 
-        {imagePreview && (
+    <Row className="mb-3">
+      <Form.Group as={Col} controlId="formImage" className="profile-edit-field mb-3">
+        <Form.Label>Image</Form.Label>
+        <Form.Control
+          type="file"
+          name="image"
+          onChange={handleImageChange}
+        />
+      </Form.Group>
+
+      {imagePreview && (
+        <Form.Group as={Col} className="profile-edit-field mb-3">
           <Row className="my-3">
             <Col>
               <Image src={imagePreview} alt="Preview" thumbnail width="100" />
             </Col>
           </Row>
-        )}
+        </Form.Group>
+      )}
+    </Row>
 
-        <Button variant="primary" onClick={handleUpdate} className="me-2">
-          Update
-        </Button>
-        <Button variant="secondary" onClick={() => navigate('/goalies')}>
-          Cancel
-        </Button>
-      </Form>
-    </Container>
+    <div className="text-left">
+      <Button type="submit" variant="primary" className="me-2">Update</Button>
+      <Button variant="secondary" onClick={() => navigate('/goalies')}>Cancel</Button>
+    </div>
+  </Form>
+</Container>
+
   );
 }
 
