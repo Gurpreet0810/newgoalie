@@ -44,7 +44,7 @@ const Addgoalie = () => {
         { field: 'email', name: 'email', validate: 'required' },
         { field: 'phone', name: 'phone', validate: 'required' },
         { field: 'password', name: 'password', validate: 'required' },
-        { field: 'goalie_photo', name: 'goalie_photo', validate: 'required' }
+        { field: 'goalie_photo', name: 'goalie_photo', validate: '' }
          // Optional validation
     ];
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
