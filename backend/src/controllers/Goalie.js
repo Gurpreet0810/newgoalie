@@ -96,7 +96,7 @@ export const updateGoalie = async (req, res) => {
 
     if (file) {
       // If a file is uploaded, include the image path in the update
-      const imagePath = `/storage/productImages/${file.filename}`;
+      const imagePath = req.image;
       updateFields.goalie_photo = imagePath; // Add the image path to the update fields
     }
 

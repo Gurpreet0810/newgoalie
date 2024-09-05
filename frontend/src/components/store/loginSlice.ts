@@ -20,6 +20,7 @@ export const add_goalie = async (payload: any) => {
     }
     return res?.data || []
   } catch (err) {
+    
     console.log('Error on login slice', err);   
     throw err;
   }
