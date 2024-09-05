@@ -122,7 +122,9 @@ function EditGoalie() {
         />
       </Form.Group>
 
-      
+      <Form.Group as={Col}  className="profile-edit-field mb-3">
+        
+      </Form.Group>
     </Row>
 
     <Row className="mb-3">
