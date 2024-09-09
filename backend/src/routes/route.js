@@ -1,13 +1,15 @@
 import express from 'express';
 import { editSingleAddress, editUserAddress, forgotPassword, updatePassword, getUserdata, updateProfile, getUserAddress, loginUser, logoutUser, removeUserAddress, signInRouter, userAddress } from '../controllers/user.controller.js';
 import { verifyUser } from '../middleware/index.js';
-import { getProductImg, getImg } from '../middleware/multer.js';
+import { getProductImg, getImg, getImgWithVideo } from '../middleware/multer.js';
 import { addProduct } from '../controllers/addProduct.js';
 import { createOrder, orderHistory } from '../controllers/createProductOrder.js';
 import { getProductByName, getProducts } from '../controllers/getProduct.js';
 import sendEmail from '../utils/nodemailer.js';
 import { addGoalie, getAllGoalies, getSingleGoalie, updateGoalie, deleteGoalie } from '../controllers/Goalie.js';
 import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, updateDrillCategory, deleteDrillCategory } from '../controllers/drill.js';
+import { addDrill, getAllDrills, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
+
 
 const router = express.Router()
 router.post('/signIn', signInRouter)
@@ -23,6 +25,13 @@ router.get('/drillCategories',  getAllDrillCategories)
 router.get('/get_drill_category/:id', getSingleDrillCategory)
 router.put('/update_drill_category/:id', updateDrillCategory)
 router.delete('/drillCategories/:id', deleteDrillCategory)
+
+router.post('/addDrill', verifyUser, getImgWithVideo, addDrill)
+router.get('/drills',  getAllDrills)
+router.get('/drills/:id', getSingleDrill)
+router.put('/update_drill/:id', getImgWithVideo, updateDrill)
+router.delete('/drills/:id', deleteDrill)
+
 
 
 router.post('/addProduct', verifyUser, getProductImg, addProduct)

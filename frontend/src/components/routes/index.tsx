@@ -16,6 +16,9 @@ import CheckScreen from '../screen';
 import AddDrillCategory from '../login/add_drill_cat';
 import ListDrillCategory from '../login/listDrillCategory';
 import EditDrillCategory from '../login/editDrillCategory';
+import AddDrill from '../login/addDrill';
+import ListDrill from '../login/listDrill';
+import EditDrill from '../login/editDrill';
 
 const router = createBrowserRouter([
   {
@@ -54,12 +57,16 @@ const router = createBrowserRouter([
             element: <ListGoalie />,
           },
           {
-            path: 'compliance-box',
-            element: <ComplianceBox />, // Displayed within Layout
+            path: 'add-drill',
+            element: <AddDrill />,
           },
           {
-            path: 'add-new-reason',
-            element: <ComplaintReason />, // Displayed within Layout
+            path: 'list-drill',
+            element: <ListDrill />, // Displayed within Layout
+          },
+          {
+            path: '/drills/edit/:id',
+            element: <EditDrill />, 
           },
           {
             path: 'customer-reports',

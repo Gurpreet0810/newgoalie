@@ -77,7 +77,8 @@ body {
 }
 
 .layout_container .sidebar_layout {
-    width: 320px;
+    width: 260px !important;
+    min-width: 260px!important;
     background-color: #1a748d29;
     height: 100%;
     transition: ease-in-out .3s;
@@ -1846,4 +1847,24 @@ a.forgot-password-link:hover {
 
 main.layout_section input[type=text] {
     color: #000 !important;
-}   
+}
+
+.MuiList-root a span.MuiTypography-root.MuiTypography-body1.MuiListItemText-primary.css-10hburv-MuiTypography-root {
+    color: #828485;
+}
+
+.MuiList-root a svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.title.css-i4bv87-MuiSvgIcon-root {
+    color: #828485;
+}
+
+.MuiList-root a .title.text_title  span.MuiTypography-root.MuiTypography-body1.MuiListItemText-primary.css-10hburv-MuiTypography-root {
+    color: #fff;
+}
+
+.MuiList-root a .css-cveggr-MuiListItemIcon-root svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.title.css-i4bv87-MuiSvgIcon-root {
+    color: #fff;
+}
+
+.MuiCollapse-wrapper.MuiCollapse-vertical.css-smkl36-MuiCollapse-wrapper a svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.title.css-i4bv87-MuiSvgIcon-root {
+    color: #828485;
+}

@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import express from 'express';
 
-const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'video/mp4'];
 
 // Configure storage
 const storage = multer.diskStorage({
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = uuidv4();
-        cb(null, `product-Image-${uniqueSuffix}.${file.originalname}`); // Use a unique file name
+        cb(null, `file-${uniqueSuffix}.${file.originalname}`); // Use a unique file name
     }
 });
 
@@ -50,7 +50,7 @@ const getProductImg = asyncHandler(async (req, res, next) => {
         }
 
         // At this point, multer has parsed the file and req.file should be populated
-        console.log(req.file); // Output file details if correctly uploaded
+        console.log('file is :',req.file); // Output file details if correctly uploaded
         
         // Save the filename to req.image
         req.image = req.file.filename;
@@ -89,33 +89,52 @@ export const getProductupdateImg = asyncHandler(async (req, res, next) => {
 });
 
 const getImg = asyncHandler(async (req, res, next) => {
-    // Use multer's single method within the middleware
     upload.single('photo')(req, res, (err) => {
         if (err instanceof multer.MulterError) {
-            // Handle Multer errors (e.g., file size limit exceeded)
             return next(new ApiError(err.message, 400));
         } else if (err) {
-            // Handle other errors
             return next(new ApiError(err.message, 500));
         }
 
         if (!req.file) {
-            // If no file was uploaded, handle accordingly
-            req.image = null; // Set image to null if no new image is provided
-          } else {
-            // Save the filename to req.image
+            req.image = null;
+        } else {
             req.image = req.file.filename;
-          }
+        }
 
-        // At this point, multer has parsed the file and req.file should be populated
-        console.log(req.file); // Output file details if correctly uploaded
-        
-        // Save the filename to req.image
-        // req.image = req.file.filename;
-
-        // Continue to the next middleware or route handler
+        // console.log('output file',req.file);
         next();
     });
 });
 
-export { getProductImg, getImg };
+const getImgWithVideo = asyncHandler(async (req, res, next) => {
+    const uploadFields = upload.fields([
+        { name: 'photo', maxCount: 1 },
+        { name: 'video_file', maxCount: 1 },
+    ]);
+
+    uploadFields(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            return next(new ApiError(err.message, 400));
+        } else if (err) {
+            return next(new ApiError(err.message, 500));
+        }
+
+        if (!req.files?.photo) {
+            req.image = null;
+        } else {
+            req.image = req.files.photo[0].filename;
+        }
+
+        if (!req.files?.video_file) {
+            req.video = null;
+        } else {
+            req.video = req.files.video_file[0].filename;
+        }
+        console.log('Uploaded files:', req.files);
+        next();
+    });
+});
+
+
+export { getProductImg, getImg, getImgWithVideo };

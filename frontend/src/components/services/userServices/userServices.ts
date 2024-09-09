@@ -38,6 +38,10 @@ class LoginService {
     return postRequest('/api/v1/addDrillCat', payload)
   } 
 
+  addDrill = async (payload: any) => {
+    return imagePostRequest('/api/v1/addDrill', payload)
+  } 
+
 }
 
 const instance = new LoginService;
