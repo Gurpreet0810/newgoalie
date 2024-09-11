@@ -1868,3 +1868,31 @@ main.layout_section input[type=text] {
 .MuiCollapse-wrapper.MuiCollapse-vertical.css-smkl36-MuiCollapse-wrapper a svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.title.css-i4bv87-MuiSvgIcon-root {
     color: #828485;
 }
+
+/* Container for all the months */
+.month-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between each month block */
+  }
+  
+  /* Container for each month */
+  .month-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 8px;
+    min-width: 150px; /* Ensure each month container has a consistent size */
+  }
+  
+  /* Week list container (keeps weeks in a normal vertical flow) */
+  .week-list {
+    display: block; /* Ensures weeks are stacked normally */
+  }
+  
+  /* Style for individual week checkboxes */
+  .week_check {
+    margin-top: 5px;
+  }
+  
+  
