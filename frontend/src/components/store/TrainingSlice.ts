@@ -8,7 +8,7 @@ interface Training {
   drill_category: string;
   training_name: string;
   photo?: File | null;
-  week: string;
+  week: [Number];
 }
 
 // Define the state interface
@@ -31,7 +31,9 @@ export const addTrainings = async (formData: any, dispatch: any) => {
 
     if (res?.status === 200) {
       // Notify the user of the success
-      toast.success('Training created successfully');
+
+      
+     // toast.success('Training created successfully');
 
       // Dispatch the action to add training to the state
       dispatch(addTraining({
@@ -51,34 +53,66 @@ export const addTrainings = async (formData: any, dispatch: any) => {
   }
 };
 
+export const updateTraining = async (payload: any, dispatch: any) => {
+  try {
+    const res = await UserService.updateUserProfile(payload);
+    console.log('redux res update profile', res);
+    // dispatch(authUser({
+    //   token: res?.data?.token || '',
+    //   userInfo: res?.data?.data ? [res?.data?.data] : []
+    // }));
+    toast.success('Profile updated successfully!', { autoClose: 2000 });
+    return res?.data;
+  } catch (err) {
+    console.log('Error on update profile slice', err);
+    toast.error('Error updating profile.', { autoClose: 2000 });
+    throw err;
+  }
+};
+export const fetchTrainingById = async (payload: any, dispatch: any) => {
+  try {
+    const res = await UserService.updateUserProfile(payload);
+    console.log('redux res update profile', res);
+    // dispatch(authUser({
+    //   token: res?.data?.token || '',
+    //   userInfo: res?.data?.data ? [res?.data?.data] : []
+    // }));
+    toast.success('Profile updated successfully!', { autoClose: 2000 });
+    return res?.data;
+  } catch (err) {
+    console.log('Error on update profile slice', err);
+    toast.error('Error updating profile.', { autoClose: 2000 });
+    throw err;
+  }
+};
 
 // // Async function to add a training
-// export const addTrainings = async (payload: Training, dispatch: any) => {
-//   try {
-//     const res = await UserService.addTraining(payload);
-//     console.log('redux response addTraining:', res);
+export const addTrainingsDrills = async (payload: any, dispatch: any) => {
+  try {
+    const res = await UserService.addTrainingDrills(payload);
+    console.log('redux response addTraining:', res);
 
-//     if (res?.status === 200) {
-//       // Notify the user of the success
-//       toast.success('Training created successfully');
+    if (res?.status === 200) {
+      // Notify the user of the success
+    //  toast.success('Training created successfully');
 
-//       // Dispatch the action to add training to the state
-//       dispatch(addTraining({
-//         training: res?.data ? [res?.data] : []
-//       }));
-//     }
+      // Dispatch the action to add training to the state
+      dispatch(addTraining({
+        training: res?.data ? [res?.data] : []
+      }));
+    }
 
-//     return res?.data || [];
-//   } catch (err) {
-//     console.log('Error in addTraining slice:', err);
+    return res?.data || [];
+  } catch (err) {
+    console.log('Error in addTraining slice:', err);
     
-//     // Notify the user of the error
-//     toast.error('Error adding training');
+    // Notify the user of the error
+    toast.error('Error adding training');
     
-//     // Throw the error to be handled by the calling function
-//     throw err;
-//   }
-// };
+    // Throw the error to be handled by the calling function
+    throw err;
+  }
+};
 
 // Create the slice with explicit initial state type
 const trainingSlice = createSlice({

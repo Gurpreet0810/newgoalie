@@ -21,7 +21,7 @@ import ListDrill from '../login/listDrill';
 import EditDrill from '../login/editDrill';
 import AddTraining from '../login/addTraining';
 import ListTrainings from '../login/listtraining';
-// import EditTraining from '../login/editTraining';
+import EditTraining from '../login/editTraining';
 
 const router = createBrowserRouter([
   {
@@ -87,10 +87,10 @@ const router = createBrowserRouter([
             path: 'add-training',
             element: <AddTraining />, 
           },
-          // {
-          //   path: '/edit-training/:id',
-          //   element: <EditTraining />, 
-          // },
+          {
+            path: '/edit-training/:trainingId',
+            element: <EditTraining />, 
+          },
           {
             path: '/manage-training',
             element: <ListTrainings />, 

@@ -1,93 +1,105 @@
-import { useState, useEffect, ChangeEvent } from 'react';
-import axios from 'axios';  
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
-import { validate } from '../utils/validate';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import 'react-toastify/dist/ReactToastify.css';
-import { addTrainings } from '../store/TrainingSlice';
+import { addTrainings,addTrainingsDrills } from '../store/TrainingSlice';
+import { useNavigate } from 'react-router';
+interface Training {
+    category: string;
+    drill_name: string;
+    photoPreview: string;
+}
+interface DrillCategory {
+    _id: string;
+    category_name: string;
+    category_status: string;
+}
+interface Drills {
+    _id: string;
+    drill_name: string;
+    category: string;
+    video_option: string;
+}
 
 const AddTraining = () => {
-    const [training, setTraining] = useState({
-        training_name: "",
+    const [trainings, setTrainings] = useState<Training[]>([{
         category: "",
-        photo: null as File | null,
         drill_name: "",
-        photoPreview: "", 
-    });
+        photoPreview: "",
+    }]);
+    const [trainingName, setTrainingName] = useState<string>("");
+    const [photo, setPhoto] = useState<File | null>(null);
+    const [selectedWeeks, setSelectedWeeks] = useState<number[][]>([[]]);
+    const [categories, setCategories] = useState<any[]>([]);
+    const [drills, setDrills] = useState<any[]>([]);
+    const [errors, setErrors] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);  // Add loading state
 
-    interface DrillCategory {
-        _id: string;
-        category_name: string;
-        category_status: string;
-    }
-    interface Drills {
-        _id: string;
-        drill_name: string;
-        category: string;
-        video_option: string;
-    }
-    
-    const [categories, setCategories] = useState<DrillCategory[]>([]);
-    const [drills, setDrills] = useState<Drills[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [errors, setErrors] = useState<any>({});
-    const [showValidation, setShowValidation] = useState(false);
-    const [selectedWeeks, setSelectedWeeks] = useState<number[]>([]);
     const dispatch = useDispatch();
-
     const { userInfo } = useSelector((state: any) => state.user);
 
-    // Handle input fields (drill name, category, description, etc.)
-    const handleInputs = async (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        setShowValidation(true);
+    const handleInputs = async (event: ChangeEvent<HTMLSelectElement>, index: number) => {
         const { name, value } = event.target;
-        setTraining({ ...training, [name]: value });
-        
+
+        const newTrainings = [...trainings];
+        newTrainings[index] = {
+            ...newTrainings[index],
+            [name]: value as keyof Training,
+        };
+        setTrainings(newTrainings);
+
         if (name === 'category') {
-            // Fetch drills when category changes
             try {
-                const response = await axios.get<Drills[]>(`http://localhost:4500/api/v1/drills?category=${value}`);
+                const response = await axios.get(`http://localhost:4500/api/v1/getAllDrillsbycategory?category=${value}`);
                 setDrills(response.data);
             } catch (err) {
-                if (err instanceof Error) {
-                    setErrors({ fetch: err.message });
-                } else {
-                    setErrors({ fetch: 'An unknown error occurred' });
-                }
+                setErrors([...errors, { fetch: 'An error occurred while fetching drills' }]);
             }
         }
     };
 
-    // Handle file changes (photo and video uploads)
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const { name, files } = event.target;
+        const { files } = event.target;
         if (files && files.length > 0) {
-            const file = files[0];
-            setTraining({
-                ...training,
-                photo: file,
-                photoPreview: URL.createObjectURL(file),
-            });
+            setPhoto(files[0]);
+            setTrainings(trainings.map((training, index) => {
+                if (index === 0) {  
+                    return {
+                        ...training,
+                        photoPreview: URL.createObjectURL(files[0]),
+                    };
+                }
+                return training;
+            }));
         }
     };
 
-    // Fetch categories from API
+    const handleAddMore = () => {
+        setTrainings([
+            ...trainings,
+            { category: "", drill_name: "", photoPreview: "" }
+        ]);
+        setSelectedWeeks([...selectedWeeks, []]);
+        setErrors([...errors, {}]);
+    };
+
+    const handleRemove = (index: number) => {
+        setTrainings(trainings.filter((_, i) => i !== index));
+        setSelectedWeeks(selectedWeeks.filter((_, i) => i !== index));
+        setErrors(errors.filter((_, i) => i !== index));
+    };
+
     const fetchCategories = async () => {
         try {
+            setLoading(true);  // Start loading
             const response = await axios.get<DrillCategory[]>('http://localhost:4500/api/v1/drillCategories');
-            const activeCategories = response.data.filter(category => category.category_status === 'active');
-            setCategories(activeCategories);
+            setCategories(response.data.filter(category => category.category_status === 'active'));
         } catch (err) {
-            if (err instanceof Error) {
-                setErrors({ fetch: err.message });
-            } else {
-                setErrors({ fetch: 'An unknown error occurred' });
-            }
+            setErrors([...errors, { fetch: err instanceof Error ? err.message : 'An unknown error occurred' }]);
         } finally {
-            setLoading(false);
+            setLoading(false);  // End loading
         }
     };
 
@@ -110,170 +122,174 @@ const AddTraining = () => {
         { month: 'July', weeks: [26, 27, 28, 29, 30] },
     ];
 
-    // Handle week checkbox changes
-    const handleWeekChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleWeekChange = (event: ChangeEvent<HTMLInputElement>, formIndex: number) => {
         const week = parseInt(event.target.value, 10);
-        setSelectedWeeks(prevWeeks =>
-            event.target.checked
-                ? [...prevWeeks, week]
-                : prevWeeks.filter(w => w !== week)
-        );
-        console.log(selectedWeeks);
-    };
-
-    // Form submission handler
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        setSelectedWeeks(prevSelectedWeeks => {
+          const newSelectedWeeks = [...prevSelectedWeeks];
+          newSelectedWeeks[formIndex] = event.target.checked
+            ? [...newSelectedWeeks[formIndex], week]
+            : newSelectedWeeks[formIndex].filter((w) => w !== week);
+          return newSelectedWeeks;
+        });
+      };
+      const navigate = useNavigate();
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
-        const formData = new FormData();
-        formData.append('training_name', training.training_name);
-        formData.append('drill_category', training.category);
-        if (training.photo) {
-            formData.append('photo', training.photo);
-        }
-        formData.append('user_id', userInfo[0]?.userDetails?._id);
-        formData.append('weeks', JSON.stringify(selectedWeeks)); // Add selected weeks
-        formData.append('drill_name',training.drill_name);
-        try {
-            const isValidate = await validate([
-                { field: 'training_name', name: 'Training Name', validate: 'required' },
-                { field: 'category', name: 'Category', validate: 'required' },
-            ], training);
-            if (isValidate) {
-                // await axios.post('http://localhost:4500/api/v1/trainings', formData);
-                // toast.success('Training added successfully!', { autoClose: 2000 });
-                // setLoader(true);
-                await addTrainings(formData, dispatch);
-                // setLoader(false);
+
+        // for (let i = 0; i < trainings.length; i++) {
+            const formData = new FormData();
+            formData.append('training_name', trainingName);
+            // formData.append('category', trainings[i].category);
+            if (photo) formData.append('photo', photo as Blob);
+            formData.append('user_id', userInfo[0]?.userDetails?._id);
+            // formData.append('weeks', JSON.stringify(selectedWeeks[i]));
+            // formData.append('drill_name', trainings[i].drill_name);
+           
+            try {
+               const res = await addTrainings(formData, dispatch);
+                var training_id = res.data.addCategorySuccess._id;
+                for (let i = 0; i < trainings.length; i++) {
+                    const formData_drills = new FormData();
+                    formData_drills.append('drill_category', trainings[i].category);
+                    formData_drills.append('drill_name', trainings[i].drill_name);
+                    formData_drills.append('trainingplan_id', training_id);
+                    formData_drills.append('weeks', JSON.stringify(selectedWeeks[i]));
+                     await addTrainingsDrills(formData_drills, dispatch);
+                    
+                    try {
+                     //   toast.success('Training added successfully!');
+                }
+                catch (error) {
+                    toast.error('Error adding training');
+                }
             }
-        } catch (error: any) {
-            setErrors(error);
-            console.error('Error adding training:', error);
-            if (error?.data?.message) {
-                toast.error(error?.data?.message, { autoClose: 2000 });
+             toast.success('Training added successfully!');
+             navigate('/manage-training');
+            } catch (error) {
+                toast.error('Error adding training');
             }
-        }
+        // }
     };
 
     return (
-        <div className="profile-edit-content card card-primary">
-            <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Add Training</h3>
-            </div>
-            <Form
-                onSubmit={handleSubmit}
-                encType='multipart/form-data'
-                className="profile-edit-form row"
-            >
-                <Form.Group controlId="training_name" className="profile-edit-field col-md-6">
-                    <Form.Label>Training Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Training Name"
-                        name="training_name"
-                        value={training.training_name}
-                        onChange={handleInputs}
-                        isInvalid={!!errors.training_name}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.training_name}
-                    </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group controlId="photo" className="profile-edit-field col-md-6">
-                    <Form.Label>Training Image</Form.Label>
-                    <Form.Control
-                        type="file"
-                        name="photo"
-                        onChange={handleFileChange}
-                        isInvalid={!!errors.photo}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.photo}
-                    </Form.Control.Feedback>
-                    {training.photoPreview && (
-                        <div className="image-preview mt-2">
-                            <img src={training.photoPreview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "150px" }} />
-                        </div>
-                    )}
-                </Form.Group>
-                <Form.Group controlId="category" className="profile-edit-field col-md-6">
-                    <Form.Label>Drill Category</Form.Label>
-                    <Form.Control
-                        as="select"
-                        name="category"
-                        value={training.category}
-                        onChange={handleInputs}
-                        isInvalid={!!errors.category}
-                    >
-                        <option value="">Select Drill Category</option>
-                        {categories.map((category) => (
-                            <option key={category._id} value={category._id}>
-                                {category.category_name}
-                            </option>
-                        ))}
-                    </Form.Control>
-                    <Form.Control.Feedback type="invalid">
-                        {errors.category}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId="drill_name" className="profile-edit-field col-md-6">
-                    <Form.Label>Drill Name</Form.Label>
-                    <Form.Control
-                        as="select"
-                        name="drill_name"
-                        value={training.drill_name}
-                        onChange={handleInputs}
-                        isInvalid={!!errors.drill_name}
-                    >
-                        <option value="">Select Drill Name</option>
-                        {drills.map((drill) => (
-                            <option key={drill._id} value={drill._id}>
-                                {drill.drill_name}
-                            </option>
-                        ))}
-                    </Form.Control>
-                    <Form.Control.Feedback type="invalid">
-                        {errors.drill_name}
-                    </Form.Control.Feedback>
-                </Form.Group>
-
-               
-
-                <Form.Group controlId="weekSelection">
-                    <Form.Label>Week</Form.Label>
-                    <div className="month-flex-container">
-                        {weeksData.map((monthData, index) => (
-                            <div key={index} className="month-container">
-                                <h5>{monthData.month}</h5>
-                                <div className="week-list">
-                                    {monthData.weeks.map((week) => (
+        <div className="profile-edit-content card card-primary" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px', padding: '20px' }}>
+        <div className="card-header" style={{ backgroundColor: '#00617a', color: '#fff', padding: '15px', borderRadius: '10px 10px 0 0', marginBottom: '20px' }}>
+            <h3 className="card-title">Add Training</h3>
+        </div>
+        <Form onSubmit={handleSubmit} encType='multipart/form-data'>
+            <Form.Group controlId="training_name" className="profile-edit-field col-md-6" style={{ marginBottom: '20px' }}>
+                <Form.Label style={{ fontWeight: 'bold' }}>Training Name</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter Training Name"
+                    value={trainingName}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setTrainingName(e.target.value)}
+                    style={{ padding: '10px', borderRadius: '5px' }}
+                />
+            </Form.Group>
+    
+            <Form.Group controlId="photo" className="profile-edit-field col-md-6" style={{ marginBottom: '20px' }}>
+                <Form.Label style={{ fontWeight: 'bold' }}>Training Photo</Form.Label>
+                <Form.Control
+                    type="file"
+                    onChange={handleFileChange}
+                    style={{ padding: '10px', borderRadius: '5px' }}
+                />
+                {photo && (
+                    <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                        <img src={URL.createObjectURL(photo)} alt="Preview" style={{ width: '100px', height: '100px', border: '2px solid #00617a', borderRadius: '5px' }} />
+                    </div>
+                )}
+            </Form.Group>
+    
+            {trainings.map((training, index) => (
+                <div key={index} className="addmore_div" style={{ padding: '20px', border: '1px solid #ddd', borderRadius: '10px', marginBottom: '20px' }}>
+                    <Form.Group controlId={`category_${index}`} className="profile-edit-field col-md-6" style={{ marginBottom: '15px' }}>
+                        <Form.Label style={{ fontWeight: 'bold' }}>Drill Category</Form.Label>
+                        <Form.Control
+                            as="select"
+                            name="category"
+                            value={training.category}
+                            onChange={(e) => handleInputs(e as unknown as ChangeEvent<HTMLSelectElement>, index)} 
+                            isInvalid={!!errors[index]?.category}
+                            style={{ padding: '10px', borderRadius: '5px' }}
+                        >
+                            <option value="">Select Drill Category</option>
+                            {categories.map((category) => (
+                                <option key={category._id} value={category._id}>
+                                    {category.category_name}
+                                </option>
+                            ))}
+                        </Form.Control>
+                        <Form.Control.Feedback type="invalid">
+                            {errors[index]?.category}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+    
+                    <Form.Group controlId={`drill_name_${index}`} className="profile-edit-field col-md-6" style={{ marginBottom: '15px' }}>
+                        <Form.Label style={{ fontWeight: 'bold' }}>Drill Name</Form.Label>
+                        <Form.Control
+                            as="select"
+                            name="drill_name"
+                            value={training.drill_name}
+                            onChange={(e) => handleInputs(e as unknown as ChangeEvent<HTMLSelectElement>, index)} 
+                            isInvalid={!!errors[index]?.drill_name}
+                            style={{ padding: '10px', borderRadius: '5px' }}
+                        >
+                            <option value="">Select Drill Name</option>
+                            {drills.map((drill) => (
+                                <option key={drill._id} value={drill._id}>
+                                    {drill.drill_name}
+                                </option>
+                            ))}
+                        </Form.Control>
+                        <Form.Control.Feedback type="invalid">
+                            {errors[index]?.drill_name}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+    
+                    <div className="weeks-checkboxes" style={{ marginBottom: '15px' }}>
+                        {weeksData.map((weekData, weekIndex) => (
+                            <div key={weekIndex} style={{ marginBottom: '10px' }}>
+                                <strong style={{ display: 'block', marginBottom: '5px' }}>{weekData.month}:</strong>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                                    {weekData.weeks.map((week) => (
                                         <Form.Check
                                             key={week}
                                             type="checkbox"
-                                            label={week}
+                                            id={`week_${week}_${index}`}
+                                            label={`Week ${week}`}
                                             value={week}
-                                            onChange={handleWeekChange}
-                                            className={`dis_${week} week_check`}
+                                            checked={selectedWeeks[index].includes(week)}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleWeekChange(e, index)}
+                                            style={{ marginRight: '10px' }}
                                         />
                                     ))}
                                 </div>
                             </div>
                         ))}
                     </div>
-                </Form.Group>                 
+                    {index > 0 && (
+                                   
+                    <Button variant="danger" onClick={() => handleRemove(index)} style={{ marginTop: '10px', padding: '10px 15px', borderRadius: '5px' }}>
+                        Remove
+                    </Button>
+             )}
+                </div>
+            ))}
     
-                <Form.Group>
-                    <Button variant="warning">Add More</Button>
-                </Form.Group>
+            <Button variant="secondary" onClick={handleAddMore} style={{ marginBottom: '20px', padding: '10px 15px', borderRadius: '5px' }}>
+                Add More
+            </Button>
+    <div>
+            <Button variant="primary" type="submit" style={{ padding: '10px 15px', borderRadius: '5px' }}>
+                Submit
+            </Button>
+            </div>
+        </Form>
+    </div>
+    
 
-                <Form.Group>
-                    <div className="text-left">
-                        <Button variant="primary" type="submit">Submit</Button>
-                    </div>
-                </Form.Group>
-            </Form>
-        </div>
     );
 };
 

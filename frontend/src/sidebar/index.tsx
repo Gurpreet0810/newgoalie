@@ -199,7 +199,7 @@ const hideSibar = () => {
  {/* End Drill  */}
 
   {/* Training Plan  */}
-  {/* <ListItem className='list_child' button onClick={handleClick6}>
+  <ListItem className='list_child' button onClick={handleClick6}>
                                 <ListItemIcon>
                                     <AccountTreeIcon className='title' />
                                 </ListItemIcon>
@@ -208,13 +208,13 @@ const hideSibar = () => {
                             </ListItem>
                             <Collapse in={open6} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
-                                    <ListItem component={Link} to="/users-extension" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/add-training" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
                                         <ListItemText className='title' primary="Add Training Plan" />
                                     </ListItem>
-                                    <ListItem component={Link} to="/change-password" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/manage-training" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
@@ -222,8 +222,8 @@ const hideSibar = () => {
                                     </ListItem>
                                    
                                 </List>
-                            </Collapse> */}
- {/* End Training Plan  */}
+                            </Collapse> 
+ {/* End Training Plan */}
 
  {/* Training Plan  */}
  {/* <ListItem className='list_child' button onClick={handleClick2}>

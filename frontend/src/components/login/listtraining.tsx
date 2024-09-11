@@ -94,7 +94,7 @@ function ListTrainings() {
         <>
           <IconButton
             component={Link}
-            to={`/trainings/edit/${params.row._id}`}
+            to={`/edit-training/${params.row._id}`}
             aria-label="edit"
             style={{ marginRight: 8 }}
           >

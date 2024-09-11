@@ -165,6 +165,31 @@ const deleteDrillCategory = asyncHandler(async (req, res) => {
     }
   };
 
+  export const getAllDrillsbycategory = async (req, res) => {
+    try {
+      const { category } = req.query; // Get the category from query parameters
+  console.log(category);
+      // Validate category presence
+      if (!category) {
+        return res.status(400).json({ message: 'Category is required' });
+      }
+  
+      // Find drills by the category
+      const drills = await Drill.find({ category: category });
+  
+      // If no drills found
+      if (drills.length === 0) {
+        return res.status(404).json({ message: 'No drills found for this category' });
+      }
+  
+      // Return the found drills
+      res.status(200).json(drills);
+    } catch (error) {
+      console.error('Error fetching drills by category:', error);
+      res.status(500).json({ message: 'Server error, please try again later.' });
+    }
+  };
+
   const getSingleDrill = async (req, res) => {
     try {
       const category = await Drill.findById(req.params.id);

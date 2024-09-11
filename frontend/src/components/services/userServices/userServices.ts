@@ -44,7 +44,9 @@ class LoginService {
   addTraining = async (payload: any) => {
     return imagePostRequest('/api/v1/addTraining', payload)
   } 
-
+  addTrainingDrills = async (payload: any) => {
+    return postRequest('/api/v1/addTrainingdrills', payload)
+  } 
 
 }
 
