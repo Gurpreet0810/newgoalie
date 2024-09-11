@@ -9,7 +9,7 @@ import sendEmail from '../utils/nodemailer.js';
 import { addGoalie, getAllGoalies, getSingleGoalie, updateGoalie, deleteGoalie } from '../controllers/Goalie.js';
 import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, updateDrillCategory, deleteDrillCategory } from '../controllers/drill.js';
 import { addDrill, getAllDrills, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
-
+import { AddTrainings , getAllTrainings} from '../controllers/training.js';
 
 const router = express.Router()
 router.post('/signIn', signInRouter)
@@ -31,8 +31,8 @@ router.get('/drills',  getAllDrills)
 router.get('/drills/:id', getSingleDrill)
 router.put('/update_drill/:id', getImgWithVideo, updateDrill)
 router.delete('/drills/:id', deleteDrill)
-
-
+router.post('/addTraining', verifyUser, getImg, AddTrainings)
+router.get('/trainings',  getAllTrainings)
 
 router.post('/addProduct', verifyUser, getProductImg, addProduct)
 router.post('/add-address', verifyUser, userAddress)

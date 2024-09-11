@@ -19,6 +19,9 @@ import EditDrillCategory from '../login/editDrillCategory';
 import AddDrill from '../login/addDrill';
 import ListDrill from '../login/listDrill';
 import EditDrill from '../login/editDrill';
+import AddTraining from '../login/addTraining';
+import ListTrainings from '../login/listtraining';
+// import EditTraining from '../login/editTraining';
 
 // for superadmin
 import AddCoach from '../login/signUp';
@@ -87,6 +90,18 @@ const router = createBrowserRouter([
             path: '/goalies/edit/:id',
             element: <EditGoalie />, 
           },
+          {
+            path: 'add-training',
+            element: <AddTraining />, 
+          },
+          // {
+          //   path: '/edit-training/:id',
+          //   element: <EditTraining />, 
+          // },
+          {
+            path: '/manage-training',
+            element: <ListTrainings />, 
+          }
         ],
       },
     ],
