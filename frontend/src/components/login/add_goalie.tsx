@@ -122,12 +122,13 @@ const Addgoalie = () => {
 
       <Row className="mb-3">
                 <Form.Group  as={Col}  className="profile-edit-field" controlId="goaliePhoto">
-                    <Form.Label>Photo</Form.Label>
+                    <Form.Label>Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
                     <Form.Control
                         type="file"
                         name='goalie_photo'
                         onChange={handleInputs}
                         isInvalid={!!errors.goalie_photo}
+                        accept="image/jpeg, image/png, image/jpg, image/gif"
                     />
                      <Form.Control.Feedback type="invalid">
                                     {errors.goalie_photo}

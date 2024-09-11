@@ -7,7 +7,12 @@ import { validate } from '../utils/validate';
 import { toast } from 'react-toastify';
 import { addDrill } from '../store/drillSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import previewImgShow from '../../assests/admin.jpg'
 
 interface DrillCategory {
     _id: string;
@@ -20,7 +25,7 @@ const AddDrill = () => {
         drill_name: "",
         category: "",
         photo: null as File | null, // Explicitly typed as File | null
-        photoPreview: "", // For image preview
+        photoPreview: previewImgShow, // For image preview
         video_option: "video_upload", // default value
         video_file: null as File | null, // Explicitly typed as File | null
         video_link: "",
@@ -32,6 +37,7 @@ const AddDrill = () => {
     const [errors, setErrors] = useState<any>({});
     const [loader, setLoader] = useState(false);
     const [showValidation, setShowValidation] = useState(false);
+    const [progress, setProgress] = useState(0);
     const dispatch = useDispatch();
 
     const { userInfo } = useSelector((state: any) => state.user);
@@ -41,6 +47,25 @@ const AddDrill = () => {
         setShowValidation(true);
         const { name, value } = event.target;
         setDrill({ ...drill, [name]: value });
+    };
+
+    const handleDescriptionChange = (content: string) => {
+        setDrill({ ...drill, description: content });
+    };
+
+      // Simulate progress incrementation
+      const simulateProgress = () => {
+        setProgress(10); // Start at 50%
+        const incrementProgress = (value: number) => {
+            setTimeout(() => {
+                if (value < 100) {
+                    const nextValue = value + (value < 80 ? 10 : 5); // Increment by 10 until 80%, then by 5
+                    setProgress(nextValue);
+                    incrementProgress(nextValue); // Recursive call to increment progress
+                }
+            }, 300); // Increment every 300 milliseconds
+        };
+        incrementProgress(50); // Start incrementing from 50%
     };
 
     // Handle file changes (photo and video uploads)
@@ -53,11 +78,12 @@ const AddDrill = () => {
                 setDrill({
                     ...drill,
                     photo: file,
-                    photoPreview: URL.createObjectURL(file),
+                    photoPreview: file ? URL.createObjectURL(file) : previewImgShow,
                 });
                 // alert('1');
             }
             if (name === 'video_file') {
+                simulateProgress();
                 setDrill({
                     ...drill,
                     video_file: file,
@@ -87,9 +113,11 @@ const AddDrill = () => {
     useEffect(() => {
         fetchCategories();
     }, []);
-
+    
+    const navigate = useNavigate();
     // Form submission handler
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        
         event.preventDefault();
         
         const formData = new FormData();
@@ -112,11 +140,13 @@ const AddDrill = () => {
                 { field: 'drill_name', name: 'drill_name', validate: 'required' },
                 { field: 'category', name: 'category', validate: 'required' },
                 { field: 'description', name: 'description', validate: 'required' },
+                { field: 'photo', name: 'photo', validate: 'required' },
             ], drill);
             if (isValidate) {
                 setLoader(true);
                 await addDrill(formData, dispatch);
                 setLoader(false);
+                navigate('/list-drill');
             }
         } catch (error: any) {
             setLoader(false);
@@ -175,16 +205,21 @@ const AddDrill = () => {
                 </Form.Group>
 
                 <Form.Group controlId="photo" className="profile-edit-field col-md-6">
-                    <Form.Label>Photo</Form.Label>
+                    <Form.Label>Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
                     <Form.Control
                         type="file"
                         name="photo"
                         onChange={handleFileChange}
                         isInvalid={!!errors.photo}
+                        accept="image/jpeg, image/png, image/jpg, image/gif"
                     />
                     <Form.Control.Feedback type="invalid">
                         {errors.photo}
                     </Form.Control.Feedback>
+                   
+                </Form.Group>
+
+                <Form.Group controlId="photo" className="profile-edit-field col-md-6">
                     {drill.photoPreview && (
                         <div className="image-preview mt-2">
                             <img src={drill.photoPreview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "150px" }} />
@@ -207,16 +242,18 @@ const AddDrill = () => {
 
                 {drill.video_option === "video_upload" ? (
                     <Form.Group controlId="videoFile" className="profile-edit-field col-md-6">
-                        <Form.Label>Video File</Form.Label>
+                        <Form.Label>Video File (Accept only: mp4,webm)</Form.Label>
                         <Form.Control
                             type="file"
                             name="video_file"
                             onChange={handleFileChange}
                             isInvalid={!!errors.video_file}
+                            accept="video/mp4,video/webm"
                         />
                         <Form.Control.Feedback type="invalid">
                             {errors.video_file}
                         </Form.Control.Feedback>
+                        <LinearProgress variant="determinate" value={progress} />
                     </Form.Group>
                 ) : (
                     <Form.Group controlId="videoLink" className="profile-edit-field col-md-6">
@@ -244,6 +281,13 @@ const AddDrill = () => {
                         value={drill.description}
                         onChange={handleInputs}
                         isInvalid={!!errors.description}
+                        style={{ display: 'none' }}
+                    />
+                       <ReactQuill
+                        value={drill.description}
+                        onChange={handleDescriptionChange}
+                        placeholder="Enter drill description"
+                        className={!!errors.description ? "is-invalid" : ""}
                     />
                     <Form.Control.Feedback type="invalid">
                         {errors.description}

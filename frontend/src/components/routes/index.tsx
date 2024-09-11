@@ -23,6 +23,9 @@ import AddTraining from '../login/addTraining';
 import ListTrainings from '../login/listtraining';
 import EditTraining from '../login/editTraining';
 
+// for superadmin
+import AddCoach from '../login/signUp';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -38,6 +41,10 @@ const router = createBrowserRouter([
           {
             path: 'dashboard',
             element: <HomeSection1 />, // Displayed within Layout
+          },
+          {
+            path: 'add-coach',
+            element: <AddCoach />, // Displayed within Layout
           },
           {
             path: 'profile',

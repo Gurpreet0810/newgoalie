@@ -218,11 +218,11 @@ const ProfileEdit = () => {
                 </Form.Group>
 
                 <Form.Group controlId="photo" className="profile-edit-field col-md-6">
-                    <Form.Label>Profile Photo</Form.Label>
+                    <Form.Label>Profile Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
                     <Form.Control
                         type="file"
                         name="photo"
-                        accept=".jpg,.jpeg,.png"
+                        accept=".jpg,.jpeg,.png,.gif"
                         onChange={handleChange}
                     />
                     {errors.photo && <div className='text-danger'>{errors.photo}</div>}

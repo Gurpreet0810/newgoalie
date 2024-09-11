@@ -25,11 +25,16 @@ const HeaderPage = () => {
     const [showMenu, setShowMenu] = useState(false);
     const [showList, setShowList] = useState(false);
 
+    // Get user info from state
+    const userInfo = useSelector((state: any) => state.user.userInfo);
+
+    // Check if the user has a superadmin role
+    const isSuperAdmin = userInfo && userInfo[0]?.userDetails?.roles.includes("superadmin");
+
     const onConfirm = async () => {
         // Logout function
         let logoutResponse = await userLogout(dispatch);
-        console.log('hreader logout response', logoutResponse);
-        
+        console.log('hreader logout response', logoutResponse);        
         if (logoutResponse.statusCode == 200) {
           localStorage.removeItem('token');
           toast.success(logoutResponse.message, {
@@ -53,10 +58,7 @@ const HeaderPage = () => {
     return (
         <header className={`headerTag ${showMenu ? '' : 'new_header_class'}`}>
             <div className="left_sider">
-                {/* <input type="text" className="search_bar"  placeholder="Search By Employee"/>
-                <p  className="icons filter">
-                    <TuneIcon/>
-                </p> */}
+            {isSuperAdmin && <p>Logged in as Superadmin</p>}
             </div>
             <nav>
               <ul>

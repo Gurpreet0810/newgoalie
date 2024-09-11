@@ -26,35 +26,7 @@ import AdjustIcon from '@mui/icons-material/Adjust';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import '../components/style/style.scss'; // Make sure to import your stylesheet
 import GroupsIcon from '@mui/icons-material/Groups';
-
-const list = [
-    { id: 1, title: 'Calling Sheet', link: '/calling-sheet', icon: <AdjustIcon className='icon_color' /> },
-    { id: 2, title: 'Ticket Status Sheet', link: '/ticket-status-sheet', icon: <AdjustIcon className='icon_color' /> },
-    { id: 3, title: 'Assigned Assistance Sheet',link: '/assigned-assistance-sheet', icon: <AdjustIcon className='icon_color' /> },
-    { id: 4, title: 'Maya Calls Request',link: '/maya-call-request', icon: <AdjustIcon className='icon_color' /> },
-    { id: 5, title: 'Maya Message Request',link: '/maya-message-request', icon: <AdjustIcon className='icon_color' /> },
-    { id: 7, title: 'Compliance-Box',link: '/compliance-box', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 8, title: 'Add New Reason',link: '/add-new-reason', icon: <AdjustIcon className='icon_color icon_2' /> },
-];
-
-const listData = [
-    { id: 9, title: 'Call Now Sheet', link: '/call-sheet', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 10, title: 'Call Records',link: '/call-records', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 11, title: 'Queue Call List',link: '/queue-call-list', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 12, title: 'In Progress Call',link: '/in-progress-call', icon: <AdjustIcon className='icon_color icon_2' /> },
-
-];
-
-const reportData = [
-    { id: 11, title: 'Analytics Reports', link: '/analytics-reports', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 12, title: 'Customer Reports',link: '/customer-reports', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 13, title: 'M.G.T Reports',link: '/mgt-reports', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 14, title: 'Report Call Logs',link: '/report-call-logs', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 15, title: 'Report Logs',link: '/report-logs', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 16, title: 'Data Reports',link: '/data-reports', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 17, title: 'Call Now Report',link: '/call-now-report', icon: <AdjustIcon className='icon_color icon_2' /> },
-    { id: 18, title: 'Timing Report',link: '/timing-report', icon: <AdjustIcon className='icon_color icon_2' /> },
-];
+import { useSelector } from "react-redux";
 
 const Sidebar = ({ setShowSidebar,showSidebar } : any) => {
     const [open, setOpen] = useState(false);
@@ -64,6 +36,12 @@ const Sidebar = ({ setShowSidebar,showSidebar } : any) => {
     const [open5, setOpen5] = useState(false);
     const [open6, setOpen6] = useState(false);
     const [showDropDown, setShowDropDown] = useState(false)
+    // Get user info from state
+    const userInfo = useSelector((state: any) => state.user.userInfo);
+
+    // Check if the user has a superadmin role
+    const isSuperAdmin = userInfo && userInfo[0]?.userDetails?.roles.includes("superadmin");
+    const isCoach = userInfo && userInfo[0]?.userDetails?.roles.includes("coach");
 
     const handleClick = () => {
         setOpen(!open);
@@ -117,7 +95,41 @@ const hideSibar = () => {
                         </ListItemIcon>
                         <ListItemText className='title text_title' primary="Profile" />
                     </ListItem>
- {/* My Goalie */}
+
+                    {/* menu for super admin start */}
+                    {isSuperAdmin && (
+                    <>
+                    <ListItem className='list_child' button onClick={handleClick3}>
+                                <ListItemIcon>
+                                    <PersonIcon className='title' />
+                                </ListItemIcon>
+                                <ListItemText className='title text_title' primary="Coaches" />
+                                {open3 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
+                            </ListItem>
+                            <Collapse in={open3} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    <ListItem component={Link} to="/add-coach" sx={{ pl: 2 }} button>
+                                        <ListItemIcon>
+                                            <AddBoxIcon className='title' />
+                                        </ListItemIcon>
+                                        <ListItemText className='title' primary="Add Coach" />
+                                    </ListItem>
+                                    <ListItem component={Link} to="/listCoach" sx={{ pl: 2 }} button>
+                                        <ListItemIcon>
+                                            <BallotIcon className='title' />
+                                        </ListItemIcon>
+                                        <ListItemText className='title' primary=" Manage Coaches " />
+                                    </ListItem>
+                                   
+                                </List>
+                            </Collapse>
+                            </>
+                        )}
+                    {/* menu for super admin end */}
+                    {isCoach && (
+                    <> </>
+                )}
+            {/* My Goalie */}
                 <ListItem className='list_child' button onClick={handleClick3}>
                                 <ListItemIcon>
                                     <PersonIcon className='title' />
@@ -251,87 +263,7 @@ const hideSibar = () => {
                                 </List>
                             </Collapse> */}
  {/* End Drill  */}
-
-                    {/* <p className='link_title'>Active Customers</p> */}
-                    {/* Use Link component from react-router-dom */}
-             {/*       <ListItem component={Link} to="/active-customer" className='list_child' button>
-                        <ListItemIcon>
-                            <GroupsIcon className='title' />
-                        </ListItemIcon>
-                        <ListItemText className='title text_title' primary="Active Customers" />
-                    </ListItem>
-                   
-                    <ListItem className='list_child' button onClick={handleClick}>
-                <ListItemIcon>
-                    <SettingsIcon className='title' />
-                </ListItemIcon>
-                <ListItemText className='title text_title' primary="Settings" />
-                {open ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItem component={Link} to="/users-extension" sx={{ pl: 2 }} button>
-                        <ListItemIcon>
-                            <CallIcon className='title' />
-                        </ListItemIcon>
-                        <ListItemText className='title' primary="Users Extension" />
-                    </ListItem>
-                    <ListItem component={Link} to="/change-password" sx={{ pl: 2 }} button>
-                        <ListItemIcon>
-                            <AddBoxIcon className='title' />
-                        </ListItemIcon>
-                        <ListItemText className='title' primary="Change Password" />
-                    </ListItem>
-                    <ListItem component={Link} to="/messenger" sx={{ pl: 2 }} button>
-                        <ListItemIcon>
-                            <MailOutlineIcon className='title' />
-                        </ListItemIcon>
-                        <ListItemText className='title' primary="Messenger" />
-                    </ListItem>
-                    <ListItem component={Link} to="/active-customers" sx={{ pl: 2 }} button>
-                        <ListItemIcon>
-                            <GroupIcon className='title' />
-                        </ListItemIcon>
-                        <ListItemText className='title' primary="Active Customers" />
-                    </ListItem>
-                </List>
-            </Collapse>
-                   
-                    {list.map((item) => (
-                        <ListItem component={Link} to={item.link} key={item.id} button>
-                            {item.icon}
-                            <ListItemText className='title text_title' primary={item.title} />
-                        </ListItem>
-                    ))}
-                  
-                    {listData.map((item) => (
-                        <ListItem component={Link} to={item.link} key={item.id} button>
-                            {item.icon}
-                            <ListItemText className='title text_title' primary={item.title} />
-                        </ListItem>
-                    ))}
-                </List>
-               
-                <ListItem className='list_child' button onClick={handleClick2}>
-                <ListItemIcon>
-                    <CalendarMonthIcon className='title' />
-                </ListItemIcon>
-                <ListItemText className='title text_title' primary="Maya Report" />
-                {open2 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
-            </ListItem>
-            <Collapse in={open2} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    {reportData.map((item) => (
-                        <ListItem component={Link} key={item.id} to={item.link} sx={{ pl: 2 }} button>
-                            <ListItemIcon>
-                                {item.icon}
-                            </ListItemIcon>
-                            <ListItemText className='title' primary={item.title} />
-                        </ListItem>
-                    ))}
-                </List>
-            </Collapse> */}
-
+           
 <ListItem component={Link} to="/" className='list_child' button>
                         <ListItemIcon>
                             <LogoutIcon className='title' />

@@ -59,6 +59,6 @@ router.get('/get_goalies/:id', getSingleGoalie)
 router.put('/update_goalie/:id', getProductImg, updateGoalie)
 router.delete('/deleteGoalies/:id', deleteGoalie)
 
-
+// router.post('/add_coach', verifyUser ,addCoach)
 
 export default router

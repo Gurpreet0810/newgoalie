@@ -9,6 +9,7 @@ import { addDrillCat } from '../store/drillSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const AddDrillCategory = () => {
     const [category, setCategory] = useState({
@@ -20,6 +21,7 @@ const AddDrillCategory = () => {
     const [loader, setLoader] = useState(false);
     const [showValidation, setShowValidation] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { userInfo } = useSelector((state: any) => state.user);
     
@@ -48,6 +50,7 @@ const AddDrillCategory = () => {
                 setLoader(true);
                 await addDrillCat(formData, dispatch);
                 setLoader(false);
+                navigate('/list-drill-cat');
             }
         } catch (error: any) {
             setLoader(false);
