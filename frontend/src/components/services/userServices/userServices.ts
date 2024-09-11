@@ -7,12 +7,12 @@ class LoginService {
   signUpUser = async (payload:any) =>{
     return postRequest(`/api/v1/signIn`,payload)
   }
-  logoutUser = async () => {
+  logoutUser = async () => { 
     return getRequest('/api/v1/logout')
   }
-  // add_goalie = async (payload:any) => {
-  //   return postRequest(`/api/v1/add_goalie`,payload) 
-  // }
+  add_coach = async (payload:any) => {
+    return postRequest(`/api/v1/add_coach`,payload) 
+  }
    add_goalie = async (payload: any) => {
     // const formData = new FormData();
   

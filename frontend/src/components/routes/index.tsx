@@ -20,6 +20,9 @@ import AddDrill from '../login/addDrill';
 import ListDrill from '../login/listDrill';
 import EditDrill from '../login/editDrill';
 
+// for superadmin
+import AddCoach from '../login/signUp';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -35,6 +38,10 @@ const router = createBrowserRouter([
           {
             path: 'dashboard',
             element: <HomeSection1 />, // Displayed within Layout
+          },
+          {
+            path: 'add-coach',
+            element: <AddCoach />, // Displayed within Layout
           },
           {
             path: 'profile',

@@ -8,6 +8,9 @@ import Spinner from 'react-bootstrap/Spinner';
 import { validate } from '../utils/validate';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 interface DrillCategory {
     _id: string;
@@ -36,6 +39,7 @@ const EditDrill = () => {
     const [errors, setErrors] = useState<any>({});
     const [loader, setLoader] = useState(false);
     const [showValidation, setShowValidation] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const { userInfo } = useSelector((state: any) => state.user);
 
@@ -83,6 +87,24 @@ const EditDrill = () => {
         const { name, value } = event.target;
         setDrill({ ...drill, [name]: value });
     };
+    const handleDescriptionChange = (content: string) => {
+        setDrill({ ...drill, description: content });
+    };
+
+     // Simulate progress incrementation
+     const simulateProgress = () => {
+        setProgress(10); // Start at 50%
+        const incrementProgress = (value: number) => {
+            setTimeout(() => {
+                if (value < 100) {
+                    const nextValue = value + (value < 80 ? 10 : 5); // Increment by 10 until 80%, then by 5
+                    setProgress(nextValue);
+                    incrementProgress(nextValue); // Recursive call to increment progress
+                }
+            }, 300); // Increment every 300 milliseconds
+        };
+        incrementProgress(50); // Start incrementing from 50%
+    };
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, files } = event.target;
@@ -97,6 +119,7 @@ const EditDrill = () => {
                 });
             }
             if (name === 'video_file') {
+                simulateProgress();
                 setDrill({
                     ...drill,
                     video_file: file,
@@ -129,6 +152,7 @@ const EditDrill = () => {
                 { field: 'drill_name', name: 'drill_name', validate: 'required' },
                 { field: 'category', name: 'category', validate: 'required' },
                 { field: 'description', name: 'description', validate: 'required' },
+                { field: 'photo', name: 'photo', validate: 'required' },
             ], drill);
 
             if (isValidate) {
@@ -190,16 +214,19 @@ const EditDrill = () => {
 
                     {/* Photo */}
                     <Form.Group controlId="photo" className="profile-edit-field col-md-6">
-                        <Form.Label>Photo</Form.Label>
+                        <Form.Label>Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
                         <Form.Control
                             type="file"
                             name="photo"
                             onChange={handleFileChange}
                             isInvalid={!!errors.photo}
+                            accept="image/jpeg, image/png, image/jpg, image/gif"
                         />
                         <Form.Control.Feedback type="invalid">
                             {errors.photo}
                         </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="photo" className="profile-edit-field col-md-6">
                         {drill.photoPreview && (
                             <div className="image-preview mt-2">
                                 <img src={drill.photoPreview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "150px" }} />
@@ -224,16 +251,18 @@ const EditDrill = () => {
                     {/* Video Upload or Video Link */}
                     {drill.video_option === "video_upload" ? (
                         <Form.Group controlId="videoFile" className="profile-edit-field col-md-6">
-                            <Form.Label>Video File</Form.Label>
+                            <Form.Label>Video File (Accept only: mp4,webm)</Form.Label>
                             <Form.Control
                                 type="file"
                                 name="video_file"
                                 onChange={handleFileChange}
                                 isInvalid={!!errors.video_file}
+                                accept="video/mp4,video/webm"
                             />
                             <Form.Control.Feedback type="invalid">
                                 {errors.video_file}
                             </Form.Control.Feedback>
+                            <LinearProgress variant="determinate" value={progress} />
                             {drill.videoPreview && (
                                 <div className="video-preview mt-2">
                                     <video controls style={{ maxWidth: "100%", maxHeight: "200px" }}>
@@ -282,7 +311,14 @@ const EditDrill = () => {
                             value={drill.description}
                             onChange={handleInputs}
                             isInvalid={!!errors.description}
+                            style={{ display: 'none' }}
                         />
+                        <ReactQuill
+                        value={drill.description}
+                        onChange={handleDescriptionChange}
+                        placeholder="Enter drill description"
+                        className={!!errors.description ? "is-invalid" : ""}
+                    />
                         <Form.Control.Feedback type="invalid">
                             {errors.description}
                         </Form.Control.Feedback>

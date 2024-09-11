@@ -129,11 +129,12 @@ function EditGoalie() {
 
     <Row className="mb-3">
       <Form.Group as={Col} controlId="formImage" className="profile-edit-field mb-3">
-        <Form.Label>Image</Form.Label>
+        <Form.Label>Image (Accept only: jpg,jpeg,png,gif)</Form.Label>
         <Form.Control
           type="file"
           name="image"
           onChange={handleImageChange}
+          accept="image/jpeg, image/png, image/jpg, image/gif"
         />
       </Form.Group>
 

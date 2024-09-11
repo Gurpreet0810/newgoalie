@@ -11,6 +11,23 @@ interface AuthPayload {
   token: string;
   userInfo: any[]; // Add userInfo to the AuthPayload
 }
+
+export const add_coach = async (payload: any) => {
+  try {
+    const res: any = await UserService.add_coach(payload);
+    console.log('redux res loign here', res);
+    if(res.status="200"){
+      toast.success('Coach created successfully')
+    }
+    return res?.data || []
+  } catch (err) {
+    
+    console.log('Error on login slice', err);   
+    throw err;
+  }
+};
+
+
 export const add_goalie = async (payload: any) => {
   try {
     const res: any = await UserService.add_goalie(payload);
