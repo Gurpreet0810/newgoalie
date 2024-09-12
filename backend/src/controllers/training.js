@@ -71,12 +71,10 @@ export const AddTrainingsDrills = asyncHandler(async (req, res) => {
 
 
 export const singleTrainingsDrills = async (req, res) => {
+  
   try {
-    const category = await TrainingDrills
-    
-    
-    
-    .findById(req.params.id);
+  
+    const category = await TrainingDrills.find({ trainingplan_id: req.params.id });
     if (!category) {
       return res.status(404).json({ message: "Training not found" });
     }
