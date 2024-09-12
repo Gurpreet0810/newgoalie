@@ -20,8 +20,7 @@ export const add_coach = async (payload: any) => {
       toast.success('Coach created successfully')
     }
     return res?.data || []
-  } catch (err) {
-    
+  } catch (err) {    
     console.log('Error on login slice', err);   
     throw err;
   }

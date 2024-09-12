@@ -10,6 +10,7 @@ import { addGoalie, getAllGoalies, getSingleGoalie, updateGoalie, deleteGoalie }
 import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, updateDrillCategory, deleteDrillCategory } from '../controllers/drill.js';
 import { addDrill, getAllDrills, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
 import { AddTrainings , getAllTrainings} from '../controllers/training.js';
+import { addCoach, getAllCoaches, getSingleCoach } from '../controllers/Coach.js';
 
 const router = express.Router()
 router.post('/signIn', signInRouter)
@@ -53,6 +54,8 @@ router.get('/get_goalies/:id', getSingleGoalie)
 router.put('/update_goalie/:id', getProductImg, updateGoalie)
 router.delete('/deleteGoalies/:id', deleteGoalie)
 
-// router.post('/add_coach', verifyUser ,addCoach)
+router.post('/add_coach', verifyUser ,addCoach)
+router.get('/coaches', getAllCoaches)
+router.get('/get_coach/:id', getSingleCoach)
 
 export default router

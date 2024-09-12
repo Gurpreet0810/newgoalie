@@ -25,6 +25,8 @@ import ListTrainings from '../login/listtraining';
 
 // for superadmin
 import AddCoach from '../login/signUp';
+import ListCoach from '../login/listCoach';
+import EditCoach from '../login/editCoach';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
           {
             path: 'add-coach',
             element: <AddCoach />, // Displayed within Layout
+          },
+          {
+            path: 'list-coach',
+            element: <ListCoach />, // Displayed within Layout
+          },
+          {
+            path: '/coaches/edit/:id',
+            element: <EditCoach />, // Displayed within Layout
           },
           {
             path: 'profile',

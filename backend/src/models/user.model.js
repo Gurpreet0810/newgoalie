@@ -30,6 +30,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  roles: {
+    type: [String]
+  },
   refreshToken: {
     type: String
   },
@@ -43,7 +46,7 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Hash password before saving
+// Hash password before saving, only if modified
 userSchema.pre('save', function (next) {
   const user = this;
   if (!user.isModified('password')) return next();

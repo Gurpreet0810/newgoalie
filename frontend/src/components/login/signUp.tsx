@@ -40,8 +40,7 @@ const AddCoach = () => {
             if (isValidate) {
                 setLoader(true);
                 await add_coach(coach);  // Assuming add_coach accepts the coach object
-                toast.success('Coach added successfully');
-                navigate('/list_coach');  // Navigate to coach listing page after success
+                navigate('/list-coach');  // Navigate to coach listing page after success
             }
         } catch (error) {
             setLoader(false);
