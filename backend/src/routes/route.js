@@ -8,9 +8,10 @@ import { getProductByName, getProducts } from '../controllers/getProduct.js';
 import sendEmail from '../utils/nodemailer.js';
 import { addGoalie, getAllGoalies, getSingleGoalie, updateGoalie, deleteGoalie } from '../controllers/Goalie.js';
 import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, updateDrillCategory, deleteDrillCategory } from '../controllers/drill.js';
-import { addDrill, getAllDrills, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
-import { AddTrainings , getAllTrainings} from '../controllers/training.js';
-import { addCoach, getAllCoaches, getSingleCoach } from '../controllers/Coach.js';
+import { addDrill, getAllDrills,getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
+import { AddTrainings , getAllTrainings ,AddTrainingsDrills ,singleTrainings ,singleTrainingsDrills} from '../controllers/training.js';
+import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
+import { addBlogCategory, getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
 
 const router = express.Router()
 router.post('/signIn', signInRouter)
@@ -29,11 +30,17 @@ router.delete('/drillCategories/:id', deleteDrillCategory)
 
 router.post('/addDrill', verifyUser, getImgWithVideo, addDrill)
 router.get('/drills',  getAllDrills)
+router.get('/getAllDrillsbycategory',  getAllDrillsbycategory)
+
 router.get('/drills/:id', getSingleDrill)
 router.put('/update_drill/:id', getImgWithVideo, updateDrill)
 router.delete('/drills/:id', deleteDrill)
 router.post('/addTraining', verifyUser, getImg, AddTrainings)
 router.get('/trainings',  getAllTrainings)
+router.post('/addTrainingdrills', verifyUser, AddTrainingsDrills)
+router.get('/singletrainings/:id', verifyUser, singleTrainings)
+router.get('/singletrainingsdrills/:id', verifyUser, singleTrainingsDrills)
+
 
 router.post('/addProduct', verifyUser, getProductImg, addProduct)
 router.post('/add-address', verifyUser, userAddress)
@@ -57,5 +64,21 @@ router.delete('/deleteGoalies/:id', deleteGoalie)
 router.post('/add_coach', verifyUser ,addCoach)
 router.get('/coaches', getAllCoaches)
 router.get('/get_coach/:id', getSingleCoach)
+router.put('/update_coach/:id', updateCoach)
+router.delete('/deleteCoaches/:id', deleteCoach)
+
+
+router.post('/addBlogCat', verifyUser, addBlogCategory)
+router.get('/blogCategories', getAllBlogCategories)
+router.get('/get_blog_category/:id', getSingleBlogCategory)
+router.put('/update_blog_category/:id', updateBlogCategory)
+router.delete('/blogCategories/:id', deleteBlogCategory)
+
+router.post('/addBlog', verifyUser, getImg, addBlog)
+router.get('/blogs', getAllBlogs)
+router.get('/get_blog/:id', getSingleBlog)
+// router.put('/update_blog/:id', getImg, updateBlog)
+router.delete('/blogs/:id', deleteBlog)
+
 
 export default router

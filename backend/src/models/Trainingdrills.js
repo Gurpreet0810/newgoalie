@@ -1,14 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
 
 // Define the schema for Drill
-const TrainingSchema = new mongoose.Schema({
-  training_name: {
+const TrainingDrillsSchema = new mongoose.Schema({
+  trainingplan_id: {
     type: String,
     required: true,
     trim: true,
-  },
-  image: {
-    type: String,  // Assuming photo is stored as a URL or file path
   },
   drill_category: {
     type: String,  // Store the file path or URL of the video file
@@ -17,13 +14,13 @@ const TrainingSchema = new mongoose.Schema({
     type: String,  // Store the URL of the video link if video_option is 'video_link'
   },
   weeks:{
-    type:[String]
+    type: String
   }
 }, {
   timestamps: true,
 });
 
 // Create and export the Drill model
-const Training = mongoose.model('Training', TrainingSchema);
+const TrainingDrills = mongoose.model('TrainingDrills', TrainingDrillsSchema);
 
-export default Training;
+export default TrainingDrills;

@@ -21,12 +21,20 @@ import ListDrill from '../login/listDrill';
 import EditDrill from '../login/editDrill';
 import AddTraining from '../login/addTraining';
 import ListTrainings from '../login/listtraining';
-// import EditTraining from '../login/editTraining';
+import EditTraining from '../login/editTraining';
 
 // for superadmin
 import AddCoach from '../login/signUp';
 import ListCoach from '../login/listCoach';
 import EditCoach from '../login/editCoach';
+
+import BlogCategory from '../login/blogCategory';
+import ListBlogCategory from '../login/listBlogCategory';
+import EditBlogCategory from '../login/editBlogCategory';
+
+import AddBlog from '../login/addBlog';
+import ListBlog from '../login/listBlog';
+import EditBlog from '../login/editBlog';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +63,30 @@ const router = createBrowserRouter([
           {
             path: '/coaches/edit/:id',
             element: <EditCoach />, // Displayed within Layout
+          },
+          {
+            path: 'add-blog-category',
+            element: <BlogCategory />, // Displayed within Layout
+          },
+          {
+            path: 'list-blog-category',
+            element: <ListBlogCategory />, // Displayed within Layout
+          },
+          {
+            path: '/blog-categories/edit/:id',
+            element: <EditBlogCategory />, // Displayed within Layout
+          },
+          {
+            path: 'add-blog',
+            element: <AddBlog />, // Displayed within Layout
+          },
+          {
+            path: 'list-blog',
+            element: <ListBlog />, // Displayed within Layout
+          },
+          {
+            path: '/blog/edit/:id',
+            element: <EditBlog />, // Displayed within Layout
           },
           {
             path: 'profile',
@@ -104,10 +136,10 @@ const router = createBrowserRouter([
             path: 'add-training',
             element: <AddTraining />, 
           },
-          // {
-          //   path: '/edit-training/:id',
-          //   element: <EditTraining />, 
-          // },
+          {
+            path: '/edit-training/:trainingId',
+            element: <EditTraining />, 
+          },
           {
             path: '/manage-training',
             element: <ListTrainings />, 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 function EditCoach() {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +13,7 @@ function EditCoach() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
+  const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const fetchCoach = async () => {
@@ -35,13 +37,29 @@ function EditCoach() {
     fetchCoach();
   }, [id]);
 
+  const validateForm = () => {
+    const errors: { [key: string]: string } = {};
+    if (!coachName) errors.coachName = 'Coach Name is required';
+    if (!phone) errors.phone = 'Phone is required';
+    if (!email) errors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(email)) errors.email = 'Email is invalid';
+    return errors;
+  };
+
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setFormErrors(validationErrors);
+      return;
+    }
+    
     const updatedData = { coach_name: coachName, phone, email };
 
     try {
       await axios.put(`http://localhost:4500/api/v1/update_coach/${id}`, updatedData);
-      navigate('/list_coach');
+      toast.success('Coach updated successfully')
+      navigate('/list-coach');
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -70,7 +88,9 @@ function EditCoach() {
               value={coachName}
               onChange={(e) => setCoachName(e.target.value)}
               placeholder="Coach Name"
+              isInvalid={!!formErrors.coachName}
             />
+            <Form.Control.Feedback type="invalid">{formErrors.coachName}</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group as={Col} controlId="formEmail" className="profile-edit-field mb-3">
@@ -81,7 +101,9 @@ function EditCoach() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
+              isInvalid={!!formErrors.email}
             />
+            <Form.Control.Feedback type="invalid">{formErrors.email}</Form.Control.Feedback>
           </Form.Group>
         </Row>
 
@@ -94,7 +116,9 @@ function EditCoach() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Phone"
+              isInvalid={!!formErrors.phone}
             />
+            <Form.Control.Feedback type="invalid">{formErrors.phone}</Form.Control.Feedback>
           </Form.Group>
         </Row>
 

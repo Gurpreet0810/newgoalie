@@ -1,4 +1,5 @@
 import Training from "../models/Training.js";
+import TrainingDrills from "../models/Trainingdrills.js"
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -40,6 +41,60 @@ const getAllTrainings = async (req, res) => {
     // console.log(categories);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+
+export const AddTrainingsDrills = asyncHandler(async (req, res) => {
+
+  const { drill_category, drill_name ,trainingplan_id , weeks } = req.body;
+ 
+  // Create a new DrillCategory instance
+  const newTrainingDrills = new TrainingDrills({
+    trainingplan_id,
+    drill_category,
+    drill_name,
+    weeks
+  });
+
+  const addDrillsSuccess = await newTrainingDrills.save();
+
+  if (!addDrillsSuccess) {
+    return res.status(500).json(
+      new ApiError(500, [], "Something went wrong while adding Training Details")
+    );
+  }
+
+  return res.status(200).json(new ApiResponse(200, { addDrillsSuccess }, "Training created successfully"));
+});
+
+
+
+export const singleTrainingsDrills = async (req, res) => {
+  
+  try {
+  
+    const category = await TrainingDrills.find({ trainingplan_id: req.params.id });
+    if (!category) {
+      return res.status(404).json({ message: "Training not found" });
+    }
+    res.status(200).json(category);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const singleTrainings = async (req, res) => {
+  try {
+    const category = await Training.findById(req.params.id);
+    if (!category) {
+      return res.status(404).json({ message: "Training not found" });
+    }
+    res.status(200).json(category);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 // const getAllDrillCategories = async (req, res) => {

@@ -20,6 +20,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import CallIcon from '@mui/icons-material/Call';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import BallotIcon from '@mui/icons-material/Ballot';
+import ArticleIcon from '@mui/icons-material/Article';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import GroupIcon from '@mui/icons-material/Group';
 import AdjustIcon from '@mui/icons-material/Adjust';
@@ -114,11 +115,61 @@ const hideSibar = () => {
                                         </ListItemIcon>
                                         <ListItemText className='title' primary="Add Coach" />
                                     </ListItem>
-                                    <ListItem component={Link} to="/listCoach" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/list-coach" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary=" Manage Coaches " />
+                                        <ListItemText className='title' primary=" Manage Coaches" />
+                                    </ListItem>
+                                   
+                                </List>
+                    </Collapse>
+
+                    <ListItem className='list_child' button onClick={handleClick4}>
+                                <ListItemIcon>
+                                    <CategoryIcon className='title' />
+                                </ListItemIcon>
+                                <ListItemText className='title text_title' primary="Blog Category" />
+                                {open4 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
+                            </ListItem>
+                            <Collapse in={open4} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    <ListItem component={Link} to="/add-blog-category" sx={{ pl: 2 }} button>
+                                        <ListItemIcon>
+                                            <AddBoxIcon className='title' />
+                                        </ListItemIcon>
+                                        <ListItemText className='title' primary="Add Blog Category" />
+                                    </ListItem>
+                                    <ListItem component={Link} to="/list-blog-category" sx={{ pl: 2 }} button>
+                                        <ListItemIcon>
+                                            <BallotIcon className='title' />
+                                        </ListItemIcon>
+                                        <ListItemText className='title' primary="Manage Blog Category" />
+                                    </ListItem>
+                                   
+                                </List>
+                            </Collapse>
+
+                            <ListItem className='list_child' button onClick={handleClick5}>
+                                <ListItemIcon>
+                                    <ArticleIcon className='title' />
+                                </ListItemIcon>
+                                <ListItemText className='title text_title' primary="Blog" />
+                                {open5 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
+                            </ListItem>
+                            <Collapse in={open5} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    <ListItem component={Link} to="/add-blog" sx={{ pl: 2 }} button>
+                                        <ListItemIcon>
+                                            <AddBoxIcon className='title' />
+                                        </ListItemIcon>
+                                        <ListItemText className='title' primary="Add Blog" />
+                                    </ListItem>
+                                    <ListItem component={Link} to="/list-blog" sx={{ pl: 2 }} button>
+                                        <ListItemIcon>
+                                            <BallotIcon className='title' />
+                                        </ListItemIcon>
+                                        <ListItemText className='title' primary="Manage Blog" />
                                     </ListItem>
                                    
                                 </List>
@@ -127,8 +178,7 @@ const hideSibar = () => {
                         )}
                     {/* menu for super admin end */}
                     {isCoach && (
-                    <> </>
-                )}
+                    <> 
             {/* My Goalie */}
                 <ListItem className='list_child' button onClick={handleClick3}>
                                 <ListItemIcon>
@@ -211,7 +261,7 @@ const hideSibar = () => {
  {/* End Drill  */}
 
   {/* Training Plan  */}
-  {/* <ListItem className='list_child' button onClick={handleClick6}>
+  <ListItem className='list_child' button onClick={handleClick6}>
                                 <ListItemIcon>
                                     <AccountTreeIcon className='title' />
                                 </ListItemIcon>
@@ -220,13 +270,13 @@ const hideSibar = () => {
                             </ListItem>
                             <Collapse in={open6} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
-                                    <ListItem component={Link} to="/users-extension" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/add-training" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
                                         <ListItemText className='title' primary="Add Training Plan" />
                                     </ListItem>
-                                    <ListItem component={Link} to="/change-password" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/manage-training" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
@@ -234,8 +284,8 @@ const hideSibar = () => {
                                     </ListItem>
                                    
                                 </List>
-                            </Collapse> */}
- {/* End Training Plan  */}
+                            </Collapse> 
+ {/* End Training Plan */}
 
  {/* Training Plan  */}
  {/* <ListItem className='list_child' button onClick={handleClick2}>
@@ -263,7 +313,8 @@ const hideSibar = () => {
                                 </List>
                             </Collapse> */}
  {/* End Drill  */}
-           
+ </>
+                )}
 <ListItem component={Link} to="/" className='list_child' button>
                         <ListItemIcon>
                             <LogoutIcon className='title' />
