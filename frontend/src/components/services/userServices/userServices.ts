@@ -53,7 +53,9 @@ class LoginService {
   addBlog = async (payload: any) => {
     return imagePostRequest('/api/v1/addBlog', payload)
   }  
-
+  updateTraining = async (payload: any) => {
+    return imagePostRequest('/api/v1/updateTraining', payload)
+  } 
 }
 
 const instance = new LoginService;

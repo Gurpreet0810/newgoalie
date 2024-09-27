@@ -89,6 +89,7 @@ export const getProductupdateImg = asyncHandler(async (req, res, next) => {
 });
 
 const getImg = asyncHandler(async (req, res, next) => {
+    
     upload.single('photo')(req, res, (err) => {
         if (err instanceof multer.MulterError) {
             return next(new ApiError(err.message, 400));
@@ -102,7 +103,8 @@ const getImg = asyncHandler(async (req, res, next) => {
             req.image = req.file.filename;
         }
 
-         console.log('output file',req.file);
+        // console.log('output file',req.file.filename);
+        
         next();
     });
 });
