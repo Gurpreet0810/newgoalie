@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const AddTrainings = asyncHandler(async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { training_name, drill_category ,drill_name , weeks ,user_id} = req.body;
  
   const image = req.image; 
@@ -69,12 +69,76 @@ export const AddTrainingsDrills = asyncHandler(async (req, res) => {
 });
 
 
+export const UpdateTrainings = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { training_name } = req.body; // Destructure the training_name from req.body
+
+ // Log for debugging
+
+  // Check if req.file exists to get the uploaded photo
+  const image = req.image ; // Store the path of the uploaded photo
+  let updatedTraining = '' ;
+  // console.log(image);
+  try {
+    // Find the training record by ID and update it with the new data
+    if(image == null){
+       updatedTraining = await Training.findByIdAndUpdate(
+        id,
+        { training_name }, // Ensure correct fields to update
+        { new: true } // This option returns the updated document
+      );
+    }
+    else{
+       updatedTraining = await Training.findByIdAndUpdate(
+        id,
+        { training_name ,image }, // Ensure correct fields to update
+        { new: true } // This option returns the updated document
+      );
+    }
+   
+
+    if (!updatedTraining) {
+      return res.status(404).json({ message: "Training not found" });
+    }
+
+    res.status(200).json(updatedTraining); // Respond with the updated training record
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+export const updateTrainingDrills = asyncHandler(async (req, res) => {
+  const { id } = req.params; // Get the training ID from the request parameters
+  const { drill_category,  drill_name,  weeks } = req.body; // Destructure the training_name from req.body
+  console.log(req.body);
+  try {
+    // Find the training record by ID and update it with the new data
+    const updatedTraining = await TrainingDrills.findByIdAndUpdate(
+      id,
+      { drill_category,  drill_name,  weeks }, // Ensure correct fields to update
+      { new: true } // This option returns the updated document
+    );
+
+    if (!updatedTraining) {
+      return res.status(404).json({ message: "Training not found" });
+    }
+
+    res.status(200).json(updatedTraining); // Respond with the updated training record
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 
 export const singleTrainingsDrills = async (req, res) => {
   
   try {
   
     const category = await TrainingDrills.find({ trainingplan_id: req.params.id });
+    // console.log(category);
     if (!category) {
       return res.status(404).json({ message: "Training not found" });
     }
@@ -97,6 +161,29 @@ export const singleTrainings = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const deletetrainings = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+  console.log(id);
+    try {
+      // Find the category by id and delete it
+      const category = await Training.findByIdAndDelete(id);
+  
+      if (!category) {
+        return res.status(404).json(new ApiError(404, [], "Training not found"));
+      }
+       await TrainingDrills.deleteMany({ trainingplan_id: id });
+      return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Training deleted successfully"));
+
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      res.status(500).json(new ApiError(500, [], "Server error while deleting Training"));
+    }
+  });
+
+
 // const getAllDrillCategories = async (req, res) => {
 //   try {
 //     const categories = await AddDrillCategory.find(); // Fetch all categories
@@ -145,25 +232,7 @@ export const singleTrainings = async (req, res) => {
 // };
 
 // // Delete a drill category
-// const deleteDrillCategory = asyncHandler(async (req, res) => {
-//     const { id } = req.params;
-  
-//     try {
-//       // Find the category by id and delete it
-//       const category = await AddDrillCategory.findByIdAndDelete(id);
-  
-//       if (!category) {
-//         return res.status(404).json(new ApiError(404, [], "Category not found"));
-//       }
-  
-//       return res
-//         .status(200)
-//         .json(new ApiResponse(200, {}, "Category deleted successfully"));
-//     } catch (error) {
-//       console.error("Error deleting category:", error);
-//       res.status(500).json(new ApiError(500, [], "Server error while deleting category"));
-//     }
-//   });
+
 
 //   const addDrill = asyncHandler(async (req, res) => {
 //     const { drill_name, category, video_option, video_link, description, user_id } = req.body;

@@ -67,8 +67,9 @@ function ListTrainings() {
   }, []);
 
   const handleDelete = async (id: string) => {
+ 
     try {
-      await axios.delete(`http://localhost:4500/api/v1/trainings/${id}`);
+      await axios.delete(`http://localhost:4500/api/v1/deletetrainings/${id}`);
       setTrainings(trainings.filter(training => training._id !== id));
       toast.success('Training deleted successfully', { autoClose: 1000 });
     } catch (err) {

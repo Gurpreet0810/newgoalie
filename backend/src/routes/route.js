@@ -13,6 +13,17 @@ import { AddTrainings , getAllTrainings ,AddTrainingsDrills ,singleTrainings ,si
 import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
 import { addBlogCategory, getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog, updateBlog } from '../controllers/Blog.js';
 // import { getBannerdata } from '../controllers/homeBanner.js';
+import { addDrill, getAllDrills,getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
+import { AddTrainings,updateTrainingDrills ,deletetrainings ,UpdateTrainings , getAllTrainings ,AddTrainingsDrills ,singleTrainings ,singleTrainingsDrills} from '../controllers/training.js';
+import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
+import { addBlogCategory, Addloaderimage,updateloaderimage, Getloaderimage  ,getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
+
+import multer from 'multer';
+
+// Configure multer for file uploads
+const upload = multer({ dest: 'uploads/' });
+
+
 const router = express.Router()
 router.post('/signIn', signInRouter)
 router.post('/login', loginUser)
@@ -37,11 +48,16 @@ router.get('/drills/:id', getSingleDrill)
 router.put('/update_drill/:id', getImgWithVideo, updateDrill)
 router.delete('/drills/:id', deleteDrill)
 router.post('/addTraining', verifyUser, getImg, AddTrainings)
+router.put('/updateTraining/:id',getImg, UpdateTrainings)
+router.put('/updateTrainingDrills/:id', upload.none(), updateTrainingDrills)
 router.get('/trainings',  getAllTrainings)
 router.post('/addTrainingdrills', verifyUser, AddTrainingsDrills)
 router.get('/singletrainings/:id', verifyUser, singleTrainings)
 router.get('/singletrainingsdrills/:id', verifyUser, singleTrainingsDrills)
-
+router.delete('/deletetrainings/:id', deletetrainings)
+router.post('/addloaderimage', verifyUser,getImg, Addloaderimage)
+router.get('/get_loaderimage',  Getloaderimage)
+router.put('/updateloaderimage/:id', getImg , updateloaderimage)
 
 router.post('/addProduct', verifyUser, getProductImg, addProduct)
 router.post('/add-address', verifyUser, userAddress)

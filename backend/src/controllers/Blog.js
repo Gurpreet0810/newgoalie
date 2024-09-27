@@ -3,7 +3,7 @@ import Blog from "../models/blog.model.js"; // Assuming this is the model for bl
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-
+import { LoaderImages } from "../models/LoaderImage.model.js";
 // Add a blog category
 const addBlogCategory = asyncHandler(async (req, res) => {
   const { category_name, user_id } = req.body;

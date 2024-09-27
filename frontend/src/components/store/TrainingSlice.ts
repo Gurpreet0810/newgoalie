@@ -55,17 +55,17 @@ export const addTrainings = async (formData: any, dispatch: any) => {
 
 export const updateTraining = async (payload: any, dispatch: any) => {
   try {
-    const res = await UserService.updateUserProfile(payload);
-    console.log('redux res update profile', res);
+    const res = await UserService.updateTraining(payload);
+    console.log('redux res update Training', res);
     // dispatch(authUser({
     //   token: res?.data?.token || '',
     //   userInfo: res?.data?.data ? [res?.data?.data] : []
     // }));
-    toast.success('Profile updated successfully!', { autoClose: 2000 });
+    toast.success('Training updated successfully!', { autoClose: 2000 });
     return res?.data;
   } catch (err) {
-    console.log('Error on update profile slice', err);
-    toast.error('Error updating profile.', { autoClose: 2000 });
+    console.log('Error on update Training slice', err);
+    toast.error('Error updating Training.', { autoClose: 2000 });
     throw err;
   }
 };
