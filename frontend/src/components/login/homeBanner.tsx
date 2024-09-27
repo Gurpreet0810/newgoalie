@@ -26,20 +26,22 @@ const HomeBannerEdit = () => {
     const [imagePreview, setImagePreview] = useState<string>('');
     const [loader, setLoader] = useState(false);
     const [errors, setErrors] = useState<any>({});
-    
+    const [_id, setId] = useState('');
     const navigate = useNavigate();
 
     const fetchHomeBannerData = async () => {
         try {
-            const response = await axios.get('http://localhost:4500/api/v1/home-banner'); // Adjust the endpoint as necessary
-            const bannerData = response.data; // Assuming the API returns the banner object
+            const response = await axios.get('http://localhost:4500/api/v1/get-home-banner'); // Adjust the endpoint as necessary
+            const bannerData = response.data[0]; // Assuming the API returns the banner object
+            console.log(bannerData);
             setFormData({
                 title: bannerData.title,
                 content: bannerData.content,
                 photo: null, // Reset photo field
                 link: bannerData.link,
             });
-            setImagePreview(`http://localhost:4500/storage/bannerImages/${bannerData.photo}`); // Adjust based on your storage path
+            setId(bannerData._id);
+            setImagePreview(`http://localhost:4500/storage/productImages/${bannerData.photo}`); // Adjust based on your storage path
         } catch (error) {
             console.error('Error fetching home banner data:', error);
             toast.error('Failed to load home banner data');
@@ -91,24 +93,43 @@ const HomeBannerEdit = () => {
                 if (formData.photo) {
                     formDataToSend.append('photo', formData.photo);
                 }
-
                 setLoader(true);
-
-                const response = await axios.post(
-                    'http://localhost:4500/api/v1/updateHomeBanner', // Adjust the endpoint as necessary
+               
+                if(_id){
+                  
+                const response = await axios.put(
+                    `http://localhost:4500/api/v1/updateHomeBanner/${_id}`, // Adjust the endpoint as necessary
                     formDataToSend,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type': 'multipart/form-data'
                         },
                     }
                 );
-
+                if (response.status === 200) {
+                    setLoader(false);
+                    toast.success('Home Banner Added', { autoClose: 1000 });
+                    navigate('/home-banner'); // Adjust the navigation path as necessary
+                }
+            } else{
+                const   response = await axios.post(
+                    'http://localhost:4500/api/v1/addHomeBanner', // Adjust the endpoint as necessary
+                    formDataToSend,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type': 'multipart/form-data'
+                        },
+                    }
+                );
+            
                 if (response.status === 200) {
                     setLoader(false);
                     toast.success(response.data.message, { autoClose: 1000 });
                     navigate('/home-banner'); // Adjust the navigation path as necessary
                 }
+            }
             }
         } catch (error: any) {
             setLoader(false);
@@ -159,7 +180,20 @@ const HomeBannerEdit = () => {
                     </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group controlId="link" className="profile-edit-field col-md-6">
+                <Form.Group controlId="photo" className="profile-edit-field col-md-6" style={{marginTop: '20px'}}>
+                    <Form.Label>Banner Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
+                    <Form.Control
+                        type="file"
+                        name="photo"
+                        accept=".jpg,.jpeg,.png,.gif"
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+
+               
+
+
+                <Form.Group controlId="link" className="profile-edit-field col-md-6"  style={{marginTop: '20px'}}>
                     <Form.Label>Link</Form.Label>
                     <Form.Control
                         type="text"
@@ -172,16 +206,6 @@ const HomeBannerEdit = () => {
                     <Form.Control.Feedback type="invalid">
                         {errors.link}
                     </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group controlId="photo" className="profile-edit-field col-md-6">
-                    <Form.Label>Banner Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
-                    <Form.Control
-                        type="file"
-                        name="photo"
-                        accept=".jpg,.jpeg,.png,.gif"
-                        onChange={handleChange}
-                    />
                 </Form.Group>
 
                 {imagePreview && (

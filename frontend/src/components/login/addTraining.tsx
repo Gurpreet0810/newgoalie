@@ -278,7 +278,12 @@ const AddTraining = () => {
                 ))}
         
                 <Button variant="primary" onClick={handleAddMore}>Add More Drills</Button>
-                <Button variant="success" type="submit" style={{ marginTop: '20px' }}>Submit</Button>
+                <div className="d-flex justify-content-end mt-3">
+          <Button variant="primary" type="submit" disabled={loading}>
+          Submit
+          </Button>
+        </div>
+                {/* <Button variant="success" type="submit" style={{ marginTop: '20px' }}>Submit</Button> */}
             </Form>
         </div>
     );

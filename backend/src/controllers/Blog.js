@@ -185,7 +185,55 @@ const getSingleBlog = async (req, res) => {
   }
 };
 
-// Update a blog category
+export const Addloaderimage = asyncHandler(async (req, res) => {
+        const photo = req.image;
+        // Create a new BlogCategory instance
+        const newLoaderImage = new LoaderImages({
+          photo
+  });
+      const addnewLoaderImage = await newLoaderImage.save();
+
+      if (!addnewLoaderImage) {
+        return res.status(500).json(
+          new ApiError(500, [], "Something went wrong while adding Loader Image")
+        );
+      }
+
+      return res.status(200).json(new ApiResponse(200, { addnewLoaderImage }, "Loader Image  successfully Updated"));
+
+});
+export const Getloaderimage = asyncHandler(async (req, res) => {
+  try {
+    const image = await LoaderImages.find(); // Fetch all categories
+    res.status(200).json(image);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+export const updateloaderimage = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const photo = req.image;
+
+  try {
+    // Construct the update fields
+    const updateFields = {
+      photo,
+    };
+
+    // Perform the update operation
+    const result = await LoaderImages.findByIdAndUpdate(id, updateFields, { new: true });
+
+    if (result) {
+      res.status(200).json(result); // Return the updated category
+    } else {
+      res.status(404).json({ message: "Loader Image  not found" });
+    }
+  } catch (error) {
+    console.error("Error updating Loader Image :", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 const updateBlog = async (req, res) => {
   const { id } = req.params;
   const { title, category, content } = req.body;
@@ -226,7 +274,7 @@ export {
   deleteBlogCategory,
   addBlog,
   getAllBlogs,
+updateBlog,
   deleteBlog,
-  getSingleBlog,
-  updateBlog 
+  getSingleBlog 
 };

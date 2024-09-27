@@ -182,14 +182,19 @@ const hideSibar = () => {
                         <ListItemText className='title text_title' primary="Drills" />
                     </ListItem>
 
-                    <ListItem component={Link} to="/home-banner" className='list_child' button>
+                   
+                    <ListItem className='list_child' component={Link} to="/loader/create/">
+                                <ListItemIcon>
+                                    <ArticleIcon className='title' />
+                                </ListItemIcon>
+                                <ListItemText className='title text_title' primary="Loader Image" />
+                            </ListItem>
+                            <ListItem component={Link} to="/home-banner" className='list_child' button>
                         <ListItemIcon>
                             <AutoAwesomeMosaicIcon className='title' />
                         </ListItemIcon>
                         <ListItemText className='title text_title' primary="Home Banner" />
                     </ListItem>
-
-                    
                             </>
                         )}
                     {/* menu for super admin end */}

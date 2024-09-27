@@ -103,7 +103,7 @@ const getImg = asyncHandler(async (req, res, next) => {
             req.image = req.file.filename;
         }
 
-        console.log('output file',req.file.filename);
+        // console.log('output file',req.file.filename);
         
         next();
     });

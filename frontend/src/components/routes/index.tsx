@@ -58,6 +58,14 @@ const router = createBrowserRouter([
             element: <HomeSection1 />, // Displayed within Layout
           },
           {
+            path: 'coach-drills',
+            element: <CoachDrills />, // Displayed within Layout
+          },
+          {
+            path: '/coach/drills/:coachId',
+            element: <DrillsCoach />, // Displayed within Layout
+          },
+          {
             path: 'add-coach',
             element: <AddCoach />, // Displayed within Layout
           },
@@ -96,6 +104,10 @@ const router = createBrowserRouter([
           {
             path: 'profile',
             element: <Profile />, // Displayed within Layout
+          },
+          {
+            path: '/loader/create',
+            element: <Loaders />, // Displayed within Layout
           },
           {
             path: 'home-banner',

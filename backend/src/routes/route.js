@@ -9,15 +9,10 @@ import sendEmail from '../utils/nodemailer.js';
 import { addGoalie, getAllGoalies, getSingleGoalie, updateGoalie, deleteGoalie } from '../controllers/Goalie.js';
 import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, updateDrillCategory, deleteDrillCategory } from '../controllers/drill.js';
 import { addDrill, getAllDrills, getAllCoachDrills, getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
-import { AddTrainings , getAllTrainings ,AddTrainingsDrills ,singleTrainings ,singleTrainingsDrills} from '../controllers/training.js';
-import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
-import { addBlogCategory, getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog, updateBlog } from '../controllers/Blog.js';
-// import { getBannerdata } from '../controllers/homeBanner.js';
-import { addDrill, getAllDrills,getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
 import { AddTrainings,updateTrainingDrills ,deletetrainings ,UpdateTrainings , getAllTrainings ,AddTrainingsDrills ,singleTrainings ,singleTrainingsDrills} from '../controllers/training.js';
 import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
-import { addBlogCategory, Addloaderimage,updateloaderimage, Getloaderimage  ,getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
-
+import { addBlogCategory, Addloaderimage,updateBlog,updateloaderimage, Getloaderimage  ,getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
+import { addHomeBanner , getHomeBanner ,updateHomeBanner  } from "../controllers/Homebanner.js"
 import multer from 'multer';
 
 // Configure multer for file uploads
@@ -38,10 +33,9 @@ router.get('/drillCategories',  getAllDrillCategories)
 router.get('/get_drill_category/:id', getSingleDrillCategory)
 router.put('/update_drill_category/:id', updateDrillCategory)
 router.delete('/drillCategories/:id', deleteDrillCategory)
-
+router.get('/drills/coach/:coachId',  getAllCoachDrills)
 router.post('/addDrill', verifyUser, getImgWithVideo, addDrill)
 router.get('/drills',  getAllDrills)
-router.get('/drills/coach/:coachId',  getAllCoachDrills)
 router.get('/getAllDrillsbycategory',  getAllDrillsbycategory)
 
 router.get('/drills/:id', getSingleDrill)
@@ -97,6 +91,9 @@ router.get('/get_blog/:id', getSingleBlog)
 router.put('/update_blog/:id', getImg, updateBlog)
 router.delete('/blogs/:id', deleteBlog)
 
-// router.get('/home-banner', verifyUser, getBannerdata)
+
+router.post('/addHomeBanner', verifyUser, getImg, addHomeBanner)
+router.get('/get-home-banner', getHomeBanner)
+router.put('/updateHomeBanner/:id', getImg, updateHomeBanner)
 
 export default router
