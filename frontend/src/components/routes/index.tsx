@@ -22,7 +22,7 @@ import EditDrill from '../login/editDrill';
 import AddTraining from '../login/addTraining';
 import ListTrainings from '../login/listtraining';
 import EditTraining from '../login/editTraining';
-
+import Loaders from '../login/loader';
 // for superadmin
 import AddCoach from '../login/signUp';
 import ListCoach from '../login/listCoach';
@@ -87,6 +87,10 @@ const router = createBrowserRouter([
           {
             path: '/blog/edit/:id',
             element: <EditBlog />, // Displayed within Layout
+          },
+          {
+            path: '/loader/create',
+            element: <Loaders />, // Displayed within Layout
           },
           {
             path: 'profile',

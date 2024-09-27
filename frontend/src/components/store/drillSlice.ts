@@ -37,6 +37,51 @@ interface DrillCategoryPayload {
   drillCategories: DrillCategory[];
 }
 
+
+export const addloaderimage = async (payload: any, dispatch: any) => {
+  try {
+    const res: any = await UserService.addloaderimage(payload);
+    console.log('redux res addDrillCat here', res);
+
+    if (res.status === 200) {
+      toast.success('Loader Photo created successfully');
+      dispatch(addDrillCategory({
+        drillCategories: res?.data ? [res?.data] : []
+      }));
+    }
+
+    return res?.data || [];
+  } catch (err) {
+    console.log('Error on addDrillCat slice', err);
+    toast.error('Error adding drill category');
+    throw err;
+  }
+
+
+};
+
+export const updateloaderimage = async (payload: any, dispatch: any) => {
+  try {
+    const res: any = await UserService.updateloaderimage(payload);
+    console.log('redux res addDrillCat here', res);
+
+    if (res.status === 200) {
+      toast.success(' Loader Photo update successfully');
+      dispatch(addDrillCategory({
+        drillCategories: res?.data ? [res?.data] : []
+      }));
+    }
+
+    return res?.data || [];
+  } catch (err) {
+    console.log('Error on addDrillCat slice', err);
+    toast.error('Error updating Loader Photo');
+    throw err;
+  }
+
+
+};
+
 // Async function for adding a drill category
 export const addDrillCat = async (payload: any, dispatch: any) => {
   try {

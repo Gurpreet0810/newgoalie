@@ -174,6 +174,12 @@ const hideSibar = () => {
                                    
                                 </List>
                             </Collapse>
+                            <ListItem className='list_child' component={Link} to="/loader/create/">
+                                <ListItemIcon>
+                                    <ArticleIcon className='title' />
+                                </ListItemIcon>
+                                <ListItemText className='title text_title' primary="Loader Image" />
+                            </ListItem>
                             </>
                         )}
                     {/* menu for super admin end */}

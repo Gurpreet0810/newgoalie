@@ -11,7 +11,7 @@ import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, update
 import { addDrill, getAllDrills,getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
 import { AddTrainings,updateTrainingDrills ,deletetrainings ,UpdateTrainings , getAllTrainings ,AddTrainingsDrills ,singleTrainings ,singleTrainingsDrills} from '../controllers/training.js';
 import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
-import { addBlogCategory, getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
+import { addBlogCategory, Addloaderimage,updateloaderimage, Getloaderimage  ,getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
 
 import multer from 'multer';
 
@@ -49,6 +49,9 @@ router.post('/addTrainingdrills', verifyUser, AddTrainingsDrills)
 router.get('/singletrainings/:id', verifyUser, singleTrainings)
 router.get('/singletrainingsdrills/:id', verifyUser, singleTrainingsDrills)
 router.delete('/deletetrainings/:id', deletetrainings)
+router.post('/addloaderimage', verifyUser,getImg, Addloaderimage)
+router.get('/get_loaderimage',  Getloaderimage)
+router.put('/updateloaderimage/:id', getImg , updateloaderimage)
 
 router.post('/addProduct', verifyUser, getProductImg, addProduct)
 router.post('/add-address', verifyUser, userAddress)
