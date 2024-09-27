@@ -8,11 +8,11 @@ import { getProductByName, getProducts } from '../controllers/getProduct.js';
 import sendEmail from '../utils/nodemailer.js';
 import { addGoalie, getAllGoalies, getSingleGoalie, updateGoalie, deleteGoalie } from '../controllers/Goalie.js';
 import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, updateDrillCategory, deleteDrillCategory } from '../controllers/drill.js';
-import { addDrill, getAllDrills,getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
+import { addDrill, getAllDrills, getAllCoachDrills, getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
 import { AddTrainings , getAllTrainings ,AddTrainingsDrills ,singleTrainings ,singleTrainingsDrills} from '../controllers/training.js';
 import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
-import { addBlogCategory, getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
-
+import { addBlogCategory, getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog, updateBlog } from '../controllers/Blog.js';
+// import { getBannerdata } from '../controllers/homeBanner.js';
 const router = express.Router()
 router.post('/signIn', signInRouter)
 router.post('/login', loginUser)
@@ -30,6 +30,7 @@ router.delete('/drillCategories/:id', deleteDrillCategory)
 
 router.post('/addDrill', verifyUser, getImgWithVideo, addDrill)
 router.get('/drills',  getAllDrills)
+router.get('/drills/coach/:coachId',  getAllCoachDrills)
 router.get('/getAllDrillsbycategory',  getAllDrillsbycategory)
 
 router.get('/drills/:id', getSingleDrill)
@@ -77,8 +78,9 @@ router.delete('/blogCategories/:id', deleteBlogCategory)
 router.post('/addBlog', verifyUser, getImg, addBlog)
 router.get('/blogs', getAllBlogs)
 router.get('/get_blog/:id', getSingleBlog)
-// router.put('/update_blog/:id', getImg, updateBlog)
+router.put('/update_blog/:id', getImg, updateBlog)
 router.delete('/blogs/:id', deleteBlog)
 
+// router.get('/home-banner', verifyUser, getBannerdata)
 
 export default router

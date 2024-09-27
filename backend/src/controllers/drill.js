@@ -165,6 +165,19 @@ const deleteDrillCategory = asyncHandler(async (req, res) => {
     }
   };
 
+  const getAllCoachDrills = async (req, res) => {
+    try {
+      // Fetch all drills where coach_id matches the provided coachId
+      const drills = await Drill.find({ coach_id: req.params.coachId }); 
+      if (!drills.length) {
+        return res.status(404).json({ message: 'No drills found for this coach.' });
+      }
+      res.status(200).json(drills); // Respond with the drills
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  };
+
   export const getAllDrillsbycategory = async (req, res) => {
     try {
       const { category } = req.query; // Get the category from query parameters
@@ -292,5 +305,6 @@ const deleteDrill = asyncHandler(async (req, res) => {
     getAllDrills,
     getSingleDrill,
     updateDrill,
-    deleteDrill
+    deleteDrill,
+    getAllCoachDrills
     };

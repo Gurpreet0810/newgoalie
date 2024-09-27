@@ -174,6 +174,22 @@ const hideSibar = () => {
                                    
                                 </List>
                             </Collapse>
+
+                    <ListItem component={Link} to="/coach-drills" className='list_child' button>
+                        <ListItemIcon>
+                            <AutoAwesomeMosaicIcon className='title' />
+                        </ListItemIcon>
+                        <ListItemText className='title text_title' primary="Drills" />
+                    </ListItem>
+
+                    <ListItem component={Link} to="/home-banner" className='list_child' button>
+                        <ListItemIcon>
+                            <AutoAwesomeMosaicIcon className='title' />
+                        </ListItemIcon>
+                        <ListItemText className='title text_title' primary="Home Banner" />
+                    </ListItem>
+
+                    
                             </>
                         )}
                     {/* menu for super admin end */}

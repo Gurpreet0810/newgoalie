@@ -109,7 +109,7 @@ function EditBlog() {
 
         setLoader(false);
         toast.success('Blog updated successfully', { autoClose: 1000 });
-        navigate('/list-blogs');
+        navigate('/list-blog');
       }
     } catch (error: any) {
       setLoader(false);
@@ -192,7 +192,7 @@ function EditBlog() {
         {blog.photo && (
           <div className="profile-edit-field col-md-6">
             <Form.Label>Preview:</Form.Label>
-            <img src={blog.photo} alt="Blog preview" style={{ maxWidth: '100%', height: 'auto' }} />
+            <img src={blog.photo} alt="Blog preview" style={{ maxWidth: '30%', height: 'auto' }} />
           </div>
         )}
 

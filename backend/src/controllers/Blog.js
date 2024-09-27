@@ -185,6 +185,39 @@ const getSingleBlog = async (req, res) => {
   }
 };
 
+// Update a blog category
+const updateBlog = async (req, res) => {
+  const { id } = req.params;
+  const { title, category, content } = req.body;
+  const photo = req.image;
+
+  try {
+    // Construct the update fields
+    const updateFields = {
+      title, 
+      category, 
+      content
+    };
+
+    // Only add photo if it exists
+    if (photo) {
+      updateFields.photo = photo;
+    }
+
+    // Perform the update operation
+    const result = await Blog.findByIdAndUpdate(id, updateFields, { new: true });
+
+    if (result) {
+      res.status(200).json(result); // Return the updated category
+    } else {
+      res.status(404).json({ message: "Blog not found" });
+    }
+  } catch (error) {
+    console.error("Error updating blog:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 export { 
   addBlogCategory, 
   getAllBlogCategories, 
@@ -194,5 +227,6 @@ export {
   addBlog,
   getAllBlogs,
   deleteBlog,
-  getSingleBlog 
+  getSingleBlog,
+  updateBlog 
 };

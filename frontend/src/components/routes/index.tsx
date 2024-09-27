@@ -36,6 +36,11 @@ import AddBlog from '../login/addBlog';
 import ListBlog from '../login/listBlog';
 import EditBlog from '../login/editBlog';
 
+import CoachDrills from '../login/coachDrills';
+import DrillsCoach from '../login/drillsCoach';
+
+import HomeBanner from '../login/homeBanner';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -89,8 +94,20 @@ const router = createBrowserRouter([
             element: <EditBlog />, // Displayed within Layout
           },
           {
+            path: 'coach-drills',
+            element: <CoachDrills />, // Displayed within Layout
+          },
+          {
+            path: '/coach/drills/:coachId',
+            element: <DrillsCoach />, // Displayed within Layout
+          },
+          {
             path: 'profile',
             element: <Profile />, // Displayed within Layout
+          },
+          {
+            path: 'home-banner',
+            element: <HomeBanner />, // Displayed within Layout
           },
           {
             path: 'add-drill-cat',

@@ -183,7 +183,7 @@ const AddBlog = () => {
                 <Form.Group controlId="imagePreview" className="profile-edit-field col-md-6">
                     {blog.imagePreview && (
                         <div className="image-preview mt-2">
-                            <img src={blog.imagePreview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "150px" }} />
+                            <img src={blog.imagePreview} alt="Preview" style={{ maxWidth: "30%", maxHeight: "150px" }} />
                         </div>
                     )}
                 </Form.Group>
