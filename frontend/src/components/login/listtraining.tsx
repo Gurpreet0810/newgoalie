@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Typography, Snackbar, Alert, Paper, Container, IconButton } from '@mui/material';
+import { Typography, Snackbar, Alert, Paper, Container, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
 
@@ -26,6 +26,8 @@ function ListTrainings() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null); // For delete confirmation
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,12 +68,14 @@ function ListTrainings() {
     fetchData();
   }, []);
 
-  const handleDelete = async (id: string) => {
- 
+  const handleDelete = async () => {
+    if (!deleteId) return;
+
     try {
-      await axios.delete(`http://localhost:4500/api/v1/deletetrainings/${id}`);
-      setTrainings(trainings.filter(training => training._id !== id));
+      await axios.delete(`http://localhost:4500/api/v1/deletetrainings/${deleteId}`);
+      setTrainings(trainings.filter(training => training._id !== deleteId));
       toast.success('Training deleted successfully', { autoClose: 1000 });
+      setDialogOpen(false); // Close the confirmation dialog after deletion
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -81,11 +85,15 @@ function ListTrainings() {
     }
   };
 
+  const handleClickDelete = (id: string) => {
+    setDeleteId(id); // Store the training ID to delete
+    setDialogOpen(true); // Open the confirmation dialog
+  };
+
   const columns: GridColDef[] = [
-    { field: 'srNo', headerName: 'Sr. No.' ,  width: 200,},
-    { field: 'id', headerName: 'ID'   ,width: 300},
-    { field: 'training_name', headerName: 'Training Name',   width: 300,},
-    
+    { field: 'srNo', headerName: 'Sr. No.', width: 200 },
+    { field: 'id', headerName: 'ID', width: 300 },
+    { field: 'training_name', headerName: 'Training Name', width: 300 },
     { 
       field: 'actions', 
       headerName: 'Actions', 
@@ -103,7 +111,7 @@ function ListTrainings() {
           </IconButton>
           <IconButton
             aria-label="delete"
-            onClick={() => handleDelete(params.row._id)}
+            onClick={() => handleClickDelete(params.row._id)} // Trigger delete confirmation dialog
           >
             <Delete />
           </IconButton>
@@ -116,6 +124,7 @@ function ListTrainings() {
   if (error) return <Typography variant="h6" color="error">Error: {error}</Typography>;
 
   const paginationModel = { page: 0, pageSize: 5 };
+
   return (
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
@@ -130,6 +139,27 @@ function ListTrainings() {
           checkboxSelection
           sx={{ border: 0 }}
         />
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+        >
+          <DialogTitle>{"Delete Training"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure? This action cannot be undone.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDialogOpen(false)} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleDelete} color="secondary">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
 
         <Snackbar
           open={open}

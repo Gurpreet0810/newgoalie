@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { IconButton, Typography, Container, Paper, Snackbar, Alert } from '@mui/material';
+import { IconButton, Typography, Container, Paper, Snackbar, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
 
@@ -24,6 +24,8 @@ function ListGoalie() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null); // For delete confirmation
+  const [dialogOpen, setDialogOpen] = useState(false); // State to control the delete confirmation dialog
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -44,11 +46,14 @@ function ListGoalie() {
     fetchUsers();
   }, []);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async () => {
+    if (!deleteId) return;
+
     try {
-      await axios.delete(`http://localhost:4500/api/v1/deleteGoalies/${id}`);
-      setUsers(users.filter(user => user._id !== id));
+      await axios.delete(`http://localhost:4500/api/v1/deleteGoalies/${deleteId}`);
+      setUsers(users.filter(user => user._id !== deleteId));
       toast.success('Goalie deleted successfully', { autoClose: 1000 });
+      setDialogOpen(false); // Close the confirmation dialog after deletion
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -56,6 +61,11 @@ function ListGoalie() {
         setError('An unknown error occurred');
       }
     }
+  };
+
+  const handleClickDelete = (id: string) => {
+    setDeleteId(id); // Store the goalie ID to delete
+    setDialogOpen(true); // Open the confirmation dialog
   };
 
   const columns: GridColDef[] = [
@@ -97,7 +107,7 @@ function ListGoalie() {
           </IconButton>
           <IconButton
             aria-label="delete"
-            onClick={() => handleDelete(params.row._id)}
+            onClick={() => handleClickDelete(params.row._id)} // Trigger delete confirmation dialog
           >
             <Delete />
           </IconButton>
@@ -131,6 +141,27 @@ function ListGoalie() {
           checkboxSelection
           sx={{ border: 0 }}
         />
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+        >
+          <DialogTitle>{"Delete Goalie"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure? This action cannot be undone.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDialogOpen(false)} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleDelete} color="secondary">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
       <Snackbar
         open={open}

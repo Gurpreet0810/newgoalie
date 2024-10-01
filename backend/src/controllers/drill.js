@@ -170,7 +170,7 @@ const deleteDrillCategory = asyncHandler(async (req, res) => {
       // Fetch all drills where coach_id matches the provided coachId
       const drills = await Drill.find({ coach_id: req.params.coachId }); 
       if (!drills.length) {
-        return res.status(404).json({ message: 'No drills found for this coach.' });
+        return res.status(200).json([]);
       }
       res.status(200).json(drills); // Respond with the drills
     } catch (error) {

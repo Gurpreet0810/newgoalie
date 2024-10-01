@@ -188,9 +188,9 @@ const ProfileEdit = () => {
                 </Form.Group>
 
                 <Form.Group controlId="phoneNumber" className="profile-edit-field col-md-6">
-                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Label>Phone Number (Accept only: Numbers)</Form.Label>
                     <Form.Control
-                        type="text"
+                        type="number"
                         placeholder="Enter your phone number"
                         name="phoneNumber"
                         value={formData.phoneNumber}

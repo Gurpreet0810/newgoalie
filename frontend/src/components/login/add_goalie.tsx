@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import { validate } from '../utils/validate';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
+import previewImgShow from '../../assests/admin.jpg'
 
 import { Image} from 'react-bootstrap';
 
@@ -16,11 +17,13 @@ const Addgoalie = () => {
         goalie_name: "",
         phone: "",
         email: "",
-        password: ""
+        password: "",
+        photoPreview: previewImgShow,
+        
     });
     const navigate = useNavigate();
     const [pro_image, setProFile] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string>('');
+    const [imagePreview, setImagePreview] = useState<string>(previewImgShow);
     
   const [image, setImage] = useState<File | null>(null);
     const [loader, setLoader] = useState(false);
@@ -146,9 +149,9 @@ const Addgoalie = () => {
                 </Row>
                 <Row className="mb-3">
                 <Form.Group as={Col} className="profile-edit-field mb-3" controlId="phone">
-                    <Form.Label>Phone</Form.Label>
+                    <Form.Label>Phone (Accept only: Numbers)</Form.Label>
                     <Form.Control
-                        type="tel"
+                        type="number"
                         name='phone'
                         placeholder="Enter Phone number"
                         onChange={handleInputs}

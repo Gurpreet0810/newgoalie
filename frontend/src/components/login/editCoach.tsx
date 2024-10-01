@@ -109,9 +109,9 @@ function EditCoach() {
 
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formPhone" className="profile-edit-field mb-3">
-            <Form.Label>Phone</Form.Label>
+            <Form.Label>Phone (Accept only: Numbers)</Form.Label>
             <Form.Control
-              type="tel"
+              type="number"
               name="phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}

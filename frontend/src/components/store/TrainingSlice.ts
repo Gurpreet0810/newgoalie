@@ -114,6 +114,33 @@ export const addTrainingsDrills = async (payload: any, dispatch: any) => {
   }
 };
 
+export const assignTrainingPlan = async (payload: any, dispatch: any) => {
+  try {
+    const res = await UserService.assignTrainingPlan(payload);
+    console.log('redux response assignTrainingPlan:', res);
+
+    if (res?.status === 200) {
+      // Notify the user of the success
+      toast.success('Training plan assigned successfully!');
+
+      // Dispatch the action to update the state with the assigned training
+      dispatch(setAssignedTrainingPlan({
+        training: res?.data ? [res?.data] : []
+      }));
+    }
+
+    return res?.data || [];
+  } catch (err) {
+    console.log('Error in assignTrainingPlan slice:', err);
+    
+    // Notify the user of the error
+    toast.error('Error assigning training plan');
+    
+    // Throw the error to be handled by the calling function
+    throw err;
+  }
+};
+
 // Create the slice with explicit initial state type
 const trainingSlice = createSlice({
   name: 'training',
@@ -121,10 +148,13 @@ const trainingSlice = createSlice({
   reducers: {
     addTraining: (state, action: PayloadAction<{ training: Training[] }>) => {
       state.trainings = [...state.trainings, ...action.payload.training];
+    },
+    setAssignedTrainingPlan: (state, action: PayloadAction<{ training: Training[] }>) => {
+      state.trainings = [...state.trainings, ...action.payload.training];
     }
   }
 });
 
 // Export the action and reducer
-export const { addTraining } = trainingSlice.actions;
+export const { addTraining, setAssignedTrainingPlan } = trainingSlice.actions;
 export default trainingSlice.reducer;

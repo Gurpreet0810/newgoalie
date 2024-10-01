@@ -166,17 +166,6 @@ function EditBlog() {
           </Form.Control.Feedback>
         </Form.Group>
 
-        {/* Content Field (React Quill for Rich Text Editing) */}
-        <Form.Group controlId="content" className="profile-edit-field col-md-12">
-          <Form.Label>Content</Form.Label>
-          <ReactQuill
-            value={blog.content}
-            onChange={(value) => setBlog({ ...blog, content: value })}
-            theme="snow"
-          />
-          {errors.content && <div className="invalid-feedback d-block">{errors.content}</div>}
-        </Form.Group>
-
         {/* Image Upload Field */}
         <Form.Group controlId="photo" className="profile-edit-field col-md-6">
           <Form.Label>Upload Photo</Form.Label>
@@ -195,6 +184,18 @@ function EditBlog() {
             <img src={blog.photo} alt="Blog preview" style={{ maxWidth: '30%', height: 'auto' }} />
           </div>
         )}
+
+         {/* Content Field (React Quill for Rich Text Editing) */}
+         <Form.Group controlId="content" className="profile-edit-field col-md-12">
+          <Form.Label>Content</Form.Label>
+          <ReactQuill
+            value={blog.content}
+            onChange={(value) => setBlog({ ...blog, content: value })}
+            theme="snow"
+          />
+          {errors.content && <div className="invalid-feedback d-block">{errors.content}</div>}
+        </Form.Group>
+
 
         {loader ? (
           <div className="text-left">

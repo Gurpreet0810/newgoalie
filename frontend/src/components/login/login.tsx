@@ -36,7 +36,7 @@ const Login = () => {
 
 
     const from = location.state?.from?.pathname || '/';
-    console.log('before path is ', from, location.state?.from?.pathname);
+    // console.log('before path is ', from, location.state?.from?.pathname);
     const fields = [
         { field: 'userName', name: 'userName', validate: 'required' },
         { field: 'password', name: 'password', validate: 'required' },

@@ -34,28 +34,20 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 const getProductImg = asyncHandler(async (req, res, next) => {
-    // Use multer's single method within the middleware
     upload.single('goalie_photo')(req, res, (err) => {
         if (err instanceof multer.MulterError) {
-            // Handle Multer errors (e.g., file size limit exceeded)
             return next(new ApiError(err.message, 400));
         } else if (err) {
-            // Handle other errors
             return next(new ApiError(err.message, 500));
         }
 
         if (!req.file) {
-            // If no file was uploaded, return an error
-            return next(new ApiError('Image is required', 400));
-        }
+            req.image = null;
+          } else {
+            req.image = req.file.filename;
+          }
 
-        // At this point, multer has parsed the file and req.file should be populated
-        console.log('file is :',req.file); // Output file details if correctly uploaded
-        
-        // Save the filename to req.image
-        req.image = req.file.filename;
-
-        // Continue to the next middleware or route handler
+        console.log('file is :',req.file);
         next();
     });
 });

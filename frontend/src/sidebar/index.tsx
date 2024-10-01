@@ -309,7 +309,7 @@ const hideSibar = () => {
  {/* End Training Plan */}
 
  {/* Training Plan  */}
- {/* <ListItem className='list_child' button onClick={handleClick2}>
+ <ListItem className='list_child' button onClick={handleClick2}>
                                 <ListItemIcon>
                                     <PeopleAltIcon className='title' />
                                 </ListItemIcon>
@@ -318,13 +318,13 @@ const hideSibar = () => {
                             </ListItem>
                             <Collapse in={open2} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
-                                    <ListItem component={Link} to="/users-extension" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/assign-training-plan" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
                                         <ListItemText className='title' primary="Assign Training Plan" />
                                     </ListItem>
-                                    <ListItem component={Link} to="/change-password" sx={{ pl: 2 }} button>
+                                    <ListItem component={Link} to="/manage-assign-training-plan" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
@@ -332,11 +332,11 @@ const hideSibar = () => {
                                     </ListItem>
                                    
                                 </List>
-                            </Collapse> */}
+                            </Collapse>
  {/* End Drill  */}
  </>
                 )}
-<ListItem component={Link} to="/" className='list_child' button>
+<ListItem component={Link} to="/logout" className='list_child' button>
                         <ListItemIcon>
                             <LogoutIcon className='title' />
                         </ListItemIcon>

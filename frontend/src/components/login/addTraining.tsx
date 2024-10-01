@@ -190,6 +190,7 @@ const AddTraining = () => {
                         value={trainingName}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setTrainingName(e.target.value)}
                         style={{ padding: '10px', borderRadius: '5px' }}
+                        required
                     />
                 </Form.Group>
         
@@ -199,6 +200,7 @@ const AddTraining = () => {
                         type="file"
                         onChange={handleFileChange}
                         style={{ padding: '10px', borderRadius: '5px' }}
+                        required
                     />
                     {photo && (
                         <div style={{ textAlign: 'center', marginTop: '10px' }}>
@@ -218,6 +220,7 @@ const AddTraining = () => {
                                 value={training.category}
                                 onChange={(e) => handleInputs(e as unknown as ChangeEvent<HTMLSelectElement>, index)} 
                                 style={{ padding: '10px', borderRadius: '5px' }}
+                                required
                             >
                                 <option value="">Select Drill Category</option>
                                 {categories.map((category) => (
@@ -237,6 +240,7 @@ const AddTraining = () => {
                                 value={training.drill_name}
                                 onChange={(e) => handleInputs(e as unknown as ChangeEvent<HTMLSelectElement>, index)} 
                                 style={{ padding: '10px', borderRadius: '5px' }}
+                                required
                             >
                                 <option value="">Select Drill Name</option>
                                 {(drillOptions[index] || []).map((drill) => (

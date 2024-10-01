@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Button, Typography, Snackbar, Alert, Paper, Container, IconButton } from '@mui/material';
+import { Button, Typography, Snackbar, Alert, Paper, Container, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
 
@@ -17,6 +17,8 @@ function ListBlogCategory() {
   const [categories, setCategories] = useState<BlogCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null); // State to store the category ID to delete
+  const [dialogOpen, setDialogOpen] = useState(false); // State for the delete confirmation dialog
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -43,11 +45,13 @@ function ListBlogCategory() {
     fetchCategories();
   }, []);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async () => {
+    if (!deleteId) return;
     try {
-      await axios.delete(`http://localhost:4500/api/v1/blogCategories/${id}`);
-      setCategories(categories.filter(category => category._id !== id));
+      await axios.delete(`http://localhost:4500/api/v1/blogCategories/${deleteId}`);
+      setCategories(categories.filter(category => category._id !== deleteId));
       toast.success('Blog Category deleted successfully', { autoClose: 1000 });
+      setDialogOpen(false); // Close the confirmation dialog after deletion
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -55,6 +59,11 @@ function ListBlogCategory() {
         setError('An unknown error occurred');
       }
     }
+  };
+
+  const handleClickDelete = (id: string) => {
+    setDeleteId(id); // Set the category ID to delete
+    setDialogOpen(true); // Open the confirmation dialog
   };
 
   const columns: GridColDef[] = [
@@ -78,7 +87,7 @@ function ListBlogCategory() {
           </IconButton>
           <IconButton
             aria-label="delete"
-            onClick={() => handleDelete(params.row._id)}
+            onClick={() => handleClickDelete(params.row._id)} // Open confirmation dialog
           >
             <Delete />
           </IconButton>
@@ -91,31 +100,54 @@ function ListBlogCategory() {
   if (error) return <Typography variant="h6" color="error">Error: {error}</Typography>;
 
   const paginationModel = { page: 0, pageSize: 5 };
+
   return (
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
-    <Paper sx={{ height: 400, width: '100%' }}>
-      <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-        Blog Categories List
-      </Typography>
-      <DataGrid
-        rows={categories}
-        columns={columns}
-        initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-        sx={{ border: 0 }}
-      />
+      <Paper sx={{ height: 400, width: '100%' }}>
+        <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
+          Blog Categories List
+        </Typography>
+        <DataGrid
+          rows={categories}
+          columns={columns}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+          sx={{ border: 0 }}
+        />
 
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={() => setOpen(false)}
-      >
-        <Alert onClose={() => setOpen(false)} severity="success">
-          Blog Category deleted successfully
-        </Alert>
-      </Snackbar>
-    </Paper>
+        {/* Delete Confirmation Dialog */}
+        <Dialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+        >
+          <DialogTitle>{"Delete Blog Category"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+            Are you sure? This action cannot be undone.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDialogOpen(false)} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleDelete} color="secondary">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Snackbar for success message */}
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={() => setOpen(false)}
+        >
+          <Alert onClose={() => setOpen(false)} severity="success">
+            Blog Category deleted successfully
+          </Alert>
+        </Snackbar>
+      </Paper>
     </Container>
   );
 }

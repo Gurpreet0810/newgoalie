@@ -51,6 +51,13 @@ function ListCoach() {
           component={Link}
           to={`/coach/drills/${params.row._id}`}
           aria-label="Drills"
+          sx={{
+            backgroundColor: '#00617a',
+            color: '#fff',
+            '&:hover': {
+              backgroundColor: '#004d5c', // Optional hover effect
+            },
+          }}
         >
           Drills
         </Button>
@@ -71,7 +78,7 @@ function ListCoach() {
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-        Users
+        Coaches
         </Typography>
         <DataGrid
           rows={rows}
