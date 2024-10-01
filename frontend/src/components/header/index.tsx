@@ -9,7 +9,11 @@ import profileLogo from '../../assests/admin.jpg'
 import TuneIcon from '@mui/icons-material/Tune';
 import { userLogout } from "../store/loginSlice";
 import { toast } from "react-toastify";
-
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import enTranslation from '../locales/en/translation.json';
+import frTranslation from '../locales/fr/translation.json';
+import { useTranslation } from 'react-i18next'
 interface userParams {
     page : number,
     limit: number,
@@ -17,9 +21,7 @@ interface userParams {
 }
 
 const HeaderPage = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const location = useLocation();
+  
     const searchRef = useRef(null); // Ref for the search input and results container
     const [loader, setLoader] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -52,13 +54,21 @@ const HeaderPage = () => {
           onConfirm();
         }
       };
-    
+      const { t, i18n } = useTranslation();
+      const navigate = useNavigate();
+      const location = useLocation();
+      const dispatch = useDispatch();
+      const changeLanguage = (lng: any) => {
+        i18n.changeLanguage(lng);
+      };
 
 
     return (
         <header className={`headerTag ${showMenu ? '' : 'new_header_class'}`}>
             <div className="left_sider">
             {isSuperAdmin && <p>Logged in as Superadmin</p>}
+            <button onClick={() => changeLanguage('en')}>English</button>
+                <button onClick={() => changeLanguage('fr')}>Français</button>
             </div>
             <nav>
               <ul>

@@ -5,7 +5,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { IconButton, Typography, Container, Paper, Snackbar, Alert } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
-
+import { useTranslation } from 'react-i18next'
 // Define the user interface based on the structure of your data
 interface User {
   _id: string;
@@ -24,7 +24,7 @@ function ListGoalie() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -121,7 +121,7 @@ function ListGoalie() {
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-          Goalies List
+          {t('goalies')}
         </Typography>
         <DataGrid
           rows={rows}

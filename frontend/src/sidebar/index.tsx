@@ -28,6 +28,9 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import '../components/style/style.scss'; // Make sure to import your stylesheet
 import GroupsIcon from '@mui/icons-material/Groups';
 import { useSelector } from "react-redux";
+import { useTranslation } from 'react-i18next'
+
+
 
 const Sidebar = ({ setShowSidebar,showSidebar } : any) => {
     const [open, setOpen] = useState(false);
@@ -70,7 +73,7 @@ const Sidebar = ({ setShowSidebar,showSidebar } : any) => {
 const hideSibar = () => {
     setShowSidebar(!showSidebar)
 }
-
+const { t, i18n } = useTranslation();
 
     return (
         <div className={
@@ -94,7 +97,7 @@ const hideSibar = () => {
                         <ListItemIcon>
                             <DashboardIcon className='title' />
                         </ListItemIcon>
-                        <ListItemText className='title text_title' primary="Profile" />
+                        <ListItemText className='title text_title' primary={t('profile')} />
                     </ListItem>
 
                     {/* menu for super admin start */}
@@ -104,7 +107,7 @@ const hideSibar = () => {
                                 <ListItemIcon>
                                     <PersonIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary="Coaches" />
+                                <ListItemText className='title text_title' primary={t('coaches')} />
                                 {open3 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
                             </ListItem>
                             <Collapse in={open3} timeout="auto" unmountOnExit>
@@ -113,13 +116,13 @@ const hideSibar = () => {
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Add Coach" />
+                                        <ListItemText className='title' primary={t('addcoaches')} />
                                     </ListItem>
                                     <ListItem component={Link} to="/list-coach" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary=" Manage Coaches" />
+                                        <ListItemText className='title' primary={t('managecoaches')}  />
                                     </ListItem>
                                    
                                 </List>
@@ -129,7 +132,7 @@ const hideSibar = () => {
                                 <ListItemIcon>
                                     <CategoryIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary="Blog Category" />
+                                <ListItemText className='title text_title' primary={t('Blog Category')} />
                                 {open4 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
                             </ListItem>
                             <Collapse in={open4} timeout="auto" unmountOnExit>
@@ -138,13 +141,13 @@ const hideSibar = () => {
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Add Blog Category" />
+                                        <ListItemText className='title' primary={t('addblogcat')} />
                                     </ListItem>
                                     <ListItem component={Link} to="/list-blog-category" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Manage Blog Category" />
+                                        <ListItemText className='title' primary={t('Manage_Blog_cate')} />
                                     </ListItem>
                                    
                                 </List>
@@ -154,7 +157,7 @@ const hideSibar = () => {
                                 <ListItemIcon>
                                     <ArticleIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary="Blog" />
+                                <ListItemText className='title text_title' primary={t('Blogs')} />
                                 {open5 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
                             </ListItem>
                             <Collapse in={open5} timeout="auto" unmountOnExit>
@@ -163,13 +166,13 @@ const hideSibar = () => {
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Add Blog" />
+                                        <ListItemText className='title' primary={t('addblog')} />
                                     </ListItem>
                                     <ListItem component={Link} to="/list-blog" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Manage Blog" />
+                                        <ListItemText className='title' primary={t('Manage_Blog')} />
                                     </ListItem>
                                    
                                 </List>
@@ -179,7 +182,7 @@ const hideSibar = () => {
                         <ListItemIcon>
                             <AutoAwesomeMosaicIcon className='title' />
                         </ListItemIcon>
-                        <ListItemText className='title text_title' primary="Drills" />
+                        <ListItemText className='title text_title' primary={t('drills')} />
                     </ListItem>
 
                    
@@ -187,13 +190,13 @@ const hideSibar = () => {
                                 <ListItemIcon>
                                     <ArticleIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary="Loader Image" />
+                                <ListItemText className='title text_title' primary={t('loaderimage')} />
                             </ListItem>
                             <ListItem component={Link} to="/home-banner" className='list_child' button>
                         <ListItemIcon>
                             <AutoAwesomeMosaicIcon className='title' />
                         </ListItemIcon>
-                        <ListItemText className='title text_title' primary="Home Banner" />
+                        <ListItemText className='title text_title' primary={t('homebanner')} />
                     </ListItem>
                             </>
                         )}
@@ -205,7 +208,7 @@ const hideSibar = () => {
                                 <ListItemIcon>
                                     <PersonIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary="My Goalie" />
+                                <ListItemText className='title text_title' primary={t('my_goalies')} />
                                 {open3 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
                             </ListItem>
                             <Collapse in={open3} timeout="auto" unmountOnExit>
@@ -214,13 +217,13 @@ const hideSibar = () => {
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Add Goalie" />
+                                        <ListItemText className='title' primary={t('add_goalie')} />
                                     </ListItem>
                                     <ListItem component={Link} to="/list_goalie" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary=" Manage Goalie " />
+                                        <ListItemText className='title' primary={t('manage_goalies')} />
                                     </ListItem>
                                    
                                 </List>
@@ -232,7 +235,7 @@ const hideSibar = () => {
                                 <ListItemIcon>
                                     <CategoryIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary="Drill Category" />
+                                <ListItemText className='title text_title' primary={t('drills_cat')} />
                                 {open4 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
                             </ListItem>
                             <Collapse in={open4} timeout="auto" unmountOnExit>
@@ -241,13 +244,13 @@ const hideSibar = () => {
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Add Drill Category" />
+                                        <ListItemText className='title' primary={t('add_drills_cat')} />
                                     </ListItem>
                                     <ListItem component={Link} to="/list-drill-cat" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary=" Manage Drill Category " />
+                                        <ListItemText className='title' primary={t('manage_drills_cat')} />
                                     </ListItem>
                                    
                                 </List>
@@ -259,7 +262,7 @@ const hideSibar = () => {
                                 <ListItemIcon>
                                     <AutoAwesomeMosaicIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary="Drills" />
+                                <ListItemText className='title text_title' primary={t('drills')}  />
                                 {open5 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
                             </ListItem>
                             <Collapse in={open5} timeout="auto" unmountOnExit>
@@ -268,13 +271,13 @@ const hideSibar = () => {
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Add Drills" />
+                                        <ListItemText className='title' primary={t('add_drills')}     />
                                     </ListItem>
                                     <ListItem component={Link} to="/list-drill" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary=" Manage Drills " />
+                                        <ListItemText className='title' primary={t('manage_drills')} />
                                     </ListItem>
                                    
                                 </List>
@@ -286,7 +289,7 @@ const hideSibar = () => {
                                 <ListItemIcon>
                                     <AccountTreeIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary="Training Plan" />
+                                <ListItemText className='title text_title' primary={t('traning')} />
                                 {open6 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
                             </ListItem>
                             <Collapse in={open6} timeout="auto" unmountOnExit>
@@ -295,13 +298,13 @@ const hideSibar = () => {
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Add Training Plan" />
+                                        <ListItemText className='title' primary={t('add_traning')} />
                                     </ListItem>
                                     <ListItem component={Link} to="/manage-training" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary=" Manage Training Plan " />
+                                        <ListItemText className='title' primary={t('manage_traning')} />
                                     </ListItem>
                                    
                                 </List>
@@ -340,7 +343,7 @@ const hideSibar = () => {
                         <ListItemIcon>
                             <LogoutIcon className='title' />
                         </ListItemIcon>
-                        <ListItemText className='title text_title' primary="Logout" />
+                        <ListItemText className='title text_title' primary={t('logout')} />
                     </ListItem>
              </List>
             </div>

@@ -5,7 +5,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Typography, Snackbar, Alert, Paper, Container, IconButton } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
-
+import { useTranslation } from 'react-i18next'
 // Define the interface for the drill data
 interface Drill {
   _id: string;
@@ -26,6 +26,7 @@ function ListDrills() {
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -127,7 +128,7 @@ function ListDrills() {
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-          Drill List
+          {t('drills')}
         </Typography>
         <DataGrid
           rows={drills}

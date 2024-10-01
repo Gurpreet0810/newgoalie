@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import { validate } from '../utils/validate';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next'
 import { Image} from 'react-bootstrap';
 
 const Addgoalie = () => {
@@ -80,22 +80,22 @@ const Addgoalie = () => {
             setErrors(error);
         }
    
-    };
+    };   const { t, i18n } = useTranslation();
 
     return (
         <div className="profile-edit-content card card-primary">
         <div className="card-header">
-        <h3 className="card-title">Add Goalie</h3> </div>
+        <h3 className="card-title">{t('add_goalie')}</h3> </div>
             <Form onSubmit={handleSubmit} encType='multipart/form-data' className="profile-edit-form row">
                 
 
                 <Row className="mb-3">
                 <Form.Group as={Col} controlId="goalieName" className="profile-edit-field mb-3">
-                    <Form.Label>Goalie Name</Form.Label>
+                    <Form.Label>{t('goalie_name')}</Form.Label>
                     <Form.Control
                         type="text"
                         name='goalie_name'
-                        placeholder="Goalie Name"
+                        placeholder={t('goalie_name')}
                         onChange={handleInputs}
                         value={user.goalie_name}
                         isInvalid={!!errors.goalie_name}
@@ -105,7 +105,7 @@ const Addgoalie = () => {
                                 </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group  as={Col} className="profile-edit-field mb-3" controlId="email">
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label>{t('email')}</Form.Label>
                     <Form.Control
                         type="email"
                         name='email'
@@ -122,7 +122,7 @@ const Addgoalie = () => {
 
       <Row className="mb-3">
                 <Form.Group  as={Col}  className="profile-edit-field" controlId="goaliePhoto">
-                    <Form.Label>Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
+                    <Form.Label>{t('photo')} {t('Accept only: jpg,jpeg,png,gif')}</Form.Label>
                     <Form.Control
                         type="file"
                         name='goalie_photo'
@@ -146,11 +146,11 @@ const Addgoalie = () => {
                 </Row>
                 <Row className="mb-3">
                 <Form.Group as={Col} className="profile-edit-field mb-3" controlId="phone">
-                    <Form.Label>Phone</Form.Label>
+                    <Form.Label>{t('phono')}</Form.Label>
                     <Form.Control
                         type="tel"
                         name='phone'
-                        placeholder="Enter Phone number"
+                        placeholder={t('Enter your phone number')}
                         onChange={handleInputs}
                         value={user.phone}
                         isInvalid={!!errors.phone}
@@ -160,11 +160,11 @@ const Addgoalie = () => {
                                 </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} className="profile-edit-field mb-3" controlId="password">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>{t('password')}</Form.Label>
                     <Form.Control
                         type="password"
                         name='password'
-                        placeholder="Enter Password"
+                        placeholder={t('Enter Password')}
                         onChange={handleInputs}
                         value={user.password}
                         isInvalid={!!errors.password}
@@ -175,7 +175,7 @@ const Addgoalie = () => {
                 </Form.Group>
                 </Row>
                 <div className="text-left">
-                <Button type='submit' variant="primary" >Submit</Button>
+                <Button type='submit' variant="primary" >{t('submit')}</Button>
                 </div>
             </Form>
         </div>

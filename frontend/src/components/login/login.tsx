@@ -15,7 +15,21 @@ import { AiFillTwitterCircle } from "react-icons/ai";
 import { FaGooglePlus } from "react-icons/fa6";
 import { userLogin } from '../store/loginSlice'
 import { Form, Button, Spinner } from 'react-bootstrap';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import enTranslation from '../locales/en/translation.json';
+import frTranslation from '../locales/fr/translation.json';
+import { useTranslation } from 'react-i18next';
 
+i18n.use(initReactI18next).init({
+  resources: {
+    en: { translation: enTranslation },
+    fr: { translation: frTranslation },
+  },
+  lng: 'en', // Default language
+  fallbackLng: 'en', // Fallback language
+  interpolation: { escapeValue: false }, // React already handles escaping
+});
 
 interface formState {
     userName: string,
@@ -26,17 +40,18 @@ const Login = () => {
         userName: '',
         password: ''
     });
-    const navigate = useNavigate();
-    const location = useLocation();
+    
+    
     const [loader, setLoader] = useState(false);
     const [errors, setErrors] = useState<any>({});
-    const dispatch = useDispatch();
+   
     const [isFormValid, setIsFormValid] = useState(false);
     const [showValidation, setShowValidation] = useState(false);
-
-
-    const from = location.state?.from?.pathname || '/';
-    console.log('before path is ', from, location.state?.from?.pathname);
+    const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useDispatch();
+   
     const fields = [
         { field: 'userName', name: 'userName', validate: 'required' },
         { field: 'password', name: 'password', validate: 'required' },
@@ -78,20 +93,26 @@ const Login = () => {
         }
     };
 
+    const changeLanguage = (lng: any) => {
+      i18n.changeLanguage(lng);
+    };
+
 
     return (
         <div className="sign-in-page" style={{ backgroundImage: `url(${bglogo})` }}>
             <div className="signin-wrapper">
-                <div className="right-content">
+                <div className="right-content"><button onClick={() => changeLanguage('en')}>English</button>
+                <button onClick={() => changeLanguage('fr')}>Français</button>
                     <div className="center">
                         {/* <span>Welcome to Maya Support</span> */}
                         <div className="login-content">
                         <img src={logo} alt="" className='login-img'/>
                         <Form onSubmit={handleSubmit} className="login-form">
     <Form.Group controlId="formUserName" className="login-username mb-3">
-      <Form.Label>UserName</Form.Label>
+        
+      <Form.Label>{t('username')}</Form.Label>
       <InputField
-        placeholder="Enter a valid User Name"
+        placeholder={t('Enter a valid User Name')}
         onChange={handleChange}
         title={formData.userName}
         type="text"
@@ -102,9 +123,9 @@ const Login = () => {
     </Form.Group>
 
     <Form.Group controlId="formPassword" className="login-password mb-3">
-      <Form.Label>Password</Form.Label>
+      <Form.Label>{t('password')}</Form.Label>
       <InputField
-        placeholder="Enter password"
+        placeholder={t('Enter password')}
         onChange={handleChange}
         title={formData.password}
         type="password"
@@ -117,7 +138,7 @@ const Login = () => {
     <Form.Group controlId="formRememberMe" className="login-password remember_me mb-3">
       <Form.Check
         type="checkbox"
-        label="Remember me"
+        label={t('Remember me')}
         id="remember"
       />
     </Form.Group>
@@ -128,7 +149,7 @@ const Login = () => {
       </div>
     ) : (
       <Button variant="primary" type="submit" className="form-submit-button">
-        Login
+        {t('Login')}
       </Button>
 
     )}
@@ -136,7 +157,7 @@ const Login = () => {
 <div className="d-flex justify-content-between align-items-center pt-3">
     <Form.Text>
       <a href="/forgot-password" className="forgot-password-link">
-        Forgot Password?
+       {t('Forgot Password')} 
       </a>
     </Form.Text>
   </div>

@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import previewImg from '../../assests/admin.jpg'
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { Form, Button, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { validate } from '../utils/validate';
 import { updateUserProfile } from '../store/loginSlice';
 import axios from 'axios';
-
+import { useTranslation } from 'react-i18next'
 interface FormState {
     userName: string;
     email: string;
@@ -35,9 +35,8 @@ const ProfileEdit = () => {
     const [errors, setErrors] = useState<any>({});
     const [showValidation, setShowValidation] = useState(false);
     
+   
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
     const fetchUserData = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -149,18 +148,19 @@ const ProfileEdit = () => {
             }
         }
     };
+    const { t, i18n } = useTranslation();
 
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header">
-                <h3 className="card-title">Profile</h3>
+                <h3 className="card-title">{t('profile') }</h3>
             </div>
             <Form onSubmit={handleSubmit} className="profile-edit-form row">
                 <Form.Group controlId="name" className="profile-edit-field col-md-6">
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>{t('name')}</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter your name"
+                        placeholder={t('Enter your name')}
                         name="userName"
                         value={formData.userName}
                         onChange={handleChange}
@@ -172,7 +172,7 @@ const ProfileEdit = () => {
                 </Form.Group>
 
                 <Form.Group controlId="email" className="profile-edit-field col-md-6">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>{t('email')}</Form.Label>
                     <Form.Control
                         type="email"
                         placeholder="Enter your email"
@@ -188,10 +188,10 @@ const ProfileEdit = () => {
                 </Form.Group>
 
                 <Form.Group controlId="phoneNumber" className="profile-edit-field col-md-6">
-                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Label>{t('phone')}</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter your phone number"
+                        placeholder={t('Enter your phone number')}
                         name="phoneNumber"
                         value={formData.phoneNumber}
                         onChange={handleChange}
@@ -203,10 +203,10 @@ const ProfileEdit = () => {
                 </Form.Group>
 
                 <Form.Group controlId="password" className="profile-edit-field col-md-6">
-                    <Form.Label>Set New Password</Form.Label>
+                    <Form.Label>{t('set_new_pass')}</Form.Label>
                     <Form.Control
                         type="password"
-                        placeholder="Enter a new password"
+                        placeholder={t('Enter a new password')}
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
@@ -218,7 +218,7 @@ const ProfileEdit = () => {
                 </Form.Group>
 
                 <Form.Group controlId="photo" className="profile-edit-field col-md-6">
-                    <Form.Label>Profile Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
+                    <Form.Label>{t('profile') } {t('photo')} {t('Accept only: jpg,jpeg,png,gif')}</Form.Label>
                     <Form.Control
                         type="file"
                         name="photo"
@@ -243,7 +243,7 @@ const ProfileEdit = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">{t('submit')}</Button>
                     </div>
                 )}
             </Form>

@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { persistor, store } from './components/store';
 import router from './components/routes';
-
+import './i18n';
 
 const App = () => {
  

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'
 
 const AddBlogCategory = () => {
     const [categoryName, setCategoryName] = useState('');
@@ -18,7 +19,7 @@ const AddBlogCategory = () => {
     const [showValidation, setShowValidation] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { t, i18n } = useTranslation();
     const { userInfo } = useSelector((state: any) => state.user);
 
     const fields = [
@@ -58,14 +59,14 @@ const AddBlogCategory = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Add Blog Category</h3>
+                <h3 className="card-title">{t('add_drills_cat')}</h3>
             </div>
             <Form onSubmit={handleSubmit} className="profile-edit-form row">
                 <Form.Group controlId="categoryName" className="profile-edit-field col-md-6">
-                    <Form.Label>Category Name</Form.Label>
+                    <Form.Label>{t('categoryname')}</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter category name"
+                        placeholder={t('categoryname')}
                         value={categoryName}
                         onChange={handleInputs}
                         isInvalid={!!errors.category_name}
