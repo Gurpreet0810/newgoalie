@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Typography, Snackbar, Alert, Paper, Container, IconButton } from '@mui/material';
+import { Typography, Snackbar, Alert, Paper, Container, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 
@@ -27,6 +27,8 @@ function ListBlogs() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null); // For delete confirmation dialog
+  const [dialogOpen, setDialogOpen] = useState(false); // State to control the delete dialog
 
   useEffect(() => {
     const fetchBlogsAndCategories = async () => {
@@ -61,11 +63,14 @@ function ListBlogs() {
     fetchBlogsAndCategories();
   }, []);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async () => {
+    if (!deleteId) return;
+
     try {
-      await axios.delete(`http://localhost:4500/api/v1/blogs/${id}`);
-      setBlogs(blogs.filter(blog => blog._id !== id));
+      await axios.delete(`http://localhost:4500/api/v1/blogs/${deleteId}`);
+      setBlogs(blogs.filter(blog => blog._id !== deleteId));
       toast.success('Blog deleted successfully', { autoClose: 1000 });
+      setDialogOpen(false); // Close dialog after deletion
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -73,6 +78,11 @@ function ListBlogs() {
         setError('An unknown error occurred');
       }
     }
+  };
+
+  const handleClickDelete = (id: string) => {
+    setDeleteId(id); // Store the blog ID to delete
+    setDialogOpen(true); // Open the confirmation dialog
   };
 
   const columns: GridColDef[] = [
@@ -85,10 +95,10 @@ function ListBlogs() {
       headerName: 'Photo',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <img 
-          src={`http://localhost:4500/storage/productImages/${params.row.photo}`} 
-          alt="Blog" 
-          style={{ width: 50, height: 50 }} 
+        <img
+          src={`http://localhost:4500/storage/productImages/${params.row.photo}`}
+          alt="Blog"
+          style={{ width: 50, height: 50 }}
         />
       ),
     },
@@ -109,7 +119,7 @@ function ListBlogs() {
           </IconButton>
           <IconButton
             aria-label="delete"
-            onClick={() => handleDelete(params.row._id)}
+            onClick={() => handleClickDelete(params.row._id)} // Open confirmation dialog
           >
             <Delete />
           </IconButton>
@@ -137,6 +147,27 @@ function ListBlogs() {
           checkboxSelection
           sx={{ border: 0 }}
         />
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+        >
+          <DialogTitle>{"Delete Blog"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure? This action cannot be undone.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDialogOpen(false)} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleDelete} color="secondary">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
 
         <Snackbar
           open={open}

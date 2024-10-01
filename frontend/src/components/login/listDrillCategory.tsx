@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Button, Typography, Snackbar, Alert, Paper, Container, IconButton } from '@mui/material';
+import { Button, Typography, Snackbar, Alert, Paper, Container, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next'
@@ -19,7 +19,6 @@ function ListDrillCategory() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -45,11 +44,14 @@ function ListDrillCategory() {
     fetchCategories();
   }, []);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async () => {
+    if (!deleteId) return;
+
     try {
-      await axios.delete(`http://localhost:4500/api/v1/drillCategories/${id}`);
-      setCategories(categories.filter(category => category._id !== id));
+      await axios.delete(`http://localhost:4500/api/v1/drillCategories/${deleteId}`);
+      setCategories(categories.filter(category => category._id !== deleteId));
       toast.success('Drill Category deleted successfully', { autoClose: 1000 });
+      setDialogOpen(false); // Close the confirmation dialog after deletion
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -57,6 +59,11 @@ function ListDrillCategory() {
         setError('An unknown error occurred');
       }
     }
+  };
+
+  const handleClickDelete = (id: string) => {
+    setDeleteId(id); // Store the drill category ID to delete
+    setDialogOpen(true); // Open the confirmation dialog
   };
 
   const columns: GridColDef[] = [
@@ -90,7 +97,7 @@ function ListDrillCategory() {
           </IconButton>
           <IconButton
             aria-label="delete"
-            onClick={() => handleDelete(params.row._id)}
+            onClick={() => handleClickDelete(params.row._id)} // Trigger delete confirmation dialog
           >
             <Delete />
           </IconButton>
@@ -103,11 +110,12 @@ function ListDrillCategory() {
   if (error) return <Typography variant="h6" color="error">Error: {error}</Typography>;
 
   const paginationModel = { page: 0, pageSize: 5 };
+  
   return (
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
     <Paper sx={{ height: 400, width: '100%' }}>
       <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-       {t('drill_category')}
+        Drill Categories List
       </Typography>
       <DataGrid
         rows={categories}
@@ -118,16 +126,16 @@ function ListDrillCategory() {
         sx={{ border: 0 }}
       />
 
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={() => setOpen(false)}
-      >
-        <Alert onClose={() => setOpen(false)} severity="success">
-          Drill Category deleted successfully
-        </Alert>
-      </Snackbar>
-    </Paper>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={() => setOpen(false)}
+        >
+          <Alert onClose={() => setOpen(false)} severity="success">
+            Drill Category deleted successfully
+          </Alert>
+        </Snackbar>
+      </Paper>
     </Container>
   );
 }

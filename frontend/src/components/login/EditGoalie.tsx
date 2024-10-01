@@ -85,7 +85,7 @@ function EditGoalie() {
     <h3 className="card-title">{t('editgoalie')}</h3>
   </div>
   
-  <Form onSubmit={handleUpdate} encType="multipart/form-data" className="profile-edit-form row">
+  <Form onSubmit={handleUpdate} className="profile-edit-form row">
     <Row className="mb-3">
       <Form.Group as={Col} controlId="formName" className="profile-edit-field mb-3">
         <Form.Label>{t('name')}</Form.Label>
@@ -112,13 +112,13 @@ function EditGoalie() {
 
     <Row className="mb-3">
       <Form.Group as={Col} controlId="formPhone" className="profile-edit-field mb-3">
-        <Form.Label>{t('phone')}</Form.Label>
+        <Form.Label>Phone</Form.Label>
         <Form.Control
           type="tel"
           name="phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          placeholder={t('phone')}
+          placeholder="Phone"
         />
       </Form.Group>
 
@@ -147,6 +147,24 @@ function EditGoalie() {
           </Row>
         </Form.Group>
       )}
+    </Row>
+
+    
+    <Row className="mb-3">
+      <Form.Group as={Col} controlId="formPhone" className="profile-edit-field mb-3">
+        <Form.Label>Phone (Accept only: Numbers)</Form.Label>
+        <Form.Control
+          type="number"
+          name="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Phone"
+        />
+      </Form.Group>
+
+      <Form.Group as={Col}  className="profile-edit-field mb-3">
+        
+      </Form.Group>
     </Row>
 
     <div className="text-left">

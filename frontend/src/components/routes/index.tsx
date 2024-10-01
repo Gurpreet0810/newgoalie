@@ -1,4 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import UserService from '../services/userServices';
+
+import ProtectedRoute from './protectedRoute';
 import Layout from '../layout';
 import HomeSection, { HomeSection1, HomeSection2 } from '../home';
 import Login from '../login/login';
@@ -9,7 +15,6 @@ import ListGoalie from  '../login/list_goalie';
 import EditGoalie from '../login/EditGoalie';
 import ForgotPassword from '../login/forgot-password';
 import ResetPassword from '../login/reset-password';
-import ProtectedRoute from './protectedRoute';
 import ComplianceBox from '../complianceBox';
 import ComplaintReason from '../complianceBox/reason';
 import CheckScreen from '../screen';
@@ -39,7 +44,27 @@ import EditBlog from '../login/editBlog';
 import CoachDrills from '../login/coachDrills';
 import DrillsCoach from '../login/drillsCoach';
 
+import AssignTrainingPlan from '../login/assignTrainingPlan';
+
 import HomeBanner from '../login/homeBanner';
+
+// Logout component
+const Logout = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const logout = async () => {
+      try {
+        const res: any = await UserService.logoutUser();
+        localStorage.removeItem('token');
+        navigate('/login');
+      } catch (error) {
+        console.error('Logout failed', error);
+      }
+    };
+    logout();
+  }, [navigate]);
+  return null;
+};
 
 const router = createBrowserRouter([
   {
@@ -164,6 +189,10 @@ const router = createBrowserRouter([
           {
             path: '/manage-training',
             element: <ListTrainings />, 
+          },
+          {
+            path: 'assign-training-plan',
+            element: <AssignTrainingPlan />, 
           }
         ],
       },
@@ -172,6 +201,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />, // No header here
+  },
+  {
+    path: '/logout',
+    element: <Logout />, // No header here
   },
   {
     path: '/sign-up',
@@ -196,3 +229,4 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
+export { Logout };

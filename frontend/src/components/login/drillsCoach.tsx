@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Typography, Paper, Container } from '@mui/material';
+import { Typography, Paper, Container, Box } from '@mui/material';
 import { useParams } from 'react-router-dom'; // Import useParams
 
 // Define the interface for the drill data
@@ -28,6 +28,7 @@ function ListDrillsByCoach() {
       try {
         // Fetch drills by coach ID
         const drillsResponse = await axios.get<Drill[]>(`http://localhost:4500/api/v1/drills/coach/${coachId}`);
+        console.log('response : ',drillsResponse)
         const fetchedDrills = drillsResponse.data.map((drill, index) => ({
           ...drill,
           id: drill._id,
@@ -80,14 +81,21 @@ function ListDrillsByCoach() {
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
           Drills
         </Typography>
-        <DataGrid
-          rows={drills}
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-          sx={{ border: 0 }}
-        />
+        
+        {drills.length > 0 ? (
+          <DataGrid
+            rows={drills}
+            columns={columns}
+            initialState={{ pagination: { paginationModel } }}
+            pageSizeOptions={[5, 10]}
+            checkboxSelection
+            sx={{ border: 0 }}
+          />
+        ) : (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <Typography variant="h6">No drills available for this coach.</Typography>
+          </Box>
+        )}
       </Paper>
     </Container>
   );

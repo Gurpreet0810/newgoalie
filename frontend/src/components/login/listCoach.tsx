@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { IconButton, Typography, Container, Paper, Snackbar, Alert } from '@mui/material';
-import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
+import { IconButton, Typography, Container, Paper, Snackbar, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { Edit, Delete } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 
-// Define the coach interface based on the structure of your data
 interface Coach {
   _id: string;
   userName: string;
@@ -23,6 +22,8 @@ function ListCoach() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null); // State to store coach ID to delete
+  const [dialogOpen, setDialogOpen] = useState(false); // State for confirmation dialog
 
   useEffect(() => {
     const fetchCoaches = async () => {
@@ -43,11 +44,13 @@ function ListCoach() {
     fetchCoaches();
   }, []);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async () => {
+    if (!deleteId) return;
     try {
-      await axios.delete(`http://localhost:4500/api/v1/deleteCoaches/${id}`);
-      setCoaches(coaches.filter(coach => coach._id !== id));
+      await axios.delete(`http://localhost:4500/api/v1/deleteCoaches/${deleteId}`);
+      setCoaches(coaches.filter(coach => coach._id !== deleteId));
       toast.success('Coach deleted successfully', { autoClose: 1000 });
+      setDialogOpen(false); // Close dialog after deletion
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -55,6 +58,11 @@ function ListCoach() {
         setError('An unknown error occurred');
       }
     }
+  };
+
+  const handleClickDelete = (id: string) => {
+    setDeleteId(id); // Set the ID of the coach to delete
+    setDialogOpen(true); // Open the confirmation dialog
   };
 
   const columns: GridColDef[] = [
@@ -84,7 +92,7 @@ function ListCoach() {
           </IconButton>
           <IconButton
             aria-label="delete"
-            onClick={() => handleDelete(params.row._id)}
+            onClick={() => handleClickDelete(params.row._id)} // Open confirmation dialog
           >
             <Delete />
           </IconButton>
@@ -128,6 +136,29 @@ function ListCoach() {
           Coach deleted successfully
         </Alert>
       </Snackbar>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirm Deletion"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          Are you sure? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} color="secondary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

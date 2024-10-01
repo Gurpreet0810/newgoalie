@@ -153,7 +153,7 @@ const EditDrill = () => {
                 { field: 'drill_name', name: 'drill_name', validate: 'required' },
                 { field: 'category', name: 'category', validate: 'required' },
                 { field: 'description', name: 'description', validate: 'required' },
-                { field: 'photo', name: 'photo', validate: 'required' },
+                // { field: 'photo', name: 'photo', validate: 'required' },
             ], drill);
 
             if (isValidate) {

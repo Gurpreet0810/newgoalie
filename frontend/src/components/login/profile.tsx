@@ -188,10 +188,10 @@ const ProfileEdit = () => {
                 </Form.Group>
 
                 <Form.Group controlId="phoneNumber" className="profile-edit-field col-md-6">
-                    <Form.Label>{t('phone')}</Form.Label>
+                    <Form.Label>Phone Number</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder={t('Enter your phone number')}
+                        placeholder="Enter your phone number"
                         name="phoneNumber"
                         value={formData.phoneNumber}
                         onChange={handleChange}

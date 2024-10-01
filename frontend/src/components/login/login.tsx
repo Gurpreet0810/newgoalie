@@ -47,11 +47,10 @@ const Login = () => {
    
     const [isFormValid, setIsFormValid] = useState(false);
     const [showValidation, setShowValidation] = useState(false);
-    const { t, i18n } = useTranslation();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const dispatch = useDispatch();
-   
+
+
+    const from = location.state?.from?.pathname || '/';
+    console.log('before path is ', from, location.state?.from?.pathname);
     const fields = [
         { field: 'userName', name: 'userName', validate: 'required' },
         { field: 'password', name: 'password', validate: 'required' },
