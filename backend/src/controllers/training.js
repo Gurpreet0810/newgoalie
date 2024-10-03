@@ -1,21 +1,16 @@
 import Training from "../models/Training.js";
+import TrainingPlanAssign from "../models/trainingPlanAssign.model.js";
 import TrainingDrills from "../models/Trainingdrills.js"
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const AddTrainings = asyncHandler(async (req, res) => {
-  // console.log(req.body);
-  const { training_name, drill_category ,drill_name , weeks ,user_id} = req.body;
- 
+  const { training_name, drill_category ,drill_name , weeks ,user_id} = req.body; 
   const image = req.image; 
-
-    // Check if the user is authenticated
-    if (!user_id) {
-        return res.status(401).json(new ApiError(401, [], "User not authenticated"));
-    }
-
-  // Create a new DrillCategory instance
+  if (!user_id) {
+    return res.status(401).json(new ApiError(401, [], "User not authenticated"));
+  }
   const newTraining = new Training({
     training_name,
     drill_category,
@@ -23,32 +18,26 @@ const AddTrainings = asyncHandler(async (req, res) => {
     weeks,
     image
   });
-
   const addCategorySuccess = await newTraining.save();
-
   if (!addCategorySuccess) {
     return res.status(500).json(
-      new ApiError(500, [], "Something went wrong while adding Training Details")
+    new ApiError(500, [], "Something went wrong while adding Training Details")
     );
   }
-
   return res.status(200).json(new ApiResponse(200, { addCategorySuccess }, "Training created successfully"));
 });
+
 const getAllTrainings = async (req, res) => {
   try {
-    const categories = await Training.find(); // Fetch all categories
+    const categories = await Training.find();
     res.status(200).json(categories);
-    // console.log(categories);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
-
 export const AddTrainingsDrills = asyncHandler(async (req, res) => {
-
-  const { drill_category, drill_name ,trainingplan_id , weeks } = req.body;
- 
+  const { drill_category, drill_name ,trainingplan_id , weeks } = req.body; 
   // Create a new DrillCategory instance
   const newTrainingDrills = new TrainingDrills({
     trainingplan_id,
@@ -56,51 +45,38 @@ export const AddTrainingsDrills = asyncHandler(async (req, res) => {
     drill_name,
     weeks
   });
-
   const addDrillsSuccess = await newTrainingDrills.save();
-
   if (!addDrillsSuccess) {
     return res.status(500).json(
       new ApiError(500, [], "Something went wrong while adding Training Details")
     );
   }
-
   return res.status(200).json(new ApiResponse(200, { addDrillsSuccess }, "Training created successfully"));
 });
 
-
 export const UpdateTrainings = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { training_name } = req.body; // Destructure the training_name from req.body
-
- // Log for debugging
-
-  // Check if req.file exists to get the uploaded photo
-  const image = req.image ; // Store the path of the uploaded photo
-  let updatedTraining = '' ;
-  // console.log(image);
+  const { training_name } = req.body;
+  const image = req.image;
+  let updatedTraining = '';
   try {
-    // Find the training record by ID and update it with the new data
     if(image == null){
        updatedTraining = await Training.findByIdAndUpdate(
         id,
-        { training_name }, // Ensure correct fields to update
-        { new: true } // This option returns the updated document
+        { training_name },
+        { new: true }
       );
     }
     else{
        updatedTraining = await Training.findByIdAndUpdate(
         id,
-        { training_name ,image }, // Ensure correct fields to update
-        { new: true } // This option returns the updated document
+        { training_name, image },
+        { new: true }
       );
     }
-   
-
     if (!updatedTraining) {
       return res.status(404).json({ message: "Training not found" });
     }
-
     res.status(200).json(updatedTraining); // Respond with the updated training record
   } catch (error) {
     console.error(error);
@@ -109,21 +85,17 @@ export const UpdateTrainings = asyncHandler(async (req, res) => {
 });
 
 export const updateTrainingDrills = asyncHandler(async (req, res) => {
-  const { id } = req.params; // Get the training ID from the request parameters
-  const { drill_category,  drill_name,  weeks } = req.body; // Destructure the training_name from req.body
-  console.log(req.body);
+  const { id } = req.params;
+  const { drill_category,  drill_name,  weeks } = req.body;
   try {
-    // Find the training record by ID and update it with the new data
     const updatedTraining = await TrainingDrills.findByIdAndUpdate(
       id,
-      { drill_category,  drill_name,  weeks }, // Ensure correct fields to update
-      { new: true } // This option returns the updated document
+      { drill_category,  drill_name,  weeks },
+      { new: true }
     );
-
     if (!updatedTraining) {
       return res.status(404).json({ message: "Training not found" });
     }
-
     res.status(200).json(updatedTraining); // Respond with the updated training record
   } catch (error) {
     console.error(error);
@@ -131,14 +103,9 @@ export const updateTrainingDrills = asyncHandler(async (req, res) => {
   }
 });
 
-
-
-export const singleTrainingsDrills = async (req, res) => {
-  
-  try {
-  
+export const singleTrainingsDrills = async (req, res) => {  
+  try {  
     const category = await TrainingDrills.find({ trainingplan_id: req.params.id });
-    // console.log(category);
     if (!category) {
       return res.status(404).json({ message: "Training not found" });
     }
@@ -164,229 +131,123 @@ export const singleTrainings = async (req, res) => {
 
 export const deletetrainings = asyncHandler(async (req, res) => {
     const { id } = req.params;
-  console.log(id);
     try {
-      // Find the category by id and delete it
-      const category = await Training.findByIdAndDelete(id);
-  
+      const category = await Training.findByIdAndDelete(id);  
       if (!category) {
         return res.status(404).json(new ApiError(404, [], "Training not found"));
       }
-       await TrainingDrills.deleteMany({ trainingplan_id: id });
+      await TrainingDrills.deleteMany({ trainingplan_id: id });
       return res
         .status(200)
         .json(new ApiResponse(200, {}, "Training deleted successfully"));
-
     } catch (error) {
       console.error("Error deleting category:", error);
       res.status(500).json(new ApiError(500, [], "Server error while deleting Training"));
     }
-  });
+});
+
+const AssignTrainingPlan = asyncHandler(async (req, res) => {
+  const { goalie_id, coach_id, training_plan_id } = req.body;
+  if (!coach_id) {
+    return res.status(401).json(new ApiError(401, [], "User not authenticated"));
+  }
+  const trainingPlans = Array.isArray(training_plan_id) ? training_plan_id : [training_plan_id];
+  const assignedTrainings = [];
+  try {
+    await TrainingPlanAssign.deleteMany({ goalie_id });
+    for (const training_plan_id of trainingPlans) {
+      const newTraining = new TrainingPlanAssign({
+        goalie_id,
+        training_plan_id,
+        coach_id
+      });
+      
+      const addAssignTraining = await newTraining.save();  // Save to DB
+      assignedTrainings.push(addAssignTraining);  // Add saved entry to response array
+    }
+    return res.status(200).json(
+      new ApiResponse(200, { assignedTrainings }, "Training plans assigned successfully")
+    );
+  } catch (error) {
+    return res.status(500).json(
+      new ApiError(500, [], "Something went wrong while assigning training plans")
+    );
+  }
+});
+
+const getAllAssignedTrainings = async (req, res) => {
+  try {
+    const assignedTrainings = await TrainingPlanAssign.aggregate([
+      {
+        $lookup: {
+          from: 'goalies', // The name of the goalie collection
+          localField: 'goalie_id', // Field from TrainingPlanAssign
+          foreignField: '_id', // Field from goalie_model
+          as: 'goalieInfo', // Output array field
+        },
+      },
+      {
+        $unwind: { // Unwind goalieInfo to deconstruct the array
+          path: '$goalieInfo',
+          preserveNullAndEmptyArrays: true, // Keep documents without a match
+        },
+      },
+      {
+        $group: {
+          _id: "$goalie_id", // Group by goalie ID
+          goalie_name: { $first: "$goalieInfo.goalie_name" },
+          goalie_email: { $first: "$goalieInfo.email" },
+          training_plans: { // Collect training plans into an array
+            $push: {
+              training_plan_name: "$training_name",
+              status: "$status", // Include status of each training plan
+            },
+          },
+        },
+      },
+    ]);
+    
+    res.status(200).json(assignedTrainings); // Return the assigned trainings
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const getAllAssignedTrainingsByGoalieId = async (req, res) => {
+  try {
+    const assignments = await TrainingPlanAssign.find({ goalie_id: req.params.goalieId });
+
+    if (!assignments || assignments.length === 0) {
+      return res.status(404).json({ message: "No assignments found for this goalie" });
+    }
+    res.status(200).json(assignments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const updateAssignedTrainingsStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params; // Get the assignment ID from the request parameters
+  const { status } = req.body; // Get the new status from the request body
+
+  try {
+    // Find the assignment by ID and update the status
+    const updatedAssignment = await TrainingPlanAssign.findByIdAndUpdate(
+      id,
+      { status }
+    );
+
+    if (!updatedAssignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    res.status(200).json(updatedAssignment); // Respond with the updated assignment record
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 
-// const getAllDrillCategories = async (req, res) => {
-//   try {
-//     const categories = await AddDrillCategory.find(); // Fetch all categories
-//     res.status(200).json(categories);
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error", error: error.message });
-//   }
-// };
-
-// const getSingleDrillCategory = async (req, res) => {
-//   try {
-//     const category = await AddDrillCategory.findById(req.params.id);
-//     if (!category) {
-//       return res.status(404).json({ message: "Category not found" });
-//     }
-//     res.status(200).json(category);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
-
-// const updateDrillCategory = async (req, res) => {
-//   const { id } = req.params;
-//   const { category_name, category_status } = req.body;
-
-//   try {
-//     // Construct the update fields
-//     const updateFields = {
-//       category_name,
-//       category_status,
-//     };
-
-//     // Perform the update operation
-//     const result = await AddDrillCategory.findByIdAndUpdate(id, updateFields, { new: true });
-
-//     if (result) {
-//       res.status(200).json(result); // Return the updated category
-//     } else {
-//       res.status(404).json({ message: "Category not found" });
-//     }
-//   } catch (error) {
-//     console.error("Error updating category:", error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
-
-// // Delete a drill category
-
-
-//   const addDrill = asyncHandler(async (req, res) => {
-//     const { drill_name, category, video_option, video_link, description, user_id } = req.body;
-//     const photo = req.image;
-//     const video_file = req.video;    
-  
-//     // Validate required fields
-//     if (!drill_name || !category || !description) {
-//       return res.status(404).json(new ApiError(404, [], "Drill name, category, and description are required"));
-//     }
-  
-//     // Check if the user is authenticated
-//     if (!user_id) {
-//       return res.status(401).json(new ApiError(401, [], "User not authenticated"));
-//     }
-  
-//     // Create a new Drill instance
-//     const newDrill = new Drill({
-//       drill_name,
-//       category,
-//       video_option,
-//       description,
-//       coach_id: user_id, // Assuming `coach_id` refers to the `user_id`
-//     });
-  
-//     // Handle video option logic
-//     if (video_option === 'video_upload' && video_file) {
-//       newDrill.video_file = video_file; // Store video file
-//       newDrill.video_link = "";
-//     } else if (video_option === 'video_link' && video_link) {
-//       newDrill.video_link = video_link; // Store video link
-//       newDrill.video_file = "";      
-//     }
-
-//     if (photo) {
-//       newDrill.photo = photo;
-//     }
-  
-//     // Save the new drill
-//     const addDrillSuccess = await newDrill.save();
-  
-//     // Error handling for failed save operation
-//     if (!addDrillSuccess) {
-//       return res.status(500).json(
-//         new ApiError(500, [], "Something went wrong while adding Drill Details")
-//       );
-//     }
-  
-//     // Return a success response with the newly created drill
-//     return res.status(200).json(
-//       new ApiResponse(200, { addDrillSuccess }, "Drill created successfully")
-//     );
-//   });
-
-//   const getAllDrills = async (req, res) => {
-//     try {
-//       const categories = await Drill.find(); // Fetch all categories
-//       res.status(200).json(categories);
-//     } catch (error) {
-//       res.status(500).json({ message: "Server error", error: error.message });
-//     }
-//   };
-
-//   const getSingleDrill = async (req, res) => {
-//     try {
-//       const category = await Drill.findById(req.params.id);
-//       if (!category) {
-//         return res.status(404).json({ message: "Category not found" });
-//       }
-//       res.status(200).json(category);
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ message: "Server error" });
-//     }
-//   };
-  
-//   const updateDrill = asyncHandler(async (req, res) => {
-//     const { id } = req.params;
-//     const { drill_name, category, video_option, video_link, description, user_id } = req.body;
-//     const photo = req.image; // Assuming photo is processed through middleware
-//     const video_file = req.video; // Assuming video is processed through middleware
-
-//     // Validate required fields
-//     if (!drill_name || !category || !description) {
-//         return res.status(404).json(new ApiError(404, [], "Drill name, category, and description are required"));
-//     }
-
-//     // Check if the user is authenticated
-//     if (!user_id) {
-//         return res.status(401).json(new ApiError(401, [], "User not authenticated"));
-//     }
-
-//     // Prepare the fields to update
-//     const updateFields = {
-//       drill_name,
-//       category,
-//       video_option,
-//       description,
-//       coach_id: user_id, // Assuming `coach_id` is linked to the authenticated user
-//   };
-
-//     // Handle video option logic
-//     if (video_option === 'video_upload' && video_file) {
-//         updateFields.video_file = video_file; // Update with the new video file
-//         updateFields.video_link = ""; // Clear the video link
-//     } else if (video_option === 'video_link' && video_link) {
-//         updateFields.video_link = video_link; // Update with the new video link
-//         updateFields.video_file = ""; // Clear the video file
-//     }
-
-//     // Update the photo if provided
-//     if (photo) {
-//         updateFields.photo = photo;
-//     }
-
-//     try {
-//         // Find the drill by ID and update it
-//         const updatedDrill = await Drill.findByIdAndUpdate(id, updateFields, { new: true });
-
-//         // If no drill is found, return an error
-//         if (!updatedDrill) {
-//             return res.status(404).json(new ApiError(404, [], "Drill not found"));
-//         }
-
-//         // Return success response with the updated drill
-//         return res.status(200).json(
-//             new ApiResponse(200, { updatedDrill }, "Drill updated successfully")
-//         );
-//     } catch (error) {
-//         // Handle any errors during the update process
-//         return res.status(500).json(new ApiError(500, [], "Error updating drill"));
-//     }
-// });
-
-// const deleteDrill = asyncHandler(async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     // Find the category by id and delete it
-//     const drill = await Drill.findByIdAndDelete(id);
-
-//     if (!drill) {
-//       return res.status(404).json(new ApiError(404, [], "Drill not found"));
-//     }
-
-//     return res
-//       .status(200)
-//       .json(new ApiResponse(200, {}, "Drill deleted successfully"));
-//   } catch (error) {
-//     console.error("Error deleting drill:", error);
-//     res.status(500).json(new ApiError(500, [], "Server error while deleting drill"));
-//   }
-// });
-
-
-  export {     AddTrainings ,getAllTrainings
-   };
+export { AddTrainings, getAllTrainings, AssignTrainingPlan, getAllAssignedTrainings, getAllAssignedTrainingsByGoalieId };

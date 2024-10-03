@@ -9,7 +9,7 @@ import sendEmail from '../utils/nodemailer.js';
 import { addGoalie, getAllGoalies, getSingleGoalie, updateGoalie, deleteGoalie } from '../controllers/Goalie.js';
 import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, updateDrillCategory, deleteDrillCategory } from '../controllers/drill.js';
 import { addDrill, getAllDrills, getAllCoachDrills, getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
-import { AddTrainings,updateTrainingDrills ,deletetrainings ,UpdateTrainings , getAllTrainings ,AddTrainingsDrills ,singleTrainings ,singleTrainingsDrills} from '../controllers/training.js';
+import { AddTrainings, updateTrainingDrills, deletetrainings, UpdateTrainings, getAllTrainings, AddTrainingsDrills, singleTrainings, singleTrainingsDrills, AssignTrainingPlan, getAllAssignedTrainings, getAllAssignedTrainingsByGoalieId, updateAssignedTrainingsStatus} from '../controllers/training.js';
 import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
 import { addBlogCategory, Addloaderimage,updateBlog,updateloaderimage, Getloaderimage  ,getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
 import { addHomeBanner , getHomeBanner ,updateHomeBanner  } from "../controllers/Homebanner.js"
@@ -78,7 +78,6 @@ router.get('/get_coach/:id', getSingleCoach)
 router.put('/update_coach/:id', updateCoach)
 router.delete('/deleteCoaches/:id', deleteCoach)
 
-
 router.post('/addBlogCat', verifyUser, addBlogCategory)
 router.get('/blogCategories', getAllBlogCategories)
 router.get('/get_blog_category/:id', getSingleBlogCategory)
@@ -91,9 +90,14 @@ router.get('/get_blog/:id', getSingleBlog)
 router.put('/update_blog/:id', getImg, updateBlog)
 router.delete('/blogs/:id', deleteBlog)
 
-
 router.post('/addHomeBanner', verifyUser, getImg, addHomeBanner)
 router.get('/get-home-banner', getHomeBanner)
 router.put('/updateHomeBanner/:id', getImg, updateHomeBanner)
+
+router.post('/assigntrainingplan', verifyUser, AssignTrainingPlan)
+router.get('/assignTrainingPlans', getAllAssignedTrainings)
+router.get('/assignments/:goalieId', getAllAssignedTrainingsByGoalieId)
+router.put('/assignments/:id', updateAssignedTrainingsStatus)
+
 
 export default router
