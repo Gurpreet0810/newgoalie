@@ -5,7 +5,8 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Button, Typography, Snackbar, Alert, Paper, Container, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
+
 // Define the interface for the drill category data
 interface DrillCategory {
   _id: string;
@@ -18,7 +19,9 @@ function ListDrillCategory() {
   const [categories, setCategories] = useState<DrillCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // Snackbar state
+  const [dialogOpen, setDialogOpen] = useState(false); // Dialog state
+  const [deleteId, setDeleteId] = useState<string | null>(null); // Track which category to delete
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -50,7 +53,7 @@ function ListDrillCategory() {
     try {
       await axios.delete(`http://localhost:4500/api/v1/drillCategories/${deleteId}`);
       setCategories(categories.filter(category => category._id !== deleteId));
-      toast.success('Drill Category deleted successfully', { autoClose: 1000 });
+      setOpen(true); // Open the success Snackbar
       setDialogOpen(false); // Close the confirmation dialog after deletion
     } catch (err) {
       if (err instanceof Error) {
@@ -113,18 +116,18 @@ function ListDrillCategory() {
   
   return (
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
-    <Paper sx={{ height: 400, width: '100%' }}>
-      <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-        Drill Categories List
-      </Typography>
-      <DataGrid
-        rows={categories}
-        columns={columns}
-        initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-        sx={{ border: 0 }}
-      />
+      <Paper sx={{ height: 400, width: '100%' }}>
+        <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
+          Drill Categories List
+        </Typography>
+        <DataGrid
+          rows={categories}
+          columns={columns}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+          sx={{ border: 0 }}
+        />
 
         <Snackbar
           open={open}
@@ -135,6 +138,26 @@ function ListDrillCategory() {
             Drill Category deleted successfully
           </Alert>
         </Snackbar>
+
+        <Dialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+        >
+          <DialogTitle>Delete Confirmation</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this drill category?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDialogOpen(false)} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleDelete} color="secondary">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
     </Container>
   );

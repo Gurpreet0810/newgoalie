@@ -132,7 +132,7 @@ const { t, i18n } = useTranslation();
                                 <ListItemIcon>
                                     <CategoryIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary={t('Blog Category')} />
+                                <ListItemText className='title text_title' primary={t('Blogcat')} />
                                 {open4 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
                             </ListItem>
                             <Collapse in={open4} timeout="auto" unmountOnExit>

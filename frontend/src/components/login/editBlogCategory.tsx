@@ -5,11 +5,11 @@ import { Form, Button, Container, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validate } from '../utils/validate';
-
+import { useTranslation } from 'react-i18next'
 function EditBlogCategory() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
+  const { t, i18n } = useTranslation();
   const [category, setCategory] = useState({
     category_name: ''
   });
@@ -79,14 +79,14 @@ function EditBlogCategory() {
   return (
     <div className="profile-edit-content card card-primary">
       <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-        <h3 className="card-title">Edit Blog Category</h3>
+        <h3 className="card-title">{t('edit_blog_category')}</h3>
       </div>
       <Form onSubmit={handleSubmit} className="profile-edit-form row">
         <Form.Group controlId="categoryName" className="profile-edit-field col-md-6">
-          <Form.Label>Category Name</Form.Label>
+          <Form.Label>{t('categoryname')}</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter category name"
+            placeholder={t('enter_Category_name')}
             name="category_name"
             value={category.category_name}
             onChange={handleInputs}
@@ -103,8 +103,8 @@ function EditBlogCategory() {
           </div>
         ) : (
           <div className="text-left">
-            <Button variant="primary" type="submit" className="me-2">Update</Button>
-            <Button variant="secondary" onClick={() => navigate('/list-blog-category')}>Cancel</Button>
+            <Button variant="primary" type="submit" className="me-2">{t('submit')}</Button>
+            <Button variant="secondary" onClick={() => navigate('/list-blog-category')}>{t('cancel')}</Button>
           </div>
         )}
       </Form>

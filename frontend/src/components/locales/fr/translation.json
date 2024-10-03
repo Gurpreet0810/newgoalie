@@ -193,9 +193,11 @@
    "category" : "Catégorie",
 
     "selectcategory" : "Choisir une catégorie",
-
+  "edit_blog_category" :"Modifier la catégorie du blog",
+     
+      "enter_Category_name" : "Entrez le nom de la catégorie",
     "selectvideooption" : "Sélectionnez l'option vidéo",
-
+    "Trainingslist" : "Liste des formations",
     "videoupload" : "Téléchargement vidéo",
     "Video File (Accept only: mp4,webm)" :"Fichier vidéo (Accepter uniquement : mp4,webm)",
   "videolink" : "Lien vidéo",

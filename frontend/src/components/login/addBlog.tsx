@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import previewImgShow from '../../assests/admin.jpg';
-
+import { useTranslation } from 'react-i18next'
 interface BlogCategory {
     _id: string;
     category_name: string;
@@ -34,7 +34,7 @@ const AddBlog = () => {
     const [showValidation, setShowValidation] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { t, i18n } = useTranslation();
     const { userInfo } = useSelector((state: any) => state.user);
 
     // Handle input fields (title, category, etc.)
@@ -123,14 +123,14 @@ const AddBlog = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Add Blog</h3>
+                <h3 className="card-title">{t('addblog')}</h3>
             </div>
             <Form onSubmit={handleSubmit} encType='multipart/form-data' className="profile-edit-form row">
                 <Form.Group controlId="title" className="profile-edit-field col-md-6">
-                    <Form.Label>Title</Form.Label>
+                    <Form.Label>{t('Title')}</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter blog title"
+                        placeholder={t('Title')}
                         name="title"
                         value={blog.title}
                         onChange={handleInputs}
@@ -142,7 +142,7 @@ const AddBlog = () => {
                 </Form.Group>
 
                 <Form.Group controlId="category" className="profile-edit-field col-md-6">
-                    <Form.Label>Category</Form.Label>
+                    <Form.Label>{t('Category')}</Form.Label>
                     {loading ? (
                         <Spinner animation="border" variant="primary" />
                     ) : (
@@ -153,7 +153,7 @@ const AddBlog = () => {
                             onChange={handleInputs}
                             isInvalid={!!errors.category}
                         >
-                            <option value="">Select Category</option>
+                            <option value="">{t('Select_Category')}</option>
                             {categories.map((category) => (
                                 <option key={category._id} value={category._id}>
                                     {category.category_name}
@@ -167,7 +167,7 @@ const AddBlog = () => {
                 </Form.Group>
 
                 <Form.Group controlId="image" className="profile-edit-field col-md-6">
-                    <Form.Label>Image (Accept only: jpg, jpeg, png, gif)</Form.Label>
+                    <Form.Label>{t('photo')} {t('Accept only: jpg,jpeg,png,gif')}</Form.Label>
                     <Form.Control
                         type="file"
                         name="photo"
@@ -189,11 +189,11 @@ const AddBlog = () => {
                 </Form.Group>
 
                 <Form.Group controlId="content" className="profile-edit-field col-md-12">
-                    <Form.Label>Content</Form.Label>
+                    <Form.Label>{t('Content')}</Form.Label>
                     <ReactQuill
                         value={blog.content}
                         onChange={handleContentChange}
-                        placeholder="Enter blog content"
+                        placeholder={t('Content')}
                         className={!!errors.content ? "is-invalid" : ""}
                     />
                     <Form.Control.Feedback type="invalid">
@@ -207,7 +207,7 @@ const AddBlog = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">{t('submit')}</Button>
                     </div>
                 )}
             </Form>

@@ -5,7 +5,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { IconButton, Typography, Container, Paper, Snackbar, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { toast } from 'react-toastify';
-
+import { useTranslation } from 'react-i18next';
 interface Coach {
   _id: string;
   userName: string;
@@ -24,7 +24,7 @@ function ListCoach() {
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null); // State to store coach ID to delete
   const [dialogOpen, setDialogOpen] = useState(false); // State for confirmation dialog
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     const fetchCoaches = async () => {
       try {
@@ -116,7 +116,7 @@ function ListCoach() {
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-          Coaches List
+        {t('coaches')}
         </Typography>
         <DataGrid
           rows={rows}

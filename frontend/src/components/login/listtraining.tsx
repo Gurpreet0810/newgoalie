@@ -5,7 +5,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Typography, Snackbar, Alert, Paper, Container, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
-
+import { useTranslation } from 'react-i18next';
 // Define the interface for the training data
 interface Training {
   _id: string;
@@ -84,7 +84,7 @@ function ListTrainings() {
       }
     }
   };
-
+  const { t, i18n } = useTranslation();
   const handleClickDelete = (id: string) => {
     setDeleteId(id); // Store the training ID to delete
     setDialogOpen(true); // Open the confirmation dialog
@@ -129,7 +129,7 @@ function ListTrainings() {
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-          Training List
+          {t('Liste des formations')}
         </Typography>
         <DataGrid
           rows={trainings}

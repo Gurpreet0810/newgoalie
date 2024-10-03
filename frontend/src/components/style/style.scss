@@ -121,7 +121,7 @@ header .left_sider {
     display: flex;
     gap: 10px;
     position: relative;
-    width: 50%;
+    width: 30%;
 }
 
 header .left_sider .filter {
@@ -1895,4 +1895,19 @@ main.layout_section input[type=text] {
     margin-top: 5px;
   }
   
-  
+  .center_sider button ,.login_center button {
+    background: #afaaaa;
+    color: white;
+    padding: 8px;
+    margin: 10px;
+    border: none;
+}
+
+.center_sider button.active{
+    background: #00617a;
+}
+
+.login_center {
+    display: table;
+    margin: auto;
+}

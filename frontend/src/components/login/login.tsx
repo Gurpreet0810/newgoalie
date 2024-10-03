@@ -44,11 +44,12 @@ const Login = () => {
     
     const [loader, setLoader] = useState(false);
     const [errors, setErrors] = useState<any>({});
-   
+    const navigate = useNavigate();
+    const location =useLocation();
     const [isFormValid, setIsFormValid] = useState(false);
     const [showValidation, setShowValidation] = useState(false);
-
-
+    const { t, i18n } = useTranslation();
+    const dispatch = useDispatch();
     const from = location.state?.from?.pathname || '/';
     console.log('before path is ', from, location.state?.from?.pathname);
     const fields = [
@@ -99,9 +100,12 @@ const Login = () => {
 
     return (
         <div className="sign-in-page" style={{ backgroundImage: `url(${bglogo})` }}>
-            <div className="signin-wrapper">
-                <div className="right-content"><button onClick={() => changeLanguage('en')}>English</button>
-                <button onClick={() => changeLanguage('fr')}>Français</button>
+       
+            <div className="signin-wrapper">  <div className='login_center'><button onClick={() => changeLanguage('en')}>English</button>
+            <button onClick={() => changeLanguage('fr')}>Français</button></div> 
+                <div className="right-content">
+                  
+                
                     <div className="center">
                         {/* <span>Welcome to Maya Support</span> */}
                         <div className="login-content">

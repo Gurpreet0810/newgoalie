@@ -183,6 +183,7 @@
 
    "categoryname" : "Category Name",
   "update" : "Update",
+  "cancel" : "Cancel",
   "categorystatus" : "Category Status",
 
   "notactive" : "Not active",
@@ -198,7 +199,7 @@
   "videoupload" : "Video Upload",
 
   "videolink" : "Video link",
-
+  "Video File (Accept only: mp4,webm)" :"Video File (Accept only: mp4,webm)",
   "video" : "Video",
 
 "description" : "Description",
@@ -238,9 +239,9 @@
       "selecttrainingplan" :"Select Training Plan",
 
       "edit_goaile_profile" :"Edit Profile",
-
+      "edit_blog_category" :"Edit Blog Category",
       "profile" :"Profile",
-
+      "enter_Category_name" : "Enter category name",
       "coaches" :"Coaches",
 
       "addcoaches" :"Add Coaches",
@@ -281,6 +282,7 @@
                "plan" : "plan",
                  "loadmore" : "Load More",
                 "viewtrainings" : "View Trainings",
+                "Trainingslist" : "Trainings list",
                  "myprogress" : "My Progress",   
                 "ourblogs"  : "Our Blogs",
                 "viewblogs"  : "View Blogs",

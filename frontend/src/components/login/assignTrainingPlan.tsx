@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { validate } from '../utils/validate';
 import axios from 'axios';
-
+import { useTranslation } from 'react-i18next';
 const AssignTrainingPlan = () => {
     const [assignment, setAssignment] = useState({
         goalie_id: "",
@@ -22,7 +22,7 @@ const AssignTrainingPlan = () => {
     const [showValidation, setShowValidation] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { t, i18n } = useTranslation();
     const { userInfo } = useSelector((state: any) => state.user);
 
     const fields = [
@@ -106,11 +106,11 @@ const AssignTrainingPlan = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Assign Training Plan</h3>
+                <h3 className="card-title">{t('assigntrainingplan')}</h3>
             </div>
             <Form onSubmit={handleSubmit} className="profile-edit-form row">
                 <Form.Group controlId="goalieSelect" className="profile-edit-field col-md-6">
-                    <Form.Label>Goalie</Form.Label>
+                    <Form.Label>{t('goalie')}</Form.Label>
                     <Form.Control
                         as="select"
                         name="goalie_id"
@@ -118,7 +118,7 @@ const AssignTrainingPlan = () => {
                         onChange={handleInputs}
                         isInvalid={!!errors.goalie_id}
                     >
-                        <option value="">Select Goalie</option>
+                        <option value="">{t('selectgoalie')}</option>
                         {goalies.map((goalie) => (
                             <option key={goalie._id} value={goalie._id}>
                                 {goalie.goalie_name}
@@ -131,7 +131,7 @@ const AssignTrainingPlan = () => {
                 </Form.Group>
 
                 <Form.Group controlId="trainingPlanSelect" className="profile-edit-field col-md-6">
-                    <Form.Label>Training Plan</Form.Label>
+                    <Form.Label>{t('trainingplan')}</Form.Label>
                     <Form.Control
                         as="select"
                         name="training_plan_id"
@@ -140,7 +140,7 @@ const AssignTrainingPlan = () => {
                         isInvalid={!!errors.training_plan_id}
                         multiple={true}
                     >
-                        <option value="">Select Training Plan</option>
+                        <option value="">{t('selecttrainingplan')}</option>
                         {trainingPlans.map((plan) => (
                             <option key={plan._id} value={plan._id}>
                                 {plan.training_name}
@@ -158,7 +158,7 @@ const AssignTrainingPlan = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">{t('submit')}</Button>
                     </div>
                 )}
             </Form>

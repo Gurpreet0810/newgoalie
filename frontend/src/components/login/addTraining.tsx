@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTrainings, addTrainingsDrills } from '../store/TrainingSlice';
 import { useNavigate } from 'react-router';
-
+import { useTranslation } from 'react-i18next';
 interface Training {
     category: string;
     drill_name: string;
@@ -39,7 +39,7 @@ const AddTraining = () => {
     const [drillOptions, setDrillOptions] = useState<{ [key: number]: Drills[] }>({});
     const [errors, setErrors] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false); 
-
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
     const { userInfo } = useSelector((state: any) => state.user);
     const navigate = useNavigate();
@@ -179,11 +179,11 @@ const AddTraining = () => {
     return (
         <div className="profile-edit-content card card-primary" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px', padding: '20px' }}>
             <div className="card-header" style={{ backgroundColor: '#00617a', color: '#fff', padding: '15px', borderRadius: '10px 10px 0 0', marginBottom: '20px' }}>
-                <h3 className="card-title">Add Training</h3>
+                <h3 className="card-title">{t('addtraining')}</h3>
             </div>
             <Form onSubmit={handleSubmit} encType='multipart/form-data'>
                 <Form.Group controlId="training_name" className="profile-edit-field col-md-6" style={{ marginBottom: '20px' }}>
-                    <Form.Label style={{ fontWeight: 'bold' }}>Training Name</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold' }}>{t('trainingname')}</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter Training Name"
@@ -195,7 +195,7 @@ const AddTraining = () => {
                 </Form.Group>
         
                 <Form.Group controlId="photo" className="profile-edit-field col-md-6" style={{ marginBottom: '20px' }}>
-                    <Form.Label style={{ fontWeight: 'bold' }}>Training Photo</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold' }}>{t('trainingplan')} {t('photo')}</Form.Label>
                     <Form.Control
                         type="file"
                         onChange={handleFileChange}
@@ -213,7 +213,7 @@ const AddTraining = () => {
                     <div key={index} className="training-entry" style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}>
                       <div className="row">
                       <div className="col-md-6">     <Form.Group controlId={`category-${index}`} className="profile-edit-field  col-md-12" style={{ marginBottom: '10px' }}>
-                            <Form.Label style={{ fontWeight: 'bold' }}>Drill Category</Form.Label>
+                            <Form.Label style={{ fontWeight: 'bold' }}>{t('drill_category')}</Form.Label>
                             <Form.Control
                                 as="select"
                                 name="category"
@@ -222,7 +222,7 @@ const AddTraining = () => {
                                 style={{ padding: '10px', borderRadius: '5px' }}
                                 required
                             >
-                                <option value="">Select Drill Category</option>
+                                <option value="">{t('selectcategory')}</option>
                                 {categories.map((category) => (
                                     <option key={category._id} value={category._id}>
                                         {category.category_name}
@@ -233,7 +233,7 @@ const AddTraining = () => {
         </div>  
         <div className="col-md-6"> 
                         <Form.Group controlId={`drill_name-${index}`}  className="profile-edit-field col-md-12"  style={{ marginBottom: '10px' }}>
-                            <Form.Label style={{ fontWeight: 'bold' }}>Drill Name</Form.Label>
+                            <Form.Label style={{ fontWeight: 'bold' }}>{t('drillname')}</Form.Label>
                             <Form.Control
                                 as="select"
                                 name="drill_name"
@@ -242,7 +242,7 @@ const AddTraining = () => {
                                 style={{ padding: '10px', borderRadius: '5px' }}
                                 required
                             >
-                                <option value="">Select Drill Name</option>
+                                <option value="">{t('selectdrill')}</option>
                                 {(drillOptions[index] || []).map((drill) => (
                                     <option key={drill._id} value={drill._id}>
                                         {drill.drill_name}
@@ -275,16 +275,16 @@ const AddTraining = () => {
                     {index > 0 && (
                                    
                                    <Button variant="danger" onClick={() => handleRemove(index)} style={{ marginTop: '10px', padding: '10px 15px', borderRadius: '5px' }}>
-                                       Remove
+                                       {t('remove')}
                                    </Button>
                             )}
                     </div>
                 ))}
         
-                <Button variant="primary" onClick={handleAddMore}>Add More Drills</Button>
+                <Button variant="primary" onClick={handleAddMore}>{t('addmore')}</Button>
                 <div className="d-flex justify-content-end mt-3">
           <Button variant="primary" type="submit" disabled={loading}>
-          Submit
+          {t('submit')}
           </Button>
         </div>
                 {/* <Button variant="success" type="submit" style={{ marginTop: '20px' }}>Submit</Button> */}
