@@ -4,6 +4,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Margin } from '@mui/icons-material';
 
 const ViewAssignTrainingPlan = () => {
     interface Assignment {
@@ -127,15 +128,16 @@ const ViewAssignTrainingPlan = () => {
                 <Spinner animation="border" variant="primary" />
             ) : (
                 <div>
-                    <div className="profile-view-field">
-                        <h5><b>Goalie Name:</b></h5>
-                        <p>{goalie?.goalie_name || 'N/A'}</p> {/* Display Goalie Name */}
+                    <div className="row" style={{ display: 'flex', margin: '0px' }}>
+                        <div className="profile-view-field" style={{ width: '50%' }}>
+                            <h5><b>Goalie Name:</b></h5>
+                            <p>{goalie?.goalie_name || 'N/A'}</p> {/* Display Goalie Name */}
+                        </div>
+                        <div className="profile-view-field" style={{ width: '50%' }}>
+                            <h5><b>Email:</b></h5>
+                            <p>{goalie?.email || 'N/A'}</p> {/* Display Goalie Email */}
+                        </div>
                     </div>
-                    <div className="profile-view-field">
-                        <h5><b>Email:</b></h5>
-                        <p>{goalie?.email || 'N/A'}</p> {/* Display Goalie Name */}
-                    </div>
-
                     <div className="profile-view-field">
                         <h5><b>Assigned Training Plans:</b></h5>
                         {assignedTrainingPlans.length > 0 ? (

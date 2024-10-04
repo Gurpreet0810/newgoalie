@@ -49,6 +49,8 @@ import ListAssignTrainingPlan from '../login/listAssignTrainingPlan';
 import EditAssignTrainingPlan from '../login/editAssignTrainingPlan';
 import ViewAssignTrainingPlan from '../login/viewAssignTrainingPlan';
 
+import GoalieHome from '../login/goalie/home';
+
 import HomeBanner from '../login/homeBanner';
 
 // Logout component
@@ -208,7 +210,11 @@ const router = createBrowserRouter([
           {
             path: '/view-assigned-training-plan/:id',
             element: <ViewAssignTrainingPlan />, 
-          }
+          },
+          {
+            path: 'goalie-home',
+            element: <GoalieHome />, 
+          }          
         ],
       },
     ],
