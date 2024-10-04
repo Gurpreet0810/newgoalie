@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { validate } from '../utils/validate';
 import axios from 'axios';
-import { SelectChangeEvent } from '@mui/material'; // Import the correct type
 
 const AssignTrainingPlan = () => {
     const [assignment, setAssignment] = useState({
@@ -20,7 +19,7 @@ const AssignTrainingPlan = () => {
     const [loader, setLoader] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { t, i18n } = useTranslation();
     const { userInfo } = useSelector((state: any) => state.user);
 
     const fields = [
@@ -94,41 +93,41 @@ const AssignTrainingPlan = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Assign Training Plan</h3>
+                <h3 className="card-title">{t('assigntrainingplan')}</h3>
             </div>
-            <form onSubmit={handleSubmit} className="profile-edit-form row trassign">
-                {/* Goalies Select Box */}
-                <FormControl fullWidth variant="outlined" className="profile-edit-field col-md-6">
-                    <InputLabel id="goalie-select-label">Goalie</InputLabel>
-                    <Select
-                        labelId="goalie-select-label"
+            <Form onSubmit={handleSubmit} className="profile-edit-form row">
+                <Form.Group controlId="goalieSelect" className="profile-edit-field col-md-6">
+                    <Form.Label>Goalie</Form.Label>
+                    <Form.Control
+                        as="select"
                         name="goalie_id"
                         value={assignment.goalie_id || ""} // Ensure it's either string or empty string
                         onChange={(e) => setAssignment({ ...assignment, goalie_id: e.target.value })} // Update goalie_id
                         error={!!errors.goalie_id}
                     >
-                        <MenuItem value="">
-                            <em>Select Goalie</em>
-                        </MenuItem>
+                        <option value="">Select Goalie</option>
                         {goalies.map((goalie) => (
                             <MenuItem key={goalie._id} value={goalie._id}>
                                 {goalie.goalie_name}
                             </MenuItem>
                         ))}
-                    </Select>
-                </FormControl>
+                    </Form.Control>
+                    <Form.Control.Feedback type="invalid">
+                        {errors.goalie_id}
+                    </Form.Control.Feedback>
+                </Form.Group>
 
-                {/* Training Plans Select Box - Now a Material-UI Multiple Select */}
-                <FormControl fullWidth variant="outlined" className="profile-edit-field col-md-6">
-                    <InputLabel id="training-plan-select-label">Training Plan</InputLabel>
-                    <Select
-                        labelId="training-plan-select-label"
+                <Form.Group controlId="trainingPlanSelect" className="profile-edit-field col-md-6">
+                    <Form.Label>Training Plan</Form.Label>
+                    <Form.Control
+                        as="select"
                         name="training_plan_id"
                         value={assignment.training_plan_id} // Keep this as is, since it is an array
                         onChange={handleInputs} // Use handleInputs for multiple selections
                         error={!!errors.training_plan_id}
                         multiple
                     >
+                        <option value="">Select Training Plan</option>
                         {trainingPlans.map((plan) => (
                             <MenuItem key={plan._id} value={plan._id}>
                                 {plan.training_name}
@@ -143,7 +142,7 @@ const AssignTrainingPlan = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="contained" color="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">Submit</Button>
                     </div>
                 )}
             </form>

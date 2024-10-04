@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateTraining, addTrainingsDrills } from '../store/TrainingSlice';
 import { useNavigate, useParams } from 'react-router';
 import { Image } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 interface Training {
   category: string;
@@ -37,7 +38,7 @@ const EditTraining = () => {
   const [categories, setCategories] = useState<DrillCategory[]>([]);
   const [drills, setDrills] = useState<Drills[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { trainingId } = useParams(); // Get training ID from route parameters
@@ -227,13 +228,13 @@ const EditTraining = () => {
   return (
     <div className="profile-edit-content card card-primary" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px', padding: '20px' }}>
       <div className="card-header" style={{ backgroundColor: '#00617a', color: '#fff', padding: '15px', borderRadius: '10px 10px 0 0', marginBottom: '20px' }}>
-        <h3 className="card-title">Edit Training</h3>
+        <h3 className="card-title">{t('edittraningplan')}</h3>
       </div>
       <Form onSubmit={handleSubmit}>
       <div className="row">
       <div className="col-md-6"> 
           <Form.Group className="profile-edit-field col-md-12">
-          <Form.Label>Training Name</Form.Label>
+          <Form.Label>{t('trainingname')}</Form.Label>
           <Form.Control
             type="text"
             value={trainingName}
@@ -244,7 +245,7 @@ const EditTraining = () => {
       </div>
         <div className="col-md-6"> 
         <Form.Group className="profile-edit-field col-md-12">
-          <Form.Label>Training Image</Form.Label>
+          <Form.Label>{t('trainingplan')} {t('photo')}</Form.Label>
           <Form.Control
             type="file"
             accept="image/*"
@@ -259,14 +260,14 @@ const EditTraining = () => {
              <div className="row">
              <div className="col-md-6"> 
                <Form.Group className="profile-edit-field col-md-12">
-              <Form.Label>Drill Category</Form.Label>
+              <Form.Label>{t('drill_category')}</Form.Label>
               <Form.Select
                 name="category"
                 value={training.category}
                 onChange={(e) => handleInputs(e, index)}
                 required
               >
-                <option value="">Select Category</option>
+                <option value="">{t('selectcategory')}</option>
                 {categories.map((category) => (
                   <option key={category._id} value={category._id}>
                     {category.category_name}
@@ -276,14 +277,14 @@ const EditTraining = () => {
             </Form.Group >
             </div>   <div className="col-md-6"> 
             <Form.Group className="profile-edit-field col-md-12">
-              <Form.Label>Drill Name</Form.Label>
+              <Form.Label>{t('drillname')}</Form.Label>
               <Form.Select
                 name="drill_name"
                 value={training.drill_name}
                 onChange={(e) => handleInputs(e, index)}
                 required
               >
-                <option value="">Select Drill</option>
+                <option value="">{t('selectdrill')}</option>
                 {drills.map((drill) => (
                   <option key={drill._id} value={drill._id}>
                     {drill.drill_name}
@@ -294,7 +295,7 @@ const EditTraining = () => {
             </div>
             </div>
             <Form.Group>
-            <Form.Label style={{ fontWeight: 'bold' }}>Weeks</Form.Label>
+            <Form.Label style={{ fontWeight: 'bold' }}>{t('Week')}</Form.Label>
             {weeksData.map((weekData, weekIndex) => (
               <div key={weekIndex} style={{ marginBottom: '10px' }}>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
@@ -319,11 +320,11 @@ const EditTraining = () => {
           </div>
         ))}
 
-        <Button variant="secondary" onClick={addTrainingEntry}>Add More Drills</Button>
+        <Button variant="secondary" onClick={addTrainingEntry}>{t('addmore')}</Button>
 
         <div className="d-flex justify-content-end mt-3">
           <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? 'Saving...' : 'Save Changes'}
+          {t('submit')}
           </Button>
         </div>
       </Form>

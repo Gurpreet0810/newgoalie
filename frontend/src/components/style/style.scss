@@ -121,7 +121,7 @@ header .left_sider {
     display: flex;
     gap: 10px;
     position: relative;
-    width: 50%;
+    width: 30%;
 }
 
 header .left_sider .filter {
@@ -1896,11 +1896,3 @@ main.layout_section input[type=text] {
   }
   
   
-  .profile-view-field {
-    padding: 0 10px;
-}
-
-.trassign .profile-edit-field.col-md-6 {
-    margin: 10px;
-    width: 47% !important;
-}

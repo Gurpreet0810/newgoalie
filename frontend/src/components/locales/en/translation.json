@@ -1,0 +1,311 @@
+{
+  "username": "UserName",
+  "Enter a valid User Name" : "Enter a valid User Name",
+  "dashboard_text" : "Dashboard",
+"Please Login":"Please Login",
+"Login":"Login",
+  "dashboard_home" : "Home",
+"Enter your name" : "Enter your name",
+  "trainingplan" : "Training Plan",
+"Enter your phone number" :"Enter your phone number",
+"Enter a new password" :"Enter a new password",
+  "logout" : "Logout",
+
+  "pass_link_text" : "Password reset link sent to your email.",
+  "resetpass" : "Reset Password",
+
+  "newpass" : "New Password",
+  
+
+
+  "number_of_goalies" : "Number of Goalies",
+
+  "more_info" : "More info",
+
+  "empty_for_the_moment" : "Empty for the moment",
+
+  "srno" : "Sr.no",
+
+  "training_plan_name" : "Training Plan Name",
+
+  "status" : "Status",
+
+  "action" : "Action",
+
+  "not_started" : "Not Started",
+
+  "in_progress" : "In Progress",
+
+  "completed" : "Completed",
+
+  "copyright" : "Copyright",
+
+  "all_right" : "All rights reserved.",
+
+  "search" : "Search:",
+
+  "first" : "First",
+
+  "last" : "Last",
+
+  "previous" : "Previous",
+
+  "emptyTable" : "No data available in table",
+
+  "info" : "Showing _START_ to _END_ of _TOTAL_ entries",
+
+  "infoEmpty" : "Showing 0 to 0 of 0 entries",
+
+  "lengthMenu" : "Show _MENU_ entries",
+
+  "loadingRecords" : "Loading...",
+
+  "zeroRecords" : "No matching records found",
+
+  "remove" : "remove",
+
+  "edittraningplan" : "Edit training plan",
+
+  "training" :"Training",
+
+   "August" : "August",
+
+  "September" : "September",
+
+  "October" : "October",
+
+  "November" : "November",
+
+  "December" : "December",
+
+  "January" : "January",
+
+  "Febuary" : "Febuary",
+
+  "March" : "March",
+
+  "April" : "April",
+
+  "May" : "May",
+
+  "June" : "June",
+
+  "drill" : "Drill",
+
+    "drill_category" : "Drill Category",
+"editdrill_category" : "Edit Drill Category",
+  "July" : "July",
+
+  "Post-Season" : "Post-Season",
+
+  "Season" : "Season",
+
+  "Pre-Season" : "Pre-Season",
+
+  "More Detail" : "More Detail",
+
+
+  "postiong" : "postiong",
+
+  "list" :"list",
+
+  "Timeline" : "Timeline",
+
+  "Week" :"Week",
+
+  "Month" : "Month",
+
+  "Send Question" : "Send Question",
+
+  "view all": "View all",
+
+  "Skating" : "Skating",
+
+  
+
+  "next" : "Next",
+
+   "Gotending development plan" : "Gotending development plan",
+
+   
+
+   "my_goalies" : "My Goalies",
+
+   "add_goalies" : "Add Goalies",
+
+   "add_goalie" : "Add Goalie",
+
+   "manage_goalies" : "Manage Goalies",
+
+   "drills_cat" : "Drills Category",
+
+   "add_drills_cat" : "Add Drill Category",
+
+  "manage_drills_cat" : "Manage Drill Category",
+
+  "drills" : "Drills",
+
+   "add_drills" : "Add Drills",
+
+  "manage_drills" : "Manage Drills",
+
+  "traning" : "Training Plan",
+
+   "add_traning" : "Add Training Plan",
+
+  "manage_traning" : "Manage Training Plan",
+
+   "goalie_name" : "Goalie Name",
+
+  "name" : "Name",
+
+  "email" : "Email",
+
+  "photo" : "Photo",
+"myprofile" :"My Profile",
+  "phone" : "Phone",
+"Enter password" :"Enter password",
+  "password" : "Password",
+
+  "submit" : "Submit",
+
+  "validation" : "This field is required.",
+
+  "validation_img" : "Please upload image only(jpeg,png)",
+
+  "validation_email" : "Please enter a valid email address.",
+
+  "choose_file" : "Choose file",
+
+  "users" : "Users",
+
+  "editgoalie" : "Edit Goalie",
+
+   "categoryname" : "Category Name",
+  "update" : "Update",
+  "cancel" : "Cancel",
+  "categorystatus" : "Category Status",
+
+  "notactive" : "Not active",
+
+  "active" : "Active",
+
+   "category" : "Category",
+
+  "selectcategory" : "Select Category",
+
+  "selectvideooption" : "Select Video Option",
+
+  "videoupload" : "Video Upload",
+
+  "videolink" : "Video link",
+  "Video File (Accept only: mp4,webm)" :"Video File (Accept only: mp4,webm)",
+  "video" : "Video",
+
+"description" : "Description",
+
+"editdrill" : "Edit Drill",
+
+"drillname" : "Drill Name",
+
+"addtraining" : "Add Training",
+
+"goalie" : "Goalie",
+
+"selectgoalie" :  "Select Goalie",
+
+
+
+ "trainingname" :  "Training Name",
+
+"selectdrill" : "Select Drill",
+
+"addmore" :"Add More",
+
+"signin" : "Sign in",
+
+"Remember Me" : "Remember me",
+"Forgot Password" : "Forgot Password",
+
+
+"backtotrainingview" : "Back to Training View",
+
+      "backtotraining" : "Back to Training Plan",
+
+        "assigntrainingplan" :"Assign Training Plan",
+
+      "manageassigntrainingplan" :"Manage Assign Training Plan",
+
+      "selecttrainingplan" :"Select Training Plan",
+
+      "edit_goaile_profile" :"Edit Profile",
+      "edit_blog_category" :"Edit Blog Category",
+      "profile" :"Profile",
+      "enter_Category_name" : "Enter category name",
+      "coaches" :"Coaches",
+
+      "addcoaches" :"Add Coaches",
+
+      "managecoaches" :"Manage Coaches",
+
+      "coachname" : "Coach Name",
+
+      "editcoach" :"Edit Coach",
+  "Accept only: jpg,jpeg,png,gif":"Accept only: jpg,jpeg,png,gif",
+      "set_new_pass" :"Set New Password",
+      "Title" :"Title",
+
+      "Category" :"Category",
+
+      "Select_Category" :"Select Category",
+
+      "Content" :"Content",
+"back" : "back",
+       "Image" :"Image",
+
+       "Blogs" :"Blogs",
+
+       "addblog" :"Add Blog",
+
+       "viewallblog" :"View All Blog",
+
+       "Blogcat" :"Blog Category",
+
+       "addblogcat" :"Add Blog Category",
+
+       "viewallblogcat" :"View All Blog Category",
+       "sportsis" : "Sports is",
+       "Important": "Important",
+       "forgoodhealth": "for Good Health",
+               "my" : "My",
+               "All the training plans" : "All the training plans",
+               "plan" : "plan",
+                 "loadmore" : "Load More",
+                "viewtrainings" : "View Trainings",
+                "Trainingslist" : "Trainings list",
+                 "myprogress" : "My Progress",   
+                "ourblogs"  : "Our Blogs",
+                "viewblogs"  : "View Blogs",
+                "noblogfound" : "No Blogs Found",
+                "learnmore" :"Learn More",
+                "latestnews" : "Latest news",
+                "mytraining":"My Trainings",
+                "notrainingfound" :"No Training Found",
+                "Manage_Blog":"Manage Blog",
+                "listing":"Listing",
+                "summertrainingplan":"Summer training plan",
+                "Manage_Blog_cate":"Manage Blog category",
+                "cat_name" :"Category Name",
+                
+                "addbanner" :"Banner Content",
+                "Link" :"Link",
+                "homebanner" :"Home Banner",
+                "size" :"Size",
+                "save_content_lang" : "In which language to save the data?",
+                "otherdrills" :"Other drills",
+                 "othertraining" :"Other Training",
+                  "No Training Found":"No Training Found",
+                    "Custom range" : "Custom Range",
+                    "filter" : "Filter",
+                     "loaderimage" : "Loader Image"
+}

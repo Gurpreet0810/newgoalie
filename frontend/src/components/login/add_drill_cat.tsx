@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next'
 const AddDrillCategory = () => {
     const [category, setCategory] = useState({
         category_name: "",
@@ -22,6 +22,7 @@ const AddDrillCategory = () => {
     const [showValidation, setShowValidation] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
 
     const { userInfo } = useSelector((state: any) => state.user);
     
@@ -65,14 +66,14 @@ const AddDrillCategory = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Add Drill Category</h3>
+                <h3 className="card-title">{t('add_drills_cat')}</h3>
             </div>
             <Form onSubmit={handleSubmit} className="profile-edit-form row">
                 <Form.Group controlId="categoryName" className="profile-edit-field col-md-6">
-                    <Form.Label>Category Name</Form.Label>
+                    <Form.Label>{t('categoryname')}</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter category name"
+                        placeholder={t('categoryname')}
                         name="category_name"
                         value={category.category_name}
                         onChange={handleInputs}
@@ -84,7 +85,7 @@ const AddDrillCategory = () => {
                 </Form.Group>
 
                 <Form.Group controlId="categoryStatus" className="profile-edit-field col-md-6">
-                    <Form.Label>Category Status</Form.Label>
+                    <Form.Label>{t('categorystatus')}</Form.Label>
                     <Form.Control
                         as="select"
                         name="category_status"
@@ -92,8 +93,8 @@ const AddDrillCategory = () => {
                         onChange={handleInputs}
                         isInvalid={!!errors.category_status}
                     >
-                        <option value="active">Active</option>
-                        <option value="not-active">Not Active</option>
+                        <option value="active">{t('active')}</option>
+                        <option value="not-active">{t('notactive')}</option>
                     </Form.Control>
                     <Form.Control.Feedback type="invalid">
                         {errors.category_status}
@@ -106,7 +107,7 @@ const AddDrillCategory = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">{t('submit')}</Button>
                     </div>
                 )}
             </Form>

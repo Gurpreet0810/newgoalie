@@ -3,6 +3,7 @@ import axios from 'axios';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Typography, Paper, Container, Box } from '@mui/material';
 import { useParams } from 'react-router-dom'; // Import useParams
+import { useTranslation } from 'react-i18next'
 
 // Define the interface for the drill data
 interface Drill {
@@ -22,7 +23,7 @@ function ListDrillsByCoach() {
   const [drills, setDrills] = useState<Drill[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -79,7 +80,7 @@ function ListDrillsByCoach() {
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-          Drills
+          {t('drills')}
         </Typography>
         
         {drills.length > 0 ? (

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Image, Container, Row, Col } from 'react-bootstrap';
-
+import { useTranslation } from 'react-i18next'
 function EditGoalie() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
+  const { t, i18n } = useTranslation();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -82,37 +82,54 @@ function EditGoalie() {
   return (
     <Container className="profile-edit-content card card-primary">
   <div className="card-header">
-    <h3 className="card-title">Edit Goalie</h3>
+    <h3 className="card-title">{t('editgoalie')}</h3>
   </div>
   
   <Form onSubmit={handleUpdate} className="profile-edit-form row">
     <Row className="mb-3">
       <Form.Group as={Col} controlId="formName" className="profile-edit-field mb-3">
-        <Form.Label>Name</Form.Label>
+        <Form.Label>{t('name')}</Form.Label>
         <Form.Control
           type="text"
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Goalie Name"
+          placeholder={t('goalie_name')}
         />
       </Form.Group>
 
       <Form.Group as={Col} controlId="formEmail" className="profile-edit-field mb-3">
-        <Form.Label>Email</Form.Label>
+        <Form.Label>{t('email')}</Form.Label>
         <Form.Control
           type="email"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+          placeholder={t('email')}
         />
       </Form.Group>
     </Row>
 
     <Row className="mb-3">
+      <Form.Group as={Col} controlId="formPhone" className="profile-edit-field mb-3">
+        <Form.Label>Phone</Form.Label>
+        <Form.Control
+          type="tel"
+          name="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Phone"
+        />
+      </Form.Group>
+
+      <Form.Group as={Col}  className="profile-edit-field mb-3">
+        
+      </Form.Group>
+    </Row>
+
+    <Row className="mb-3">
       <Form.Group as={Col} controlId="formImage" className="profile-edit-field mb-3">
-        <Form.Label>Image (Accept only: jpg,jpeg,png,gif)</Form.Label>
+        <Form.Label>{t('photo')} {t('Accept only: jpg,jpeg,png,gif')}</Form.Label>
         <Form.Control
           type="file"
           name="image"

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Typography, Container, Paper, Button } from '@mui/material';
-
+import { useTranslation } from 'react-i18next'
 // Define the coach interface based on the structure of your data
 interface Coach {
   _id: string;
@@ -20,7 +20,7 @@ function ListCoach() {
   const [coaches, setCoaches] = useState<Coach[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     const fetchCoaches = async () => {
       try {
@@ -78,7 +78,7 @@ function ListCoach() {
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-        Coaches
+        {t('coaches')}
         </Typography>
         <DataGrid
           rows={rows}

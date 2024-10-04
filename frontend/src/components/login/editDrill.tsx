@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
+import { useTranslation } from 'react-i18next'
 interface DrillCategory {
     _id: string;
     category_name: string;
@@ -41,6 +41,7 @@ const EditDrill = () => {
     const [showValidation, setShowValidation] = useState(false);
     const [progress, setProgress] = useState(0);
 
+    const { t, i18n } = useTranslation();
     const { userInfo } = useSelector((state: any) => state.user);
 
     const fetchDrill = async () => {
@@ -173,13 +174,13 @@ const EditDrill = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Edit Drill</h3>
+                <h3 className="card-title">{t('editdrill')}</h3>
             </div>
             {loading ? <Spinner animation="border" /> : (
                 <Form onSubmit={handleSubmit} encType="multipart/form-data" className="profile-edit-form row">
                     {/* Drill Name */}
                     <Form.Group controlId="drillName" className="profile-edit-field col-md-6">
-                        <Form.Label>Drill Name</Form.Label>
+                        <Form.Label>{t('drillname')}</Form.Label>
                         <Form.Control
                             type="text"
                             name="drill_name"
@@ -194,7 +195,7 @@ const EditDrill = () => {
 
                     {/* Category */}
                     <Form.Group controlId="category" className="profile-edit-field col-md-6">
-                        <Form.Label>Category</Form.Label>
+                        <Form.Label>{t('category')}</Form.Label>
                         <Form.Control
                             as="select"
                             name="category"
@@ -214,7 +215,7 @@ const EditDrill = () => {
 
                     {/* Photo */}
                     <Form.Group controlId="photo" className="profile-edit-field col-md-6">
-                        <Form.Label>Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
+                        <Form.Label>{t('photo')} {t('Accept only: jpg,jpeg,png,gif')}</Form.Label>
                         <Form.Control
                             type="file"
                             name="photo"
@@ -236,22 +237,22 @@ const EditDrill = () => {
 
                     {/* Video Option */}
                     <Form.Group controlId="videoOption" className="profile-edit-field col-md-6">
-                        <Form.Label>Video Option</Form.Label>
+                        <Form.Label>{t('selectvideooption')}</Form.Label>
                         <Form.Control
                             as="select"
                             name="video_option"
                             value={drill.video_option}
                             onChange={handleInputs}
                         >
-                            <option value="video_upload">Video Upload</option>
-                            <option value="video_link">Video Link</option>
+                            <option value="video_upload">{t('videoupload')}</option>
+                            <option value="video_link">{t('videolink')}</option>
                         </Form.Control>
                     </Form.Group>
 
                     {/* Video Upload or Video Link */}
                     {drill.video_option === "video_upload" ? (
                         <Form.Group controlId="videoFile" className="profile-edit-field col-md-6">
-                            <Form.Label>Video File (Accept only: mp4,webm)</Form.Label>
+                            <Form.Label>{t('Video File (Accept only: mp4,webm)')}</Form.Label>
                             <Form.Control
                                 type="file"
                                 name="video_file"
@@ -274,7 +275,7 @@ const EditDrill = () => {
                         </Form.Group>
                     ) : (
                         <Form.Group controlId="videoLink" className="profile-edit-field col-md-6">
-                            <Form.Label>Video Link</Form.Label>
+                            <Form.Label>{t('videolink')}</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="video_link"
@@ -303,7 +304,7 @@ const EditDrill = () => {
 
                     {/* Description */}
                     <Form.Group controlId="description" className="profile-edit-field col-md-12">
-                        <Form.Label>Description</Form.Label>
+                        <Form.Label>{t('description')}</Form.Label>
                         <Form.Control
                             as="textarea"
                             rows={3}
@@ -316,7 +317,7 @@ const EditDrill = () => {
                         <ReactQuill
                         value={drill.description}
                         onChange={handleDescriptionChange}
-                        placeholder="Enter drill description"
+                        placeholder={t('description')}
                         className={!!errors.description ? "is-invalid" : ""}
                     />
                         <Form.Control.Feedback type="invalid">
@@ -328,7 +329,7 @@ const EditDrill = () => {
                     {loader ? (
                         <Spinner animation="border" variant="primary" />
                     ) : (
-                        <Button variant="primary" type="submit" style={{ width: '20%' }}>Update</Button>
+                        <Button variant="primary" type="submit" style={{ width: '20%' }}>{t('update')}</Button>
                     )}
                 </Form>
             )}

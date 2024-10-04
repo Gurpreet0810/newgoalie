@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-
+import { useTranslation } from 'react-i18next';
 function EditCoach() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function EditCoach() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     const fetchCoach = async () => {
       try {
@@ -75,26 +75,26 @@ function EditCoach() {
   return (
     <Container className="profile-edit-content card card-primary">
       <div className="card-header">
-        <h3 className="card-title">Edit Coach</h3>
+        <h3 className="card-title">{t('editcoach')}</h3>
       </div>
 
       <Form onSubmit={handleUpdate} className="profile-edit-form row">
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formCoachName" className="profile-edit-field mb-3">
-            <Form.Label>Coach Name</Form.Label>
+            <Form.Label>{t('coachname')}</Form.Label>
             <Form.Control
               type="text"
               name="coachName"
               value={coachName}
               onChange={(e) => setCoachName(e.target.value)}
-              placeholder="Coach Name"
+              placeholder={t('coachname')}
               isInvalid={!!formErrors.coachName}
             />
             <Form.Control.Feedback type="invalid">{formErrors.coachName}</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group as={Col} controlId="formEmail" className="profile-edit-field mb-3">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>{t('email')}</Form.Label>
             <Form.Control
               type="email"
               name="email"
@@ -109,13 +109,13 @@ function EditCoach() {
 
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formPhone" className="profile-edit-field mb-3">
-            <Form.Label>Phone (Accept only: Numbers)</Form.Label>
+            <Form.Label>{t('phone')}</Form.Label>
             <Form.Control
               type="number"
               name="phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="Phone"
+              placeholder={t('Enter your phone number')}
               isInvalid={!!formErrors.phone}
             />
             <Form.Control.Feedback type="invalid">{formErrors.phone}</Form.Control.Feedback>
@@ -123,8 +123,8 @@ function EditCoach() {
         </Row>
 
         <div className="text-left">
-          <Button type="submit" variant="primary" className="me-2">Update</Button>
-          <Button variant="secondary" onClick={() => navigate('/list-coach')}>Cancel</Button>
+          <Button type="submit" variant="primary" className="me-2">{t('submit')}</Button>
+          <Button variant="secondary" onClick={() => navigate('/list-coach')}>{t('cancel')}</Button>
         </div>
       </Form>
     </Container>

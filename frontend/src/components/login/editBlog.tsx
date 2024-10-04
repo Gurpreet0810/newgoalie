@@ -7,12 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { validate } from '../utils/validate';
-
+import { useTranslation } from 'react-i18next'
 function EditBlog() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
-  // Blog data and categories
+  const { t, i18n } = useTranslation();
   const [blog, setBlog] = useState({
     title: '',
     category: '',
@@ -127,15 +126,15 @@ function EditBlog() {
   return (
     <div className="profile-edit-content card card-primary">
       <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-        <h3 className="card-title">Edit Blog</h3>
+        <h3 className="card-title">{t('Blogs')}</h3>
       </div>
       <Form onSubmit={handleSubmit} className="profile-edit-form row">
         {/* Title Field */}
         <Form.Group controlId="title" className="profile-edit-field col-md-6">
-          <Form.Label>Title</Form.Label>
+          <Form.Label>{t('Title')}</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter blog title"
+            placeholder={t('Title')}
             name="title"
             value={blog.title}
             onChange={handleInputs}
@@ -148,7 +147,7 @@ function EditBlog() {
 
         {/* Category Field */}
         <Form.Group controlId="category" className="profile-edit-field col-md-6">
-          <Form.Label>Category</Form.Label>
+          <Form.Label>{t('Category')}</Form.Label>
           <Form.Control
             as="select"
             name="category"
@@ -156,7 +155,7 @@ function EditBlog() {
             onChange={handleInputs}
             isInvalid={!!errors.category}
           >
-            <option value="">Select category</option>
+            <option value="">{t('Select_Category')}</option>
             {categories.map((cat) => (
               <option key={cat._id} value={cat._id}>{cat.category_name}</option>
             ))}
@@ -168,7 +167,7 @@ function EditBlog() {
 
         {/* Image Upload Field */}
         <Form.Group controlId="photo" className="profile-edit-field col-md-6">
-          <Form.Label>Upload Photo</Form.Label>
+          <Form.Label>{t('photo')} {t('Accept only: jpg,jpeg,png,gif')}</Form.Label>
           <Form.Control
             type="file"
             name="photo"
@@ -187,7 +186,7 @@ function EditBlog() {
 
          {/* Content Field (React Quill for Rich Text Editing) */}
          <Form.Group controlId="content" className="profile-edit-field col-md-12">
-          <Form.Label>Content</Form.Label>
+          <Form.Label>{t('Content')}</Form.Label>
           <ReactQuill
             value={blog.content}
             onChange={(value) => setBlog({ ...blog, content: value })}
@@ -203,8 +202,8 @@ function EditBlog() {
           </div>
         ) : (
           <div className="text-left">
-            <Button variant="primary" type="submit" className="me-2">Update</Button>
-            <Button variant="secondary" onClick={() => navigate('/list-blogs')}>Cancel</Button>
+            <Button variant="primary" type="submit" className="me-2">{t('submit')}</Button>
+            <Button variant="secondary" onClick={() => navigate('/list-blogs')}>{t('cancel')}</Button>
           </div>
         )}
       </Form>

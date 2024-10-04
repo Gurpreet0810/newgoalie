@@ -5,6 +5,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Button, Typography, Snackbar, Alert, Paper, Container, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 // Define the interface for the drill category data
 interface DrillCategory {
@@ -18,9 +19,9 @@ function ListDrillCategory() {
   const [categories, setCategories] = useState<DrillCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [open, setOpen] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null); // For delete confirmation
-  const [dialogOpen, setDialogOpen] = useState(false); // State to control the delete confirmation dialog
+  const [open, setOpen] = useState(false); // Snackbar state
+  const [dialogOpen, setDialogOpen] = useState(false); // Dialog state
+  const [deleteId, setDeleteId] = useState<string | null>(null); // Track which category to delete
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -52,7 +53,7 @@ function ListDrillCategory() {
     try {
       await axios.delete(`http://localhost:4500/api/v1/drillCategories/${deleteId}`);
       setCategories(categories.filter(category => category._id !== deleteId));
-      toast.success('Drill Category deleted successfully', { autoClose: 1000 });
+      setOpen(true); // Open the success Snackbar
       setDialogOpen(false); // Close the confirmation dialog after deletion
     } catch (err) {
       if (err instanceof Error) {
@@ -128,15 +129,24 @@ function ListDrillCategory() {
           sx={{ border: 0 }}
         />
 
-        {/* Delete Confirmation Dialog */}
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={() => setOpen(false)}
+        >
+          <Alert onClose={() => setOpen(false)} severity="success">
+            Drill Category deleted successfully
+          </Alert>
+        </Snackbar>
+
         <Dialog
           open={dialogOpen}
           onClose={() => setDialogOpen(false)}
         >
-          <DialogTitle>{"Delete Drill Category"}</DialogTitle>
+          <DialogTitle>Delete Confirmation</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure? This action cannot be undone.
+              Are you sure you want to delete this drill category?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -148,16 +158,6 @@ function ListDrillCategory() {
             </Button>
           </DialogActions>
         </Dialog>
-
-        <Snackbar
-          open={open}
-          autoHideDuration={6000}
-          onClose={() => setOpen(false)}
-        >
-          <Alert onClose={() => setOpen(false)} severity="success">
-            Drill Category deleted successfully
-          </Alert>
-        </Snackbar>
       </Paper>
     </Container>
   );

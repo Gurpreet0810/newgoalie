@@ -13,7 +13,7 @@ import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgres
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import previewImgShow from '../../assests/admin.jpg'
-
+import { useTranslation } from 'react-i18next'
 interface DrillCategory {
     _id: string;
     category_name: string;
@@ -32,6 +32,7 @@ const AddDrill = () => {
         description: "",
     });
 
+    const { t, i18n } = useTranslation();
     const [categories, setCategories] = useState<DrillCategory[]>([]);
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState<any>({});
@@ -161,14 +162,14 @@ const AddDrill = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Add Drill</h3>
+                <h3 className="card-title">{t('add_drills')}</h3>
             </div>
             <Form onSubmit={handleSubmit} encType='multipart/form-data' className="profile-edit-form row">
                 <Form.Group controlId="drillName" className="profile-edit-field col-md-6">
-                    <Form.Label>Drill Name</Form.Label>
+                    <Form.Label>{t('drillname')}</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter drill name"
+                        placeholder={t('drillname')}
                         name="drill_name"
                         value={drill.drill_name}
                         onChange={handleInputs}
@@ -180,7 +181,7 @@ const AddDrill = () => {
                 </Form.Group>
 
                 <Form.Group controlId="category" className="profile-edit-field col-md-6">
-                    <Form.Label>Category</Form.Label>
+                    <Form.Label>{t('category')}</Form.Label>
                     {loading ? (
                         <Spinner animation="border" variant="primary" />
                     ) : (
@@ -205,7 +206,7 @@ const AddDrill = () => {
                 </Form.Group>
 
                 <Form.Group controlId="photo" className="profile-edit-field col-md-6">
-                    <Form.Label>Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
+                    <Form.Label>{t('photo')} {t('Accept only: jpg,jpeg,png,gif')}</Form.Label>
                     <Form.Control
                         type="file"
                         name="photo"
@@ -228,21 +229,21 @@ const AddDrill = () => {
                 </Form.Group>
 
                 <Form.Group controlId="videoOption" className="profile-edit-field col-md-6">
-                    <Form.Label>Video Option</Form.Label>
+                    <Form.Label>{t('selectvideooption')} </Form.Label>
                     <Form.Control
                         as="select"
                         name="video_option"
                         value={drill.video_option}
                         onChange={handleInputs}
                     >
-                        <option value="video_upload">Video Upload</option>
-                        <option value="video_link">Video Link</option>
+                        <option value="video_upload">{t('videoupload')}</option>
+                        <option value="video_link">{t('videolink')}</option>
                     </Form.Control>
                 </Form.Group>
 
                 {drill.video_option === "video_upload" ? (
                     <Form.Group controlId="videoFile" className="profile-edit-field col-md-6">
-                        <Form.Label>Video File (Accept only: mp4,webm)</Form.Label>
+                        <Form.Label>{t('Video File (Accept only: mp4,webm)')}</Form.Label>
                         <Form.Control
                             type="file"
                             name="video_file"
@@ -257,10 +258,10 @@ const AddDrill = () => {
                     </Form.Group>
                 ) : (
                     <Form.Group controlId="videoLink" className="profile-edit-field col-md-6">
-                        <Form.Label>Video Link</Form.Label>
+                        <Form.Label>{t('videolink')}</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Enter video link"
+                            placeholder={t('videolink')}
                             name="video_link"
                             value={drill.video_link}
                             onChange={handleInputs}
@@ -273,7 +274,7 @@ const AddDrill = () => {
                 )}
 
                 <Form.Group controlId="description" className="profile-edit-field col-md-12">
-                    <Form.Label>Description</Form.Label>
+                    <Form.Label>{t('description')}</Form.Label>
                     <Form.Control
                         as="textarea"
                         rows={3}
@@ -300,7 +301,7 @@ const AddDrill = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">{t('submit')}</Button>
                     </div>
                 )}
             </Form>

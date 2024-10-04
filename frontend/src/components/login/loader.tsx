@@ -11,7 +11,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { Image} from 'react-bootstrap';
-
+import { useTranslation } from 'react-i18next'
 import axios from 'axios';
 
 const Loaders = () => {
@@ -25,7 +25,7 @@ const Loaders = () => {
     const [showValidation, setShowValidation] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(true);
     const [imagePreview, setImagePreview] = useState<string>('');
     const [image, setImage] = useState<File | null>(null);
@@ -104,11 +104,11 @@ const Loaders = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a' }}>
-                <h3 className="card-title">Loader Image</h3>
+                <h3 className="card-title">{t('loaderimage')}</h3>
             </div>
             <Form onSubmit={handleSubmit} className="profile-edit-form row">
                 <Form.Group controlId="loaderimage" className="profile-edit-field col-md-6">
-                    <Form.Label>Image (Size: 200x68)</Form.Label>
+                    <Form.Label>{t('Image')}</Form.Label>
                     <Form.Control
                         type="file"
                         name="photo"
@@ -136,7 +136,7 @@ const Loaders = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">{t('submit')}</Button>
                     </div>
                 )}
             </Form>

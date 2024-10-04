@@ -1,0 +1,314 @@
+{
+  "username": "nom d'utilisateur",
+  "Enter a valid User Name" : "Entrez un nom d'utilisateur valide",
+  "dashboard_text" : "Tableau de bord",
+
+  "dashboard_home" : "Accueil",
+
+  "trainingplan" : "Plans d'entraînement",
+"Enter your name" : "Entrez votre nom",
+  "logout" : "Se déconnecter",
+"Enter your phone number" :"Entrez votre numéro de téléphone",
+"Enter a new password" :"Entrez un nouveau mot de passe",
+"update" : "Mise à jour",
+
+"cancel" : "Annuler",
+"editdrill_category" :"Modifier la catégorie d'exercice",
+  "resetpass" : "réinitialiser le mot de passe",
+  "pass_link_text" : "Lien de réinitialisation du mot de passe envoyé à votre adresse e-mail.",
+  "newpass" : "nouveau mot de passe",
+
+  "number_of_goalies" : "Nombre de gardiens",
+
+  "more_info" : "Plus d'informations",
+
+  "empty_for_the_moment" : "Vide pour le moment",
+
+  "srno" : "Sr.non",
+
+  "training_plan_name" : "Nom du plan de formation",
+
+   "status" : "Statut",
+
+   "action" : "Action",
+
+   "not_started" : "Pas commencé",
+
+  "in_progress" : "En cours",
+
+  "completed" : "Complété",
+
+   "copyright" : "droits d'auteur",
+
+  "all_right" : "Tous droits réservés.",
+
+  
+
+  "search" : "Recherche:",
+
+  "first" : "D'abord",
+
+  "last" : "Dernier",
+
+  "next" : "Suivant",
+
+   "previous" : "Précédent",
+
+    "emptyTable" : "aucune donnée disponible",
+
+  "info" : "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+
+  "infoEmpty" : "Affichage de 0 à 0 sur 0 entrées",
+
+  "lengthMenu" : "Afficher les entrées du _MENU_",
+
+  "loadingRecords" : "Chargement...",
+
+  "zeroRecords" : "Aucun enregistrements correspondants trouvés",
+
+  
+
+ "August" : "Août",
+
+  "September" : "Septembre",
+
+  "October" : "Octobre",
+
+  "November" : "Novembre",
+
+  "December" : "Décembre",
+
+  "January" : "Janvier",
+
+  "Febuary" : "Février",
+
+  "March" : "Mars",
+
+  "April" : "Avril",
+
+  "May" : "Mai",
+
+  "June" : "Juin",
+
+  "July" : "Juillet",
+
+  "Skating" : "Patinage",
+
+  "Season" : "Saison",
+
+  "drill" : "Percer",
+
+    "drill_category" : "Catégorie de forage",
+
+  "Pre-Season" : "Pré-Saison",
+
+  "More Detail" : "Plus de détails",
+
+  "Week" :"Semaine",
+
+  "postiong" : "Positionnement",
+
+  "list" :"Liste",
+
+  "Timeline" : "Calendrier",
+
+  "Month" : "Mois",
+
+  "Send Question" : "Envoyer une question",
+
+  "view all" : "Voir tout",
+
+  "training" :"d’entraînements",
+      
+  
+
+   "Gotending development plan" : "Plan de développement de Gotending",
+
+   
+
+   "my_goalies" : "Mes gardiens",
+
+   "add_goalies" : "+ Ajouter des gardiens",
+
+    "add_goalie" : "+ Ajouter un gardien de but",
+
+   "manage_goalies" : "Gérer les gardiens",
+
+   "drills_cat" : "Catégorie d'exercices",
+
+   "add_drills_cat" : "+ Ajouter une catégorie d'exercice",
+
+  "manage_drills_cat" : "Gérer la catégorie d'exercice",
+
+  "drills" : "Exercices",
+
+   "add_drills" : "+ Ajouter un exercice",
+
+  "manage_drills" : "Modifier un exercice",
+
+  "traning" : "Plan de formation",
+
+   "add_traning" : "+ Ajouter un plan de formation",
+
+  "manage_traning" : "Gérer le plan de formation",
+
+  "goalie_name" : "Nom du gardien de but",
+
+  "name" : "Nom",
+
+  "email" : "E-mail",
+"Manage_Blog":"Gérer le blog",
+  "photo" : "Photo",
+    "set_new_pass" : "Définir un nouveau mot de passe" ,
+  "phone" : "Téléphone",
+  "Accept only: jpg,jpeg,png,gif":"Accepter uniquement : jpg,jpeg,png,gif" ,
+  "password" : "Mot de passe",
+  "Manage_Blog_cate":"Gérer la catégorie Blog",
+  "submit" : "Soumettre",
+
+  "validation" : "Ce champ est obligatoire.",
+
+  "validation_img" : "Veuillez télécharger uniquement l'image (jpeg, png)",
+
+  "validation_email" : "S'il vous plaît, mettez une adresse email valide.",
+
+  "choose_file" : "Choisir le fichier",
+
+  "users" : "Utilisateurs",
+
+  "editgoalie" : "Modifier le gardien de but",
+
+  "categoryname" : "Nom de catégorie",
+
+  "categorystatus" : "Statut de la catégorie",
+
+  "notactive" : "Pas actif",
+
+  "active" : "Actif",
+
+"drillcategories" : "Catégorie d'exercice",
+
+  "drillname" : "Nom de l'exercice",
+
+   "category" : "Catégorie",
+
+    "selectcategory" : "Choisir une catégorie",
+  "edit_blog_category" :"Modifier la catégorie du blog",
+     
+      "enter_Category_name" : "Entrez le nom de la catégorie",
+    "selectvideooption" : "Sélectionnez l'option vidéo",
+    "Trainingslist" : "Liste des formations",
+    "videoupload" : "Téléchargement vidéo",
+    "Video File (Accept only: mp4,webm)" :"Fichier vidéo (Accepter uniquement : mp4,webm)",
+  "videolink" : "Lien vidéo",
+
+  "video" : "vidéo", 
+
+  "description" : "Description",
+
+  "editdrill" : "Modifier l'exercice",
+
+    "addtraining" : "+ Ajouter une formation",
+
+    "goalie" : "Gardienne de but",
+
+      "trainingname" :  "Nom de la formation",
+
+    "selectdrill" : "Sélectionnez Forage",
+
+    "addmore" :"+ Ajouter plus",
+
+    "selectgoalie" :  "Sélectionner le gardien de but",
+
+    "remove" : "retirer",
+
+      "edittraningplan" : "Modifier le plan d'entraînement",
+
+      "signin" : "Se connecter",
+
+      "Remember Me" : "Souviens-toi de moi",
+
+      "backtotrainingview" : "Retour à la vue Formation",
+
+      "backtotraining" : "Retour au plan de formation",
+
+      "seasonupdatedsucessfully" :"Saison mise à jour avec succès",
+
+      "assigntrainingplan" :"Attribuer un plan de formation",
+
+      "manageassigntrainingplan" :"Gérer attribuer un plan de formation",
+
+      "selecttrainingplan" :"Sélectionnez le plan de formation",
+
+       "edit_goaile_profile" :"Modifier le profil",
+
+        "profile" :"profil",
+"myprofile" :"mon profil",
+        "setnewpass" :"Definir un nouveau mot de passe",
+
+        "coaches" :"Entraîneurs",
+
+      "addcoaches" :"Ajouter des entraîneurs",
+
+      "managecoaches" :"Gérer les entraîneurs",
+
+      "coachname" : "Nom de l'entraîneur",
+
+      "editcoach" :"Modifier l'entraîneur",
+
+
+      "addblogcat" :"Ajouter une catégorie de blog",
+
+      "Title" :"Titre",
+
+      "Category" :"Catégorie",
+
+      "Select_Category" :"Choisir une catégorie",
+
+      "Content" :"Contenu",
+
+       "Image" :"Image",
+
+       "Blogs" :"Blogues",
+
+       "addblog" :"Ajouter un blog",
+
+       "viewallblog" :"Voir tout le blog",
+
+       "Blogcat" :"Catégorie de blog",
+
+       "viewallblogcat" :"Voir toute la catégorie du blog",
+"Please Login":"Veuillez vous connecter",
+"Login":"connecter",
+            "cat_name" :"Nom de catégorie",
+      "sportsis" : "Le sport est",
+       "Important": "Importante",
+       "forgoodhealth": "pour une bonne santé",
+           "my" : "Mes ",
+           "All the training plans" : "Voir tous mes plans d’entraînement",
+               "plan" : "plans",
+               "viewtrainings" : "Voir les formations",
+                 "loadmore" : "Charger plus",
+                  "myprogress" : "Mes progrès",   
+                  "ourblogs"  : "Nos articles",
+                  "viewblogs"  : "Voir les blogs",
+                  "noblogfound" : "Aucun blog trouvé",
+                  "learnmore" :"Apprendre encore plus",
+                  "latestnews" : "Dernières nouvelles",
+                  "mytraining":"Mes entraînements",
+                  "listing":"Liste d'exercices",
+                   "summertrainingplan":"Plan de formation d'été",
+                   "back" : "< Retour",
+                   
+                   "addbanner" :"Contenu de la bannière",
+                   "Link" :"Lien",
+                  "homebanner" :"Bannière d'accueil",
+                  "size" :"Taille",
+                  "save_content_lang" : "In which language to save the data?","otherdrills" :"Autres exercices",
+                  "othertraining" :"Autres  d’entraînement",
+                  "No Training Found":"Aucune formation trouvée",
+                  "Custom range" : "Dates personnalisées",
+                  "filter" : "Appliquer",
+                   "loaderimage" : "Image du chargeur",
+                   "Enter password" :"Entrez le mot de passe"
+}

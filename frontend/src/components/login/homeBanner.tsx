@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { validate } from '../utils/validate';
 import axios from 'axios';
 
+import { useTranslation } from 'react-i18next'
 interface FormState {
     title: string;
     content: string;
@@ -29,6 +30,7 @@ const HomeBannerEdit = () => {
     const [_id, setId] = useState('');
     const navigate = useNavigate();
 
+    const { t, i18n } = useTranslation();
     const fetchHomeBannerData = async () => {
         try {
             const response = await axios.get('http://localhost:4500/api/v1/get-home-banner'); // Adjust the endpoint as necessary
@@ -146,14 +148,14 @@ const HomeBannerEdit = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header">
-                <h3 className="card-title">Edit Home Banner</h3>
+                <h3 className="card-title">{t('homebanner')}</h3>
             </div>
             <Form onSubmit={handleSubmit} className="profile-edit-form row">
                 <Form.Group controlId="title" className="profile-edit-field col-md-6">
-                    <Form.Label>Title</Form.Label>
+                    <Form.Label>{t('Title')}</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter banner title"
+                        placeholder={t('Title')}
                         name="title"
                         value={formData.title}
                         onChange={handleChange}
@@ -165,11 +167,11 @@ const HomeBannerEdit = () => {
                 </Form.Group>
 
                 <Form.Group controlId="content" className="profile-edit-field col-md-6">
-                    <Form.Label>Content</Form.Label>
+                    <Form.Label>{t('Content')}</Form.Label>
                     <Form.Control
                         as="textarea"
                         rows={3}
-                        placeholder="Enter banner content"
+                        placeholder={t('Content')}
                         name="content"
                         value={formData.content}
                         onChange={handleChange}
@@ -181,7 +183,7 @@ const HomeBannerEdit = () => {
                 </Form.Group>
 
                 <Form.Group controlId="photo" className="profile-edit-field col-md-6" style={{marginTop: '20px'}}>
-                    <Form.Label>Banner Photo (Accept only: jpg,jpeg,png,gif)</Form.Label>
+                    <Form.Label>{t('photo')} {t('Accept only: jpg,jpeg,png,gif')}</Form.Label>
                     <Form.Control
                         type="file"
                         name="photo"
@@ -194,10 +196,10 @@ const HomeBannerEdit = () => {
 
 
                 <Form.Group controlId="link" className="profile-edit-field col-md-6"  style={{marginTop: '20px'}}>
-                    <Form.Label>Link</Form.Label>
+                    <Form.Label>{t('Link')}</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter banner link"
+                        placeholder={t('Link')}
                         name="link"
                         value={formData.link}
                         onChange={handleChange}
@@ -226,7 +228,7 @@ const HomeBannerEdit = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">{t('submit')}</Button>
                     </div>
                 )}
             </Form>

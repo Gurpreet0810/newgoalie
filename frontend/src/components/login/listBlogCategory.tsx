@@ -5,7 +5,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Button, Typography, Snackbar, Alert, Paper, Container, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
-
+import { useTranslation } from 'react-i18next';
 // Define the interface for the blog category data
 interface BlogCategory {
   _id: string;
@@ -20,7 +20,7 @@ function ListBlogCategory() {
   const [deleteId, setDeleteId] = useState<string | null>(null); // State to store the category ID to delete
   const [dialogOpen, setDialogOpen] = useState(false); // State for the delete confirmation dialog
   const [open, setOpen] = useState(false);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -105,7 +105,7 @@ function ListBlogCategory() {
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-          Blog Categories List
+          {t('Blogcat')}
         </Typography>
         <DataGrid
           rows={categories}
