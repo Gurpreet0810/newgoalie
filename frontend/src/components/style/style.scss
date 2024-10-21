@@ -1895,19 +1895,11 @@ main.layout_section input[type=text] {
     margin-top: 5px;
   }
   
-  .center_sider button ,.login_center button {
-    background: #afaaaa;
-    color: white;
-    padding: 8px;
+   .profile-view-field {
+    padding: 0 10px;
+}
+
+.trassign .profile-edit-field.col-md-6 {
     margin: 10px;
-    border: none;
-}
-
-.center_sider button.active{
-    background: #00617a;
-}
-
-.login_center {
-    display: table;
-    margin: auto;
+    width: 47% !important;
 }

@@ -1,17 +1,16 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
+import { useState, useEffect, FormEvent } from 'react';
+import { Select, MenuItem, FormControl, InputLabel, Button, CircularProgress } from '@mui/material'; // Import Material UI components
 import { toast } from 'react-toastify';
 import { assignTrainingPlan } from '../store/TrainingSlice'; // Assuming you have this action
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { validate } from '../utils/validate';
 import axios from 'axios';
-import { useTranslation } from 'react-i18next';
+import { SelectChangeEvent } from '@mui/material'; // Import the correct type
+
 const AssignTrainingPlan = () => {
     const [assignment, setAssignment] = useState({
-        goalie_id: "",
+        goalie_id: "", // Keep as string for the goalie selection
         training_plan_id: [] as string[], // Ensure this is typed as an array of strings
     });
 
@@ -19,10 +18,9 @@ const AssignTrainingPlan = () => {
     const [trainingPlans, setTrainingPlans] = useState<any[]>([]);
     const [errors, setErrors] = useState<any>({});
     const [loader, setLoader] = useState(false);
-    const [showValidation, setShowValidation] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation();
+
     const { userInfo } = useSelector((state: any) => state.user);
 
     const fields = [
@@ -60,19 +58,9 @@ const AssignTrainingPlan = () => {
         fetchTrainingPlans();
     }, []);
 
-    const handleInputs = (
-        event: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setShowValidation(true);
-        const { name } = event.target;
-
-        if (name === 'training_plan_id') {
-            const target = event.target as HTMLSelectElement; // Assert to HTMLSelectElement
-            const options = Array.from(target.selectedOptions).map((option) => option.value); // Get selected values
-            setAssignment({ ...assignment, [name]: options });
-        } else {
-            setAssignment({ ...assignment, [name]: event.target.value });
-        }
+    const handleInputs = (event: SelectChangeEvent<string[]>) => {
+        const { name, value } = event.target;
+        setAssignment({ ...assignment, [name]: value });
     };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -83,7 +71,7 @@ const AssignTrainingPlan = () => {
         assignment.training_plan_id.forEach(plan => {
             formData.append('training_plan_id[]', plan); // Append each selected training plan
         });
-        formData.append('user_id', userInfo[0]?.userDetails?._id);
+        formData.append('coach_id', userInfo[0]?.userDetails?._id);
 
         try {
             const isValidate = await validate(fields, assignment);
@@ -91,7 +79,7 @@ const AssignTrainingPlan = () => {
                 setLoader(true);
                 await assignTrainingPlan(formData, dispatch);
                 setLoader(false);
-                navigate('/list-assignments');
+                navigate('/manage-assign-training-plan');
             }
         } catch (error: any) {
             setLoader(false);
@@ -106,62 +94,59 @@ const AssignTrainingPlan = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">{t('assigntrainingplan')}</h3>
+                <h3 className="card-title">Assign Training Plan</h3>
             </div>
-            <Form onSubmit={handleSubmit} className="profile-edit-form row">
-                <Form.Group controlId="goalieSelect" className="profile-edit-field col-md-6">
-                    <Form.Label>{t('goalie')}</Form.Label>
-                    <Form.Control
-                        as="select"
+            <form onSubmit={handleSubmit} className="profile-edit-form row trassign">
+                {/* Goalies Select Box */}
+                <FormControl fullWidth variant="outlined" className="profile-edit-field col-md-6">
+                    <InputLabel id="goalie-select-label">Goalie</InputLabel>
+                    <Select
+                        labelId="goalie-select-label"
                         name="goalie_id"
-                        value={assignment.goalie_id}
-                        onChange={handleInputs}
-                        isInvalid={!!errors.goalie_id}
+                        value={assignment.goalie_id || ""} // Ensure it's either string or empty string
+                        onChange={(e) => setAssignment({ ...assignment, goalie_id: e.target.value })} // Update goalie_id
+                        error={!!errors.goalie_id}
                     >
-                        <option value="">{t('selectgoalie')}</option>
+                        <MenuItem value="">
+                            <em>Select Goalie</em>
+                        </MenuItem>
                         {goalies.map((goalie) => (
-                            <option key={goalie._id} value={goalie._id}>
+                            <MenuItem key={goalie._id} value={goalie._id}>
                                 {goalie.goalie_name}
-                            </option>
+                            </MenuItem>
                         ))}
-                    </Form.Control>
-                    <Form.Control.Feedback type="invalid">
-                        {errors.goalie_id}
-                    </Form.Control.Feedback>
-                </Form.Group>
+                    </Select>
+                </FormControl>
 
-                <Form.Group controlId="trainingPlanSelect" className="profile-edit-field col-md-6">
-                    <Form.Label>{t('trainingplan')}</Form.Label>
-                    <Form.Control
-                        as="select"
+                {/* Training Plans Select Box - Now a Material-UI Multiple Select */}
+                <FormControl fullWidth variant="outlined" className="profile-edit-field col-md-6">
+                    <InputLabel id="training-plan-select-label">Training Plan</InputLabel>
+                    <Select
+                        labelId="training-plan-select-label"
                         name="training_plan_id"
-                        value={assignment.training_plan_id}
-                        onChange={handleInputs}
-                        isInvalid={!!errors.training_plan_id}
-                        multiple={true}
+                        value={assignment.training_plan_id} // Keep this as is, since it is an array
+                        onChange={handleInputs} // Use handleInputs for multiple selections
+                        error={!!errors.training_plan_id}
+                        multiple
                     >
-                        <option value="">{t('selecttrainingplan')}</option>
                         {trainingPlans.map((plan) => (
-                            <option key={plan._id} value={plan._id}>
+                            <MenuItem key={plan._id} value={plan._id}>
                                 {plan.training_name}
-                            </option>
+                            </MenuItem>
                         ))}
-                    </Form.Control>
-                    <Form.Control.Feedback type="invalid">
-                        {errors.training_plan_id}
-                    </Form.Control.Feedback>
-                </Form.Group>
+                    </Select>
+                </FormControl>
 
                 {loader ? (
                     <div className="text-left">
-                        <Spinner animation="border" variant="primary" />
+                        <CircularProgress />
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="primary" type="submit">{t('submit')}</Button>
+                        <Button variant="contained" color="primary" type="submit">Submit</Button>
                     </div>
                 )}
-            </Form>
+            </form>
         </div>
     );
 };

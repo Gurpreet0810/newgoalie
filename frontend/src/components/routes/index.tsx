@@ -45,6 +45,11 @@ import CoachDrills from '../login/coachDrills';
 import DrillsCoach from '../login/drillsCoach';
 
 import AssignTrainingPlan from '../login/assignTrainingPlan';
+import ListAssignTrainingPlan from '../login/listAssignTrainingPlan';
+import EditAssignTrainingPlan from '../login/editAssignTrainingPlan';
+import ViewAssignTrainingPlan from '../login/viewAssignTrainingPlan';
+
+import GoalieHome from '../login/goalie/home';
 
 import HomeBanner from '../login/homeBanner';
 
@@ -193,7 +198,23 @@ const router = createBrowserRouter([
           {
             path: 'assign-training-plan',
             element: <AssignTrainingPlan />, 
-          }
+          },
+          {
+            path: 'manage-assign-training-plan',
+            element: <ListAssignTrainingPlan />, 
+          },
+          {
+            path: '/edit-assigned-training-plan/:id',
+            element: <EditAssignTrainingPlan />, 
+          },
+          {
+            path: '/view-assigned-training-plan/:id',
+            element: <ViewAssignTrainingPlan />, 
+          },
+          {
+            path: 'goalie-home',
+            element: <GoalieHome />, 
+          }          
         ],
       },
     ],

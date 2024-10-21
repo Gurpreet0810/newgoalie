@@ -49,7 +49,7 @@ const ProfileEdit = () => {
                 }
             });
             const userData = response.data;
-            console.log("udata : ",userData);
+           // console.log("udata : ",userData);
             setFormData({
                 userName: userData.userName,
                 email: userData.email,
