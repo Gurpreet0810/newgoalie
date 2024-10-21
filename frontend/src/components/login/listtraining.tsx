@@ -91,12 +91,12 @@ function ListTrainings() {
   };
 
   const columns: GridColDef[] = [
-    { field: 'srNo', headerName: 'Sr. No.', width: 200 },
-    { field: 'id', headerName: 'ID', width: 300 },
-    { field: 'training_name', headerName: 'Training Name', width: 300 },
+    { field: 'srNo', headerName: t('srno'), width: 200 },
+    { field: 'id', headerName: t('id'), width: 300 },
+    { field: 'training_name', headerName: t('trainingname'), width: 300 },
     { 
       field: 'actions', 
-      headerName: 'Actions', 
+      headerName: t('action'), 
       sortable: false, 
       width: 200,
       renderCell: (params: GridRenderCellParams) => (

@@ -37,13 +37,13 @@ function ListCoach() {
   }, []);
 
   const columns: GridColDef[] = [
-    { field: 'srNo', headerName: 'Sr. No.', width: 100 },
-    { field: 'userName', headerName: 'Coach', flex: 1 },
-    { field: 'phoneNumber', headerName: 'Phone', flex: 1 },
-    { field: 'email', headerName: 'Email', flex: 1 },
+    { field: 'srNo', headerName: t('srno'), width: 100 },
+    { field: 'userName', headerName: t('coaches'), flex: 1 },
+    { field: 'phoneNumber', headerName: t('phone'), flex: 1 },
+    { field: 'email', headerName: t('email'), flex: 1 },
     {
       field: 'actions',
-      headerName: 'Actions',
+      headerName: t('action'),
       sortable: false,
       width: 200,
       renderCell: (params: GridRenderCellParams) => (

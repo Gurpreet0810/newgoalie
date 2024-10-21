@@ -72,16 +72,16 @@ function ListGoalie() {
   const columns: GridColDef[] = [
     { 
       field: 'srNo', 
-      headerName: 'Sr. No.', 
+      headerName: t('srno'), 
       width: 100 
     },
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'goalie_name', headerName: 'Name', flex: 1 },
-    { field: 'phone', headerName: 'Phone', flex: 1 },
-    { field: 'email', headerName: 'Email', flex: 1 },
+    { field: 'id', headerName:  t('id'), width: 70 },
+    { field: 'goalie_name', headerName: t('name'), flex: 1 },
+    { field: 'phone', headerName: t('phone'), flex: 1 },
+    { field: 'email', headerName: t('email'), flex: 1 },
     { 
       field: 'goalie_photo', 
-      headerName: 'Logo', 
+      headerName: t('photo'), 
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <img 
@@ -93,7 +93,7 @@ function ListGoalie() {
     },
     { 
       field: 'actions', 
-      headerName: 'Actions', 
+      headerName: t('action'), 
       sortable: false, 
       width: 200,
       renderCell: (params: GridRenderCellParams) => (

@@ -266,7 +266,7 @@
       "Select_Category" :"Choisir une catégorie",
 
       "Content" :"Contenu",
-
+      "id" : "Identifiant",
        "Image" :"Image",
 
        "Blogs" :"Blogues",

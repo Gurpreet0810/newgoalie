@@ -67,12 +67,12 @@ function ListBlogCategory() {
   };
 
   const columns: GridColDef[] = [
-    { field: 'srNo', headerName: 'Sr. No.', width: 100 },
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'category_name', headerName: 'Category Name', flex: 1 },
+    { field: 'srNo', headerName: t('srno'), width: 100 },
+    { field: 'id', headerName: t('id'), width: 70 },
+    { field: 'category_name', headerName: t('categoryname'), flex: 1 },
     { 
       field: 'actions', 
-      headerName: 'Actions', 
+      headerName:  t('action'), 
       sortable: false, 
       width: 200,
       renderCell: (params: GridRenderCellParams) => (
