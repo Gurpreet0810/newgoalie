@@ -78,7 +78,14 @@ const Login = () => {
                 if (data?.statusCode === 200) {
                   setLoader(false);
                   toast.success(data.message, {autoClose: 1000})
-                  navigate('/profile'); // Redirect to the previous page or home
+
+                  const userRole = data.data.userDetails.roles;
+                  // console.log('urole :',userRole);
+                  if (userRole.includes("goalie")) {
+                    navigate('/goalie-home/');
+                  } else {
+                      navigate('/profile');
+                  }
                 }
             }
         } catch (error: any) {

@@ -15,9 +15,6 @@ const TrainingSchema = new mongoose.Schema({
   },
   drill_name: {
     type: String,  // Store the URL of the video link if video_option is 'video_link'
-  },
-  weeks:{
-    type:[String]
   }
 }, {
   timestamps: true,

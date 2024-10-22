@@ -3,7 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 const AssignTrainingSchema = new mongoose.Schema({
   goalie_id: {
     type: Schema.Types.ObjectId,
-    ref: 'Goalie_model',
+    ref: 'goalie',
     required: true,
   },
   coach_id: {

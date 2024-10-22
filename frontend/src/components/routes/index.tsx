@@ -50,8 +50,12 @@ import EditAssignTrainingPlan from '../login/editAssignTrainingPlan';
 import ViewAssignTrainingPlan from '../login/viewAssignTrainingPlan';
 
 import GoalieHome from '../login/goalie/home';
-
 import HomeBanner from '../login/homeBanner';
+import GoalieAllTrainings from '../login/goalie/goalieAllTrainings';
+import GoalieTraining from '../login/goalie/goalieTraining';
+import GoalieAllBlogs from '../login/goalie/goalieAllBlogs';
+import GoalieSingleBlog from '../login/goalie/singleBlog';
+import GoalieProfile from '../login/goalie/goalieProfile';
 
 // Logout component
 const Logout = () => {
@@ -214,6 +218,26 @@ const router = createBrowserRouter([
           {
             path: 'goalie-home',
             element: <GoalieHome />, 
+          },
+          {
+            path: '/goalie/view-all-trainings',
+            element: <GoalieAllTrainings />, 
+          },
+          {
+            path: '/goalie/view-training/:trainingPlanId',
+            element: <GoalieTraining />, 
+          },
+          {
+            path: '/goalie/view-all-blogs',
+            element: <GoalieAllBlogs />, 
+          },
+          {
+            path: '/goalie/blog/:id',
+            element: <GoalieSingleBlog />, 
+          },
+          {
+            path: '/goalie-profile/',
+            element: <GoalieProfile />, 
           }          
         ],
       },

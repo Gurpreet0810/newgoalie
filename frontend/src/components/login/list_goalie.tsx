@@ -9,10 +9,10 @@ import { useTranslation } from 'react-i18next'
 // Define the user interface based on the structure of your data
 interface User {
   _id: string;
-  goalie_name: string;
-  phone: string;
+  userName: string;
+  phoneNumber: string;
   email: string;
-  goalie_photo: string;
+  photo: string;
   password: string;
   createdAt: string;
   updatedAt: string;
@@ -76,11 +76,11 @@ function ListGoalie() {
       width: 100 
     },
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'goalie_name', headerName: 'Name', flex: 1 },
-    { field: 'phone', headerName: 'Phone', flex: 1 },
+    { field: 'userName', headerName: 'Name', flex: 1 },
+    { field: 'phoneNumber', headerName: 'Phone', flex: 1 },
     { field: 'email', headerName: 'Email', flex: 1 },
     { 
-      field: 'goalie_photo', 
+      field: 'photo', 
       headerName: 'Logo', 
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (

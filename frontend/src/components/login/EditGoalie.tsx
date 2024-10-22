@@ -23,10 +23,10 @@ function EditGoalie() {
         console.log(response.data, "Response Data");
 
         const user = response.data;
-        setName(user.goalie_name);
-        setPhone(user.phone);
+        setName(user.userName);
+        setPhone(user.phoneNumber);
         setEmail(user.email);
-        setImagePreview(`http://localhost:4500/storage/productImages/${user.goalie_photo}`); // Construct the full image URL
+        setImagePreview(`http://localhost:4500/storage/productImages/${user.photo}`); // Construct the full image URL
         setLoading(false);
       } catch (err) {
         if (err instanceof Error) {
@@ -107,23 +107,6 @@ function EditGoalie() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder={t('email')}
         />
-      </Form.Group>
-    </Row>
-
-    <Row className="mb-3">
-      <Form.Group as={Col} controlId="formPhone" className="profile-edit-field mb-3">
-        <Form.Label>Phone</Form.Label>
-        <Form.Control
-          type="tel"
-          name="phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="Phone"
-        />
-      </Form.Group>
-
-      <Form.Group as={Col}  className="profile-edit-field mb-3">
-        
       </Form.Group>
     </Row>
 

@@ -1,11 +1,15 @@
 import Training from "../models/Training.js";
+import DrillCategory from "../models/drillCategory.model.js";
+import Drill from '../models/addDrill.model.js';
 import TrainingPlanAssign from "../models/trainingPlanAssign.model.js";
 import TrainingDrills from "../models/Trainingdrills.js"
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import mongoose from "mongoose"; // Ensure mongoose is imported
 
 const AddTrainings = asyncHandler(async (req, res) => {
+
   const { training_name, drill_category ,drill_name , weeks ,user_id} = req.body; 
   const image = req.image; 
   if (!user_id) {
@@ -32,6 +36,54 @@ const getAllTrainings = async (req, res) => {
     const categories = await Training.find();
     res.status(200).json(categories);
   } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const getAllTrainingsHome = async (req, res) => {
+  try {
+    const goalieId = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(goalieId)) {
+      return res.status(400).json({ message: "Invalid Goalie ID" });
+    }
+
+    const goalieObjectId = new mongoose.Types.ObjectId(goalieId);
+    console.log("Goalie ID:", goalieObjectId);
+
+    const trainings = await Training.aggregate([
+      {
+        $lookup: {
+          from: "assigntrainings", // Ensure this matches the collection name in MongoDB
+          localField: "_id",
+          foreignField: "training_plan_id",
+          as: "assignments"
+        }
+      },
+      {
+        $unwind: "$assignments"
+      },
+      {
+        $match: { 
+          "assignments.goalie_id": goalieObjectId // Explicit ObjectId conversion
+        }
+      },
+      {
+        $group: {
+          _id: "$_id",
+          trainingPlan: { $first: "$$ROOT" },
+          tr_status: { $first: "$assignments.status" }
+        }
+      },
+      {
+        $sort: { _id: -1 }
+      }
+    ]);
+
+    console.log('trainings :', trainings);
+    res.status(200).json(trainings);
+  } catch (error) {
+    console.error("Error fetching trainings:", error); // Improved error logging
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -116,6 +168,43 @@ export const singleTrainingsDrills = async (req, res) => {
   }
 };
 
+export const singleTrainingsDrillDetails = async (req, res) => {  
+  try {
+    const trainingDrills = await TrainingDrills.find({ trainingplan_id: req.params.id });
+
+    if (!trainingDrills || trainingDrills.length === 0) {
+      return res.status(404).json({ message: "Training not found" });
+    }
+
+    const drillDetailsWithCategory = await Promise.all(
+      trainingDrills.map(async (drill) => {
+        const drillDetail = await Drill.findById(drill.drill_name); // Assuming drill_name is the drill's ID
+        if (!drillDetail) {
+          throw new Error(`Drill not found for ID: ${drill.drill_name}`);
+        }
+
+        const categoryDetail = await DrillCategory.findById(drill.drill_category); // Assuming drill_category is the category's ID
+        if (!categoryDetail) {
+          throw new Error(`Category not found for ID: ${drill.drill_category}`);
+        }
+
+        return {
+          drill_name: drillDetail.drill_name,
+          drill_description: drillDetail.description,
+          drill_photo: drillDetail.photo,
+          category_name: categoryDetail.category_name,
+          weeks: drill.weeks,
+        };
+      })
+    );
+
+    res.status(200).json(drillDetailsWithCategory);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 export const singleTrainings = async (req, res) => {
   try {
     const category = await Training.findById(req.params.id);
@@ -180,9 +269,9 @@ const getAllAssignedTrainings = async (req, res) => {
     const assignedTrainings = await TrainingPlanAssign.aggregate([
       {
         $lookup: {
-          from: 'goalies', // The name of the goalie collection
+          from: 'users', // Name of the users collection
           localField: 'goalie_id', // Field from TrainingPlanAssign
-          foreignField: '_id', // Field from goalie_model
+          foreignField: '_id', // Field from users collection
           as: 'goalieInfo', // Output array field
         },
       },
@@ -195,23 +284,26 @@ const getAllAssignedTrainings = async (req, res) => {
       {
         $group: {
           _id: "$goalie_id", // Group by goalie ID
-          goalie_name: { $first: "$goalieInfo.goalie_name" },
+          goalie_name: { $first: "$goalieInfo.userName" },
           goalie_email: { $first: "$goalieInfo.email" },
           training_plans: { // Collect training plans into an array
             $push: {
-              training_plan_name: "$training_name",
+              training_plan_name: "$training_name", // Ensure this field exists
               status: "$status", // Include status of each training plan
             },
           },
         },
       },
     ]);
-    
+
+    console.log("Assigned Trainings:", JSON.stringify(assignedTrainings, null, 2)); // Debugging output
     res.status(200).json(assignedTrainings); // Return the assigned trainings
   } catch (error) {
+    console.error("Aggregation error:", error); // Improved error logging
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
 
 const getAllAssignedTrainingsByGoalieId = async (req, res) => {
   try {
@@ -250,4 +342,4 @@ export const updateAssignedTrainingsStatus = asyncHandler(async (req, res) => {
 });
 
 
-export { AddTrainings, getAllTrainings, AssignTrainingPlan, getAllAssignedTrainings, getAllAssignedTrainingsByGoalieId };
+export { AddTrainings, getAllTrainings, AssignTrainingPlan, getAllAssignedTrainings, getAllAssignedTrainingsByGoalieId, getAllTrainingsHome };

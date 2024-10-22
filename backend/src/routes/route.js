@@ -9,10 +9,10 @@ import sendEmail from '../utils/nodemailer.js';
 import { addGoalie, getAllGoalies, getSingleGoalie, updateGoalie, deleteGoalie } from '../controllers/Goalie.js';
 import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, updateDrillCategory, deleteDrillCategory } from '../controllers/drill.js';
 import { addDrill, getAllDrills, getAllCoachDrills, getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
-import { AddTrainings, updateTrainingDrills, deletetrainings, UpdateTrainings, getAllTrainings, AddTrainingsDrills, singleTrainings, singleTrainingsDrills, AssignTrainingPlan, getAllAssignedTrainings, getAllAssignedTrainingsByGoalieId, updateAssignedTrainingsStatus} from '../controllers/training.js';
+import { AddTrainings, updateTrainingDrills, deletetrainings, UpdateTrainings, getAllTrainings, AddTrainingsDrills, singleTrainings, singleTrainingsDrills, AssignTrainingPlan, getAllAssignedTrainings, getAllAssignedTrainingsByGoalieId, updateAssignedTrainingsStatus, getAllTrainingsHome, singleTrainingsDrillDetails } from '../controllers/training.js';
 import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
 import { addBlogCategory, Addloaderimage,updateBlog,updateloaderimage, Getloaderimage  ,getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
-import { addHomeBanner , getHomeBanner ,updateHomeBanner  } from "../controllers/Homebanner.js"
+import { addHomeBanner , getHomeBanner , updateHomeBanner } from "../controllers/Homebanner.js";
 import multer from 'multer';
 
 // Configure multer for file uploads
@@ -99,5 +99,8 @@ router.get('/assignTrainingPlans', getAllAssignedTrainings)
 router.get('/assignments/:goalieId', getAllAssignedTrainingsByGoalieId)
 router.put('/assignments/:id', updateAssignedTrainingsStatus)
 
-
+// goalie routes
+router.get('/banner-content', getHomeBanner)
+router.get('/trainings-home/:id', getAllTrainingsHome);
+router.get('/training/:id', singleTrainingsDrillDetails);
 export default router

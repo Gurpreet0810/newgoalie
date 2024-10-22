@@ -42,10 +42,16 @@ const Sidebar = ({ setShowSidebar,showSidebar } : any) => {
     const [showDropDown, setShowDropDown] = useState(false)
     // Get user info from state
     const userInfo = useSelector((state: any) => state.user.userInfo);
-
+    const { t, i18n } = useTranslation();
     // Check if the user has a superadmin role
     const isSuperAdmin = userInfo && userInfo[0]?.userDetails?.roles.includes("superadmin");
     const isCoach = userInfo && userInfo[0]?.userDetails?.roles.includes("coach");
+    const isGoalie = userInfo && userInfo[0]?.userDetails?.roles.includes("goalie");
+
+    // Don't render sidebar if user is goalie
+    if (isGoalie) {
+        return null;
+    }
 
     const handleClick = () => {
         setOpen(!open);
@@ -73,7 +79,7 @@ const Sidebar = ({ setShowSidebar,showSidebar } : any) => {
 const hideSibar = () => {
     setShowSidebar(!showSidebar)
 }
-const { t, i18n } = useTranslation();
+
 
     return (
         <div className={

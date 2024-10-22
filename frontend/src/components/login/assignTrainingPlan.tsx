@@ -112,7 +112,7 @@ const AssignTrainingPlan = () => {
                         </MenuItem>
                         {goalies.map((goalie) => (
                             <MenuItem key={goalie._id} value={goalie._id}>
-                                {goalie.goalie_name}
+                                {goalie.userName}
                             </MenuItem>
                         ))}
                     </Select>

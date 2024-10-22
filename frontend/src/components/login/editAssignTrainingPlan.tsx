@@ -152,7 +152,7 @@ const EditAssignTrainingPlan = () => {
                         <option value="">Select Goalie</option>
                         {goalies.map((goalie) => (
                             <option key={goalie._id} value={goalie._id}>
-                                {goalie.goalie_name}
+                                {goalie.userName}
                             </option>
                         ))}
                     </Form.Control>

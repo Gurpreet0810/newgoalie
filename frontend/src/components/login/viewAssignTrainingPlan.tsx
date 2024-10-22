@@ -131,7 +131,7 @@ const ViewAssignTrainingPlan = () => {
                     <div className="row" style={{ display: 'flex', margin: '0px' }}>
                         <div className="profile-view-field" style={{ width: '50%' }}>
                             <h5><b>Goalie Name:</b></h5>
-                            <p>{goalie?.goalie_name || 'N/A'}</p> {/* Display Goalie Name */}
+                            <p>{goalie?.userName || 'N/A'}</p> {/* Display Goalie Name */}
                         </div>
                         <div className="profile-view-field" style={{ width: '50%' }}>
                             <h5><b>Email:</b></h5>

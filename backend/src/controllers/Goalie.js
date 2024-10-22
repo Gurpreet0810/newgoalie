@@ -1,15 +1,13 @@
-import AddGoalie from "../models/Goalie_model.js";
-// import ProductImages from "../models/productImages.model.js";
+import AddGoalie from "../models/user.model.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const addGoalie = asyncHandler(async (req, res) => {
-    // console.log(req.body);
-    const {goalie_name,phone,email,password} = req.body
-    const goalie_photo = req.image;  // Access the uploaded file
+    const {goalie_name: userName, phone: phoneNumber, email, password} = req.body
+    const photo = req.image;
 
-    if (!goalie_name || !phone || !email || !password ) {
+    if (!userName || !phoneNumber || !email || !password ) {
         return res.status(404)
       .json(new ApiError(404,
         [],
@@ -18,12 +16,14 @@ const addGoalie = asyncHandler(async (req, res) => {
     }
 
   const addGoalie = new AddGoalie({
-    goalie_name,
-    phone,
+    userName,
+    phoneNumber,
     email,
     password,
-    goalie_photo
+    photo,
+    roles: ['goalie']
   })
+
   const addGoalieSuccess = await addGoalie.save()
   if (!addGoalieSuccess) {
     return res.status(500)
@@ -37,27 +37,9 @@ const addGoalie = asyncHandler(async (req, res) => {
   .json(new ApiResponse(200, {addGoalieSuccess}, 'user created successfully'))
 });
 
-
-// const getAllProducts = asyncHandler(async (req, res) => {
-//   try {
-//     // Fetch all ProductImages and populate AddProduct details
-//     const allProducts = await ProductImages.find().populate('productId');
-
-//     // Check if no products found
-//     if (!allProducts || allProducts.length === 0) {
-//       return res.status(404).json(new ApiError(404, [], 'No products found'));
-//     }
-
-//     // Return success response with all products and images
-//     return res.status(200).json(new ApiResponse(200, allProducts, 'Successfully fetched all products'));
-//   } catch (error) {
-//     console.error('Error fetching products:', error);
-//     return res.status(500).json(new ApiError(500, [], 'Something went wrong while fetching products'));
-//   }
-// });
 export const getAllGoalies = async (req, res) => {
   try {
-    const goalies = await AddGoalie.find(); // Assuming you have a Mongoose model called Goalie
+    const goalies = await AddGoalie.find({ roles: { $in: ['goalie'] } }); // Assuming you have a Mongoose model called Goalie
     res.status(200).json(goalies);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -81,30 +63,25 @@ export const getSingleGoalie = async (req, res) => {
 
 export const updateGoalie = async (req, res) => {
   const { id } = req.params;
-  const { goalie_name, phone, email } = req.body;
-
-  // Handle file upload
+  const { goalie_name:userName, phone:phoneNumber, email } = req.body;
   const file = req.image;
 
   try {
-    // Construct the update fields
     const updateFields = {
-      goalie_name,
-      phone,
+      userName,
+      phoneNumber,
       email,
     };
 
     if (file) {
-      // If a file is uploaded, include the image path in the update
       const imagePath = req.image;
-      updateFields.goalie_photo = imagePath; // Add the image path to the update fields
+      updateFields.photo = imagePath;
     }
 
-    // Perform the update operation
     const result = await AddGoalie.findByIdAndUpdate(id, updateFields, { new: true });
 
     if (result) {
-      res.status(200).json(result); // Return the updated goalie
+      res.status(200).json(result);
     } else {
       res.status(404).json({ message: 'Goalie not found' });
     }
@@ -118,9 +95,7 @@ export const deleteGoalie = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Find the category by id and delete it
     const result = await AddGoalie.findByIdAndDelete(id);
-
     if (!result) {
       return res.status(404).json(new ApiError(404, [], "Goalie not found"));
     }
