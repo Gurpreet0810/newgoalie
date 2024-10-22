@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { validate } from '../utils/validate';
 import axios from 'axios';
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material'; // Import Material UI components
+import { useTranslation } from 'react-i18next';
 
 const EditAssignTrainingPlan = () => {
     interface Assignment {
@@ -20,7 +21,7 @@ const EditAssignTrainingPlan = () => {
         goalie_id: "",
         training_plan_id: [] as string[], // Ensure this is typed as an array of strings
     });
-
+    const { t, i18n } = useTranslation();
     const [goalies, setGoalies] = useState<any[]>([]);
     const [trainingPlans, setTrainingPlans] = useState<any[]>([]);
     const [errors, setErrors] = useState<any>({});
@@ -44,7 +45,7 @@ const EditAssignTrainingPlan = () => {
                 setGoalies(res.data);
             } catch (error) {
                 console.error('Error fetching goalies:', error);
-                toast.error('Error fetching goalies');
+                toast.error(t('error'));
             }
         };
 
@@ -59,7 +60,7 @@ const EditAssignTrainingPlan = () => {
                 setTrainingPlans(res.data);
             } catch (error) {
                 console.error('Error fetching training plans:', error);
-                toast.error('Error fetching training plans');
+                toast.error(t('error'));
             }
         };
 
@@ -81,7 +82,7 @@ const EditAssignTrainingPlan = () => {
                 }
             } catch (error) {
                 console.error('Error fetching assignment details:', error);
-                toast.error('Error fetching assignment details');
+                toast.error(t('error'));
             }
         };
 
@@ -135,12 +136,12 @@ const EditAssignTrainingPlan = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Edit Training Plan Assignment</h3>
+                <h3 className="card-title">{t('manageassigntrainingplan')}</h3>
             </div>
             <Form onSubmit={handleSubmit} className="profile-edit-form row">
                 {/* Goalie Select Box */}
                 <Form.Group controlId="goalieSelect" className="profile-edit-field col-md-6">
-                    <Form.Label>Goalie</Form.Label>
+                    <Form.Label>{t('goalie')}</Form.Label>
                     <Form.Control
                         as="select"
                         name="goalie_id"
@@ -149,7 +150,7 @@ const EditAssignTrainingPlan = () => {
                         isInvalid={!!errors.goalie_id}
                         disabled
                     >
-                        <option value="">Select Goalie</option>
+                        <option value="">{t('selectgoalie')}</option>
                         {goalies.map((goalie) => (
                             <option key={goalie._id} value={goalie._id}>
                                 {goalie.userName}
@@ -164,7 +165,7 @@ const EditAssignTrainingPlan = () => {
                 {/* Training Plans Select Box - Now a Material-UI Select */}
                 <Form.Group controlId="trainingPlanSelect" className="profile-edit-field col-md-6">
                     <FormControl fullWidth variant="outlined">
-                        <InputLabel id="training-plan-select-label">Training Plan</InputLabel>
+                        <InputLabel id="training-plan-select-label">{t('trainingplan')}</InputLabel>
                         <Select
                             labelId="training-plan-select-label"
                             name="training_plan_id"
@@ -174,7 +175,7 @@ const EditAssignTrainingPlan = () => {
                             error={!!errors.training_plan_id}
                         >
                             <MenuItem value="">
-                                <em>Select Training Plan</em>
+                                <em>{t('selecttrainingplan')}</em>
                             </MenuItem>
                             {trainingPlans.map((plan) => (
                                 <MenuItem key={plan._id} value={plan._id}>
@@ -194,7 +195,7 @@ const EditAssignTrainingPlan = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="primary" type="submit">Update Assignment</Button>
+                        <Button variant="primary" type="submit">{t('submit')}</Button>
                     </div>
                 )}
             </Form>

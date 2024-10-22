@@ -195,7 +195,7 @@
   "selectcategory" : "Select Category",
 
   "selectvideooption" : "Select Video Option",
-
+    "id" : "Id",
   "videoupload" : "Video Upload",
 
   "videolink" : "Video link",
@@ -307,5 +307,7 @@
                   "No Training Found":"No Training Found",
                     "Custom range" : "Custom Range",
                     "filter" : "Filter",
+                    "error" : "Error",
+                    "success" : "Success",
                      "loaderimage" : "Loader Image"
 }

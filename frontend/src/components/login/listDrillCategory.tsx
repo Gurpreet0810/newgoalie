@@ -22,7 +22,7 @@ function ListDrillCategory() {
   const [open, setOpen] = useState(false); // Snackbar state
   const [dialogOpen, setDialogOpen] = useState(false); // Dialog state
   const [deleteId, setDeleteId] = useState<string | null>(null); // Track which category to delete
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -70,12 +70,12 @@ function ListDrillCategory() {
   };
 
   const columns: GridColDef[] = [
-    { field: 'srNo', headerName: 'Sr. No.', width: 100 },
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'category_name', headerName: 'Category Name', flex: 1 },
+    { field: 'srNo', headerName: t('srno'), width: 100 },
+    { field: 'id', headerName: t('id'), width: 70 },
+    { field: 'category_name', headerName:  t('categoryname'), flex: 1 },
     { 
       field: 'category_status', 
-      headerName: 'Category Status', 
+      headerName: t('categorystatus'), 
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <Typography variant="body2">
@@ -85,7 +85,7 @@ function ListDrillCategory() {
     },
     { 
       field: 'actions', 
-      headerName: 'Actions', 
+      headerName: t('action'), 
       sortable: false, 
       width: 200,
       renderCell: (params: GridRenderCellParams) => (

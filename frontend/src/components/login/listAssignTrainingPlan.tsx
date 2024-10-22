@@ -7,6 +7,7 @@ import { Edit, Delete } from '@mui/icons-material'; // Import Material UI icons
 import { toast } from 'react-toastify';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
+import { useTranslation } from 'react-i18next';
 // Define the interface for the assigned training plan data
 interface AssignedTrainingPlan {
   _id: string;
@@ -22,7 +23,7 @@ function ListAssignTrainingPlan() {
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null); // For delete confirmation
-
+const { t, i18n } = useTranslation();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -86,15 +87,15 @@ function ListAssignTrainingPlan() {
   };
 
   const columns: GridColDef[] = [
-    { field: 'srNo', headerName: 'Sr. No.', width: 150 },
+    { field: 'srNo', headerName:t('srno'), width: 150 },
     // { field: 'id', headerName: 'ID', width: 300 },
     // { field: 'goalie_name', headerName: 'Goalie Name', width: 250 },
     // { field: 'goalie_email', headerName: 'Goalie Email', width: 250 },
-    { field: 'goalie_name', headerName: 'Goalie Name', width: 250 },
-    { field: 'goalie_email', headerName: 'Goalie Email', width: 350 },
+    { field: 'goalie_name', headerName: t('goalie_name'), width: 250 },
+    { field: 'goalie_email', headerName: t('email'), width: 350 },
     { 
       field: 'actions', 
-      headerName: 'Actions', 
+      headerName: t('action'), 
       sortable: false, 
       width: 200,
       renderCell: (params: GridRenderCellParams) => (
@@ -128,7 +129,7 @@ function ListAssignTrainingPlan() {
     <Container maxWidth={false} sx={{ marginTop: '120px' }}>
       <Paper sx={{ height: 400, width: '100%' }}>
         <Typography variant="h4" gutterBottom sx={{ padding: '15px', background: '#00617a', color: '#fff' }}>
-          Assigned Training Plan List
+          {t('assigntrainingplan')}
         </Typography>
         <DataGrid
           rows={assignedTrainingPlans}

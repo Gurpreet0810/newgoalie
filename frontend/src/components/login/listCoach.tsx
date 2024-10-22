@@ -68,13 +68,13 @@ function ListCoach() {
   const columns: GridColDef[] = [
     { 
       field: 'srNo', 
-      headerName: 'Sr. No.', 
+      headerName: t('srno'), 
       width: 100 
     },
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'userName', headerName: 'Name', flex: 1 },
-    { field: 'phoneNumber', headerName: 'Phone', flex: 1 },
-    { field: 'email', headerName: 'Email', flex: 1 },
+    { field: 'id', headerName: t('id'), width: 70 },
+    { field: 'userName', headerName: t('name'), flex: 1 },
+    { field: 'phoneNumber', headerName: t('phone'), flex: 1 },
+    { field: 'email', headerName: t('email'), flex: 1 },
     { 
       field: 'actions', 
       headerName: 'Actions', 

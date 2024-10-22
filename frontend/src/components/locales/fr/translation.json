@@ -11,13 +11,14 @@
 "Enter your phone number" :"Entrez votre numéro de téléphone",
 "Enter a new password" :"Entrez un nouveau mot de passe",
 "update" : "Mise à jour",
-
+"error" : "Erreur",
 "cancel" : "Annuler",
 "editdrill_category" :"Modifier la catégorie d'exercice",
   "resetpass" : "réinitialiser le mot de passe",
   "pass_link_text" : "Lien de réinitialisation du mot de passe envoyé à votre adresse e-mail.",
   "newpass" : "nouveau mot de passe",
 
+  "success" : "Succès",
   "number_of_goalies" : "Nombre de gardiens",
 
   "more_info" : "Plus d'informations",
@@ -266,7 +267,7 @@
       "Select_Category" :"Choisir une catégorie",
 
       "Content" :"Contenu",
-
+      "id" : "Identifiant",
        "Image" :"Image",
 
        "Blogs" :"Blogues",

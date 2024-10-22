@@ -61,11 +61,11 @@ function ListDrillsByCoach() {
   }, [coachId]);
 
   const columns: GridColDef[] = [
-    { field: 'srNo', headerName: 'Sr. No.', width: 100 },
-    { field: 'drill_name', headerName: 'Drill Name', flex: 1 },
+    { field: 'srNo', headerName: t('srno'), width: 100 },
+    { field: 'drill_name', headerName: t('drillname'), flex: 1 },
     { 
       field: 'category', 
-      headerName: 'Category', 
+      headerName: t('category'), 
       flex: 1,
       renderCell: (params: GridRenderCellParams) => params.value,
     },
