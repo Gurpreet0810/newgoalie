@@ -154,7 +154,7 @@ const AddDrill = () => {
             setErrors(error);
             console.error('Error adding drill:', error);
             if (error?.data?.message) {
-                toast.error(error?.data?.message, { autoClose: 2000 });
+                toast.error(t('error'), { autoClose: 2000 });
             }
         }
     };

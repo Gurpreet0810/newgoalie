@@ -316,7 +316,7 @@ const { t, i18n } = useTranslation();
                                 <ListItemIcon>
                                     <PeopleAltIcon className='title' />
                                 </ListItemIcon>
-                                <ListItemText className='title text_title' primary="Assign Training Plan" />
+                                <ListItemText className='title text_title' primary={t('assigntrainingplan')} />
                                 {open2 ? <ExpandLess className='title text_title' /> : <ExpandMore className='title text_title' />}
                             </ListItem>
                             <Collapse in={open2} timeout="auto" unmountOnExit>
@@ -325,13 +325,13 @@ const { t, i18n } = useTranslation();
                                         <ListItemIcon>
                                             <AddBoxIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary="Assign Training Plan" />
+                                        <ListItemText className='title' primary={t('assigntrainingplan')} />
                                     </ListItem>
                                     <ListItem component={Link} to="/manage-assign-training-plan" sx={{ pl: 2 }} button>
                                         <ListItemIcon>
                                             <BallotIcon className='title' />
                                         </ListItemIcon>
-                                        <ListItemText className='title' primary=" Manage Assign Training Plan  " />
+                                        <ListItemText className='title' primary={t('manageassigntrainingplan')}  />
                                     </ListItem>
                                    
                                 </List>

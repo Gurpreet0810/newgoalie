@@ -8,12 +8,16 @@ import { validate } from '../utils/validate';
 import axios from 'axios';
 import { SelectChangeEvent } from '@mui/material'; // Import the correct type
 
+import { useTranslation } from 'react-i18next';
+
+
 const AssignTrainingPlan = () => {
     const [assignment, setAssignment] = useState({
         goalie_id: "", // Keep as string for the goalie selection
         training_plan_id: [] as string[], // Ensure this is typed as an array of strings
     });
 
+    const { t, i18n } = useTranslation();
     const [goalies, setGoalies] = useState<any[]>([]);
     const [trainingPlans, setTrainingPlans] = useState<any[]>([]);
     const [errors, setErrors] = useState<any>({});
@@ -36,7 +40,7 @@ const AssignTrainingPlan = () => {
                 setGoalies(res.data);
             } catch (error) {
                 console.error('Error fetching goalies:', error);
-                toast.error('Error fetching goalies');
+                toast.error(t('error'));
             }
         };
 
@@ -94,12 +98,12 @@ const AssignTrainingPlan = () => {
     return (
         <div className="profile-edit-content card card-primary">
             <div className="card-header" style={{ backgroundColor: '#00617a', marginBottom: '20px' }}>
-                <h3 className="card-title">Assign Training Plan</h3>
+                <h3 className="card-title">{t('assigntrainingplan')}</h3>
             </div>
             <form onSubmit={handleSubmit} className="profile-edit-form row trassign">
                 {/* Goalies Select Box */}
                 <FormControl fullWidth variant="outlined" className="profile-edit-field col-md-6">
-                    <InputLabel id="goalie-select-label">Goalie</InputLabel>
+                    <InputLabel id="goalie-select-label">{t('goalie')}</InputLabel>
                     <Select
                         labelId="goalie-select-label"
                         name="goalie_id"
@@ -108,7 +112,7 @@ const AssignTrainingPlan = () => {
                         error={!!errors.goalie_id}
                     >
                         <MenuItem value="">
-                            <em>Select Goalie</em>
+                            <em>{t('selectgoalie')}</em>
                         </MenuItem>
                         {goalies.map((goalie) => (
                             <MenuItem key={goalie._id} value={goalie._id}>
@@ -120,7 +124,7 @@ const AssignTrainingPlan = () => {
 
                 {/* Training Plans Select Box - Now a Material-UI Multiple Select */}
                 <FormControl fullWidth variant="outlined" className="profile-edit-field col-md-6">
-                    <InputLabel id="training-plan-select-label">Training Plan</InputLabel>
+                    <InputLabel id="training-plan-select-label">{t('trainingplan')}</InputLabel>
                     <Select
                         labelId="training-plan-select-label"
                         name="training_plan_id"
@@ -143,7 +147,7 @@ const AssignTrainingPlan = () => {
                     </div>
                 ) : (
                     <div className="text-left">
-                        <Button variant="contained" color="primary" type="submit">Submit</Button>
+                        <Button variant="contained" color="primary" type="submit">{t('submit')}</Button>
                     </div>
                 )}
             </form>

@@ -169,10 +169,10 @@ const AddTraining = () => {
                 
                 await addTrainingsDrills(formData_drills, dispatch);
             }
-            toast.success('Training added successfully!');
+            toast.success(t('success'));
             navigate('/manage-training');
         } catch (error) {
-            toast.error('Error adding training');
+            toast.error(t('error'));
         }
     };
 

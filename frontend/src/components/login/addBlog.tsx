@@ -113,9 +113,9 @@ const AddBlog = () => {
         } catch (error: any) {
             setLoader(false);
             setErrors(error);
-            console.error('Error adding blog:', error);
+            console.error(t('error'), error);
             if (error?.data?.message) {
-                toast.error(error?.data?.message, { autoClose: 2000 });
+                toast.error(t('error'), { autoClose: 2000 });
             }
         }
     };
