@@ -189,6 +189,7 @@ export const singleTrainingsDrillDetails = async (req, res) => {
         }
 
         return {
+          drill_id: drillDetail._id,
           drill_name: drillDetail.drill_name,
           drill_description: drillDetail.description,
           drill_photo: drillDetail.photo,

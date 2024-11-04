@@ -215,6 +215,20 @@ const deleteDrillCategory = asyncHandler(async (req, res) => {
       res.status(500).json({ message: "Server error" });
     }
   };
+
+  const getSingleDrillWithCats = async (req, res) => {
+    try {
+      const drill = await Drill.findById(req.params.id).populate('category', 'category_name category_status');
+      if (!drill) {
+        return res.status(404).json(new ApiError(404, [], "Drill not found"));
+      }
+  
+      res.status(200).json(new ApiResponse(200, { drill }, "Drill fetched successfully"));
+    } catch (error) {
+      console.error('Error fetching drill with category:', error);
+      res.status(500).json(new ApiError(500, [], "Server error while fetching drill"));
+    }
+  };
   
   const updateDrill = asyncHandler(async (req, res) => {
     const { id } = req.params;
@@ -306,5 +320,6 @@ const deleteDrill = asyncHandler(async (req, res) => {
     getSingleDrill,
     updateDrill,
     deleteDrill,
-    getAllCoachDrills
+    getAllCoachDrills,
+    getSingleDrillWithCats
     };

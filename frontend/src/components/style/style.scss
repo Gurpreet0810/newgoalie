@@ -4066,3 +4066,55 @@ form#u_profile {
     display: table;
     margin: auto;
 }
+
+.latest-drill {
+    background: #ffffff0f;
+    padding: 20px 18px !important;
+    border-radius: 13px;
+    border: 1px solid #25576c;
+}
+
+.latest-drill .text-white {
+    font-size: 17px;
+}
+
+.drill-category-name a {
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 7px;
+    text-decoration: none;
+}
+
+.latest-drill .card {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 19px 18px;
+    margin-top: 26px;
+    border-radius: 18px;
+    flex-direction: row;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 23px #80808066;
+}
+
+.not_started {
+    background: #ff364e !important;
+}
+
+.cat-name h2 {
+    font-size: 21px;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.latest-drill p {
+    color: white !IMPORTANT;
+}
+
+.text-white p, .text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6, .text-white span, .text-white strong {
+    color: white !IMPORTANT;
+}

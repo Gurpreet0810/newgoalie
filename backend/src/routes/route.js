@@ -8,7 +8,7 @@ import { getProductByName, getProducts } from '../controllers/getProduct.js';
 import sendEmail from '../utils/nodemailer.js';
 import { addGoalie, getAllGoalies, getSingleGoalie, updateGoalie, deleteGoalie } from '../controllers/Goalie.js';
 import { addDrillCategory, getAllDrillCategories, getSingleDrillCategory, updateDrillCategory, deleteDrillCategory } from '../controllers/drill.js';
-import { addDrill, getAllDrills, getAllCoachDrills, getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill } from '../controllers/drill.js';
+import { addDrill, getAllDrills, getAllCoachDrills, getAllDrillsbycategory, getSingleDrill, updateDrill, deleteDrill, getSingleDrillWithCats } from '../controllers/drill.js';
 import { AddTrainings, updateTrainingDrills, deletetrainings, UpdateTrainings, getAllTrainings, AddTrainingsDrills, singleTrainings, singleTrainingsDrills, AssignTrainingPlan, getAllAssignedTrainings, getAllAssignedTrainingsByGoalieId, updateAssignedTrainingsStatus, getAllTrainingsHome, singleTrainingsDrillDetails } from '../controllers/training.js';
 import { addCoach, deleteCoach, getAllCoaches, getSingleCoach, updateCoach } from '../controllers/Coach.js';
 import { addBlogCategory, Addloaderimage,updateBlog,updateloaderimage, Getloaderimage  ,getAllBlogCategories, getSingleBlogCategory, updateBlogCategory, deleteBlogCategory, addBlog, getAllBlogs, deleteBlog, getSingleBlog } from '../controllers/Blog.js';
@@ -39,6 +39,7 @@ router.get('/drills',  getAllDrills)
 router.get('/getAllDrillsbycategory',  getAllDrillsbycategory)
 
 router.get('/drills/:id', getSingleDrill)
+router.get('/drillswithcat/:id', getSingleDrillWithCats)
 router.put('/update_drill/:id', getImgWithVideo, updateDrill)
 router.delete('/drills/:id', deleteDrill)
 router.post('/addTraining', verifyUser, getImg, AddTrainings)
