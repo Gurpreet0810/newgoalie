@@ -56,6 +56,7 @@ import GoalieTraining from '../login/goalie/goalieTraining';
 import GoalieAllBlogs from '../login/goalie/goalieAllBlogs';
 import GoalieSingleBlog from '../login/goalie/singleBlog';
 import GoalieProfile from '../login/goalie/goalieProfile';
+import GoalieSingleDrill from '../login/goalie/singleDrill';
 
 // Logout component
 const Logout = () => {
@@ -226,6 +227,10 @@ const router = createBrowserRouter([
           {
             path: '/goalie/view-training/:trainingPlanId',
             element: <GoalieTraining />, 
+          },
+          {
+            path: '/goalie/view-drill/:id',
+            element: <GoalieSingleDrill />, 
           },
           {
             path: '/goalie/view-all-blogs',

@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from 'axios';
 
 interface TrainingPlan {
+    drill_id: string;
     drill_name: string;
     drill_description: string;
     category_name: string;
@@ -78,18 +79,19 @@ const SimplePage: React.FC = () => {
                                         expandIcon={<ExpandMoreIcon />}
                                         aria-controls={`panel${index}-content`}
                                         id={`panel${index}-header`}
+                                        style={{ background: '#25576C',color: '#fff' }}
                                     >
-                                        {plan.drill_name}
+                                        <h3>{plan.drill_name}</h3>
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         <div className='row'>
                                             <div className='col-md-4'>
-                                                <img src={`http://localhost:4500/storage/productImages/${plan.drill_photo}`}/>
+                                                <img src={`http://localhost:4500/storage/productImages/${plan.drill_photo}`} width="100%"/>
                                             </div>
                                             <div className='col-md-8'>
-                                            <p>{plan.drill_name}</p>
+                                            <h3>{categoryName}</h3>
                                             <div dangerouslySetInnerHTML={{ __html: plan.drill_description }} />
-                                            <a href="/goalie/view-drill/"><button className="btn btn-primary mt-3">More Detail</button></a>
+                                            <a href={`/goalie/view-drill/${plan.drill_id}`}><button className="btn btn-primary mt-3">More Detail</button></a>
                                             </div>
                                         </div>
                                         
