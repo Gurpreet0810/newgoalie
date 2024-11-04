@@ -5,7 +5,7 @@ import uicon from '../../../assests/section-banner.jpg';
 import banner_vg from '../../../assests/banner-vg.png';
 import graph_svg from '../../../assests/graph.svg';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-
+import { useTranslation } from 'react-i18next';
 interface BannerContent {
     title: string;
     content: string;
@@ -37,7 +37,7 @@ const SimplePage: React.FC = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [visibleBlogs, setVisibleBlogs] = useState(2);
     const { userInfo } = useSelector((state: any) => state.user);
-
+    const { t, i18n } = useTranslation();
     useEffect(() => {
         const fetchBannerContent = async () => {
             try {
@@ -131,7 +131,7 @@ const SimplePage: React.FC = () => {
                                         <h1>{bannerContent?.title || "Welcome to the Excellence Goalie App"}</h1>
                                         <p className="mt-4">{bannerContent?.content || "Default description here."}</p>
                                         <a href={bannerContent?.link || "#"}>
-                                            <button className="btn btn-primary mt-3">View All</button>
+                                            <button className="btn btn-primary mt-3">{t('view all')}</button>
                                         </a>
                                     </div>
                                     <div className="col-lg-4 p-0 m-auto">
@@ -154,8 +154,8 @@ const SimplePage: React.FC = () => {
                     <div className="row g-4">
                         <div className="col-12 mb-5">
                             <div className="d-flex align-items-center justify-content-between">
-                                <h2 className="text-white">My <span className="highlight-text">Training</span> plan </h2>
-                                <a href="/goalie/view-all-trainings/"><button className="btn btn-primary">All the training plans</button></a>
+                                <h2 className="text-white">{t('my')}  <span className="highlight-text">{t('training')}</span> {t('plan')} </h2>
+                                <a href="/goalie/view-all-trainings/"><button className="btn btn-primary">{t('All the training plans')}</button></a>
                             </div>
                         </div>
 
@@ -187,7 +187,7 @@ const SimplePage: React.FC = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-8">
-                            <h2 className="text-white">My Progress</h2>
+                            <h2 className="text-white">{t('myprogress')}</h2>
                         </div>
                         <div className="col-lg-4">
                             <img
@@ -206,8 +206,8 @@ const SimplePage: React.FC = () => {
                     <div className="row g-4">
                         <div className="col-12 mb-5">
                             <div className="d-flex align-items-center justify-content-between">
-                                <h2 className="text-white">Our Blogs</h2>
-                                <a href="/goalie/view-all-blogs/"><button className="btn btn-primary">View Blogs</button></a>
+                                <h2 className="text-white">{t('ourblogs')}</h2>
+                                <a href="/goalie/view-all-blogs/"><button className="btn btn-primary">{t('viewblogs')}</button></a>
                             </div>
                         </div>
                         {blogs.slice(0, visibleBlogs).map((blog) => (
@@ -217,7 +217,7 @@ const SimplePage: React.FC = () => {
                                     <h3 className="plan-name">{blog.title.length > 40 ? `${blog.title.substring(0, 40)}...` : blog.title}</h3>
                                     <p className="date"><CalendarTodayIcon /> {formatDate(blog.createdAt)}</p>
                                     <a href={`/goalie/blog/${blog._id}`}>
-                                        <button className="btn btn-primary">Learn More</button>
+                                        <button className="btn btn-primary">{t('learnmore')}</button>
                                     </a>
                                 </div>
                             </div>
@@ -225,7 +225,7 @@ const SimplePage: React.FC = () => {
                     </div>
                 </div>
                 {visibleBlogs < blogs.length && (
-                    <button onClick={loadMoreBlogs} className="cst_load_more_blog btn btn-primary">Load More</button>
+                    <button onClick={loadMoreBlogs} className="cst_load_more_blog btn btn-primary">{t('loadmore')}</button>
                 )}
             </section>
         </div>

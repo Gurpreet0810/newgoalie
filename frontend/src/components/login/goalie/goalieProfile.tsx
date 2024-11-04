@@ -31,6 +31,7 @@ const ProfileEdit = () => {
     const [loader, setLoader] = useState(false);
     const [errors, setErrors] = useState<any>({});
     const navigate = useNavigate();
+    
 
     const fetchUserData = async () => {
         try {
@@ -156,7 +157,7 @@ const ProfileEdit = () => {
                                 onChange={handleChange}
                                 isInvalid={!!errors.userName}
                             />
-                            <Form.Label>Name</Form.Label>
+                            <Form.Label>{t('name')}</Form.Label>
                             <Form.Control.Feedback type="invalid">
                                 {errors.userName}
                             </Form.Control.Feedback>
@@ -172,7 +173,7 @@ const ProfileEdit = () => {
                                 required
                                 isInvalid={!!errors.email}
                             />
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label>{t('email')}</Form.Label>
                             <Form.Control.Feedback type="invalid">
                                 {errors.email}
                             </Form.Control.Feedback>
@@ -186,7 +187,7 @@ const ProfileEdit = () => {
                                 onChange={handleChange}
                                 isInvalid={!!errors.phoneNumber}
                             />
-                            <Form.Label>Phone</Form.Label>
+                            <Form.Label>{t('phone')}</Form.Label>
                             <Form.Control.Feedback type="invalid">
                                 {errors.phoneNumber}
                             </Form.Control.Feedback>
@@ -201,7 +202,7 @@ const ProfileEdit = () => {
                                 onChange={handleChange}
                                 isInvalid={!!errors.password}
                             />
-                            <Form.Label>Set New Password</Form.Label>
+                            <Form.Label>{t('set_new_pass')}</Form.Label>
                             <Form.Control.Feedback type="invalid">
                                 {errors.password}
                             </Form.Control.Feedback>
@@ -212,7 +213,7 @@ const ProfileEdit = () => {
                                     <Spinner animation="border" variant="primary" />
                                 ) : (
                                     <Button variant="primary" type="submit">
-                                        Submit
+                                        {t('submit')}
                                     </Button>
                                 )}
                             </div>

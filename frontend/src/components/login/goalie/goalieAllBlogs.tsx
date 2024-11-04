@@ -5,7 +5,7 @@ import uicon from '../../../assests/section-banner.jpg';
 import banner_vg from '../../../assests/banner-vg.png';
 import graph_svg from '../../../assests/graph.svg';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-
+import { useTranslation } from 'react-i18next';
 interface Blog {
     _id: string;
     title: string;
@@ -17,7 +17,7 @@ const SimplePage: React.FC = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [visibleBlogs, setVisibleBlogs] = useState(2);
     const { userInfo } = useSelector((state: any) => state.user);
-
+    const { t, i18n } = useTranslation();
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
@@ -49,7 +49,7 @@ const SimplePage: React.FC = () => {
                     <div className="row g-4">
                         <div className="col-12 mb-5">
                             <div className="d-flex align-items-center justify-content-between">
-                                <h2 className="text-white" style={{ textAlign: "center", margin: "auto" }}>Our Blogs</h2>
+                                <h2 className="text-white" style={{ textAlign: "center", margin: "auto" }}>{t('ourblogs')}</h2>
                             </div>
                         </div>
                         {blogs.slice(0, visibleBlogs).map((blog) => (
@@ -59,7 +59,7 @@ const SimplePage: React.FC = () => {
                                     <h3 className="plan-name">{blog.title.length > 40 ? `${blog.title.substring(0, 40)}...` : blog.title}</h3>
                                     <p className="date"><CalendarTodayIcon /> {formatDate(blog.createdAt)}</p>
                                     <a href={`/goalie/blog/${blog._id}`}>
-                                        <button className="btn btn-primary">Learn More</button>
+                                        <button className="btn btn-primary">{t('learnmore')}</button>
                                     </a>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@ const SimplePage: React.FC = () => {
                     </div>
                 </div>
                 {visibleBlogs < blogs.length && (
-                    <button onClick={loadMoreBlogs} className="cst_load_more_blog btn btn-primary">Load More</button>
+                    <button onClick={loadMoreBlogs} className="cst_load_more_blog btn btn-primary">{t('loadmore')}</button>
                 )}
             </section>
         </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 interface Assignment {
     status: number;
@@ -16,7 +17,7 @@ interface TrainingPlan {
 const SimplePage: React.FC = () => {
     const [trainingPlans, setTrainingPlans] = useState<TrainingPlan[]>([]);
     const { userInfo } = useSelector((state: any) => state.user);
-
+    const { t, i18n } = useTranslation();
     useEffect(() => {
         const fetchTrainingPlan = async () => {
             try {
@@ -53,9 +54,9 @@ const SimplePage: React.FC = () => {
 
     const getStatusLabel = (status: number) => {
         switch (status) {
-            case 0: return "Not Started"; 
-            case 1: return "In Progress";
-            case 2: return "Completed";
+            case 0: return t('not_started'); 
+            case 1: return t('in_progress');
+            case 2: return t('completed');
             default: return "Unknown";
         }
     };
@@ -68,7 +69,7 @@ const SimplePage: React.FC = () => {
                     <div className="row g-4">
                         <div className="col-12 mb-5">
                             <div className="d-flex align-items-center justify-content-between">
-                                <h2 className="text-white" style={{ textAlign: "center", margin: "auto" }}>My <span className="highlight-text">Training</span> plan </h2>
+                                <h2 className="text-white" style={{ textAlign: "center", margin: "auto" }}>{t('my')} <span className="highlight-text">{t('training')}</span> {t('plan')}  </h2>
                             </div>
                         </div>
 

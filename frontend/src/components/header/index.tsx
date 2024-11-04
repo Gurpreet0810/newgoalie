@@ -117,7 +117,7 @@ const HeaderPage: React.FC = () => {
                                                 isActive ? "nav-link active" : "nav-link"
                                             }
                                         >
-                                            Home
+                                            {t('dashboard_home')}
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
@@ -127,7 +127,7 @@ const HeaderPage: React.FC = () => {
                                                 isActive ? "nav-link active" : "nav-link"
                                             }
                                         >
-                                            My Trainings
+                                             {t('mytraining')}
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
@@ -137,27 +137,40 @@ const HeaderPage: React.FC = () => {
                                                 isActive ? "nav-link active" : "nav-link"
                                             }
                                         >
-                                            Latest news
+                                            {t('latestnews')}
                                         </NavLink>
                                     </li>
                                 </ul>
                             </div>
                             
                             <div className="user">
-                                <div className="language" style={{ margin: 'auto' }}>
+                                {/* <div className="language" style={{ margin: 'auto' }}>
                                     <select className="language form-select" style={{ width: '108px' }}>
                                         <option value="/goalie/view-trainings/">English</option>
                                         <option value="/goalie/view-trainings/" selected>French</option>
                                     </select>
-                                </div>
-                                
+                                </div> */}
+                                 <div className="center_sider">
+            <button
+                className={isActive === 'en' ? 'active' : ''}
+                onClick={() => changeLanguage('en')}
+            >
+                English
+            </button>
+            <button
+                className={isActive === 'fr' ? 'active' : ''}
+                onClick={() => changeLanguage('fr')}
+            >
+                Français
+            </button>
+        </div>
                                 <div className="dropdown">
                                     <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src={uicon} alt="User" />
                                     </button>
                                     <ul className="dropdown-menu">
-                                        <a className="dropdown-item" href="/goalie-profile/">My Profile</a>
-                                        <a className="dropdown-item" href="/logout/">Logout</a>   
+                                        <a className="dropdown-item" href="/goalie-profile/">{t('myprofile')}</a>
+                                        <a className="dropdown-item" href="/logout/">{t('logout')}</a>   
                                     </ul>
                                 </div>
 
